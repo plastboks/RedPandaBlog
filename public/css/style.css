@@ -1,0 +1,9 @@
+body {
+  margin: 0 auto !important;
+  width: 800px;
+}
+
+.header {
+  height: 100px;
+  padding-bottom: 30px;
+}

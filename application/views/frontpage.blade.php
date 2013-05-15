@@ -3,6 +3,6 @@
 Alexanders dope blog
 @endsection
 @section('content')
-<h1>Holla!</h1>
-<p> Welcome back {{ Auth::user()->username }}</p>
+    <h1>Welcome!</h1>
+    <p>Welcome to my dope blog!</p>
 @endsection
