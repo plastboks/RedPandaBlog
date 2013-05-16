@@ -16,6 +16,10 @@
       @else 
         <li>{{ HTML::link('logout', 'Logout') }}</li>
       @endif
+      @if (!Auth::guest())
+        <li>{{ HTML::link('account/welcome', 'Account') }}</li>
+        <li>{{ HTML::link('admin', 'Admin') }}</li>
+      @endif
     @yield_section
     </ul>
   </div>

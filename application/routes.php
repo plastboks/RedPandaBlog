@@ -1,7 +1,10 @@
 <?php
 
 Route::get('/', array('as' => 'frontpage', 'do' => function() {
-  return View::make('frontpage');
+  $data = array(
+    'posts' => Post::all(),
+  );
+  return View::make('frontpage', $data);
 }));
 
 
@@ -45,17 +48,21 @@ Route::filter('auth', function()
 
 
 /**
+ * Post area
+ */
+Route::controller('post');
+
+/**
  * admin area
  */ 
 Route::controller('admin');
-
+Route::get('admin/createpost', 'admin@createpost');
+Route::post('admin/updatepost', 'admin@updatepost');
 
 /**
  * account logic
  */
 Route::controller("account");
-
-
 
 /**
  * login/logout logic
