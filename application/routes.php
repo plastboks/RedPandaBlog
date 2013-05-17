@@ -56,7 +56,11 @@ Route::controller('post');
  * admin area
  */ 
 Route::controller('admin');
-Route::get('admin/createpost', 'admin@createpost');
+Route::get('admin/newpost', 'admin@newpost');
+Route::get('admin/newuser', 'admin@newuser');
+Route::post('admin/createuser', 'admin@createuser');
+Route::post('admin/createpost', 'admin@createpost');
+Route::post('admin/updateuser', 'admin@updateuser');
 Route::post('admin/updatepost', 'admin@updatepost');
 
 /**

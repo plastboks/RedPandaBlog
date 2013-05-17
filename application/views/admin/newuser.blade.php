@@ -1,16 +1,16 @@
-@layout('account/index')
+@layout('admin/index')
 @section('content')
-    <h1>My Account</h1>
+    <h1> Add a new user</h1>
     <p class="message">{{ $status }}</p>
-    {{ Form::open('account/update') }}
+    {{ Form::open('admin/createuser') }}
         <!-- title field -->
         <p>{{ Form::label('username', 'Username') }}</p>
         {{ $errors->first('username', '<p class="error">:message</p>') }}
-        <p>{{ Form::text('username', $user->username) }}</p>
+        <p>{{ Form::text('username', $username) }}</p>
         <!-- body field -->
         <p>{{ Form::label('email', 'Email') }}</p>
         {{ $errors->first('email', '<p class="error">:message</p>') }}
-        <p>{{ Form::text('email', $user->email) }}</p>
+        <p>{{ Form::text('email', $email) }}</p>
         <!-- password field -->
         <p>{{ Form::label('password', 'Password') }}</p>
         {{ $errors->first('password', '<p class="error">:message</p>') }}

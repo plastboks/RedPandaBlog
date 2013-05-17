@@ -17,7 +17,6 @@ class Post_Controller extends Base_Controller {
     return View::make('post/view', $data);
   }
 
-
   public function action_edit($id) {
     $data = array(
       'post' => Post::find($id),

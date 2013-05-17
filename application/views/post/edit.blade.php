@@ -14,6 +14,6 @@ Edit post {{ $post->title }}
         {{ $errors->first('body', '<p class="error">:message</p>') }}
         <p>{{ Form::textarea('body', $post->body) }}</p>
         <!-- submit button -->
-        <p>{{ Form::submit('Create') }}</p>
+        <p>{{ Form::submit('Update') }}</p>
     {{ Form::close() }}
 @endsection
