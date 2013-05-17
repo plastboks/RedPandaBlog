@@ -8,20 +8,28 @@
 </head>
 <body>
   <div class="header">
-    <ul>
-    @section('navigation')
-      <li>{{ HTML::link_to_route('frontpage', 'Home') }}</li>
-      @if (Auth::guest())
-        <li>{{ HTML::link('login', 'Login') }}</li>
-      @else 
-        <li>{{ HTML::link('logout', 'Logout') }}</li>
-      @endif
-      @if (!Auth::guest())
-        <li>{{ HTML::link('account/welcome', 'Account') }}</li>
-        <li>{{ HTML::link('admin', 'Admin') }}</li>
-      @endif
-    @yield_section
-    </ul>
+    <div class="primarynav">
+      <ul>
+      @section('primarynav')
+        <li>{{ HTML::link_to_route('frontpage', 'Home') }}</li>
+        @if (!Auth::guest())
+          <li>{{ HTML::link('account', 'Account') }}</li>
+          <li>{{ HTML::link('admin', 'Admin') }}</li>
+        @endif
+        @if (Auth::guest())
+          <li>{{ HTML::link('login', 'Login') }}</li>
+        @else 
+          <li>{{ HTML::link('logout', 'Logout') }}</li>
+        @endif
+      @yield_section
+      </ul>
+    </div>
+    <div class="secondarynav">
+      <ul>
+        @section('secondarynav')
+        @yield_section
+      </ul>
+    </div>
   </div>
   @yield('content')
 </body>

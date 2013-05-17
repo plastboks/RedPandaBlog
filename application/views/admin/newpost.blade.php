@@ -1,4 +1,4 @@
-@layout('base')
+@layout('admin/index')
 @section('title')
 Add new post
 @endsection

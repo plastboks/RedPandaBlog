@@ -1,7 +1,4 @@
-@layout('base')
-@section('title')
-Alexanders dope blog
-@endsection
+@layout('account/index')
 @section('content')
 <h1>Holla!</h1>
 <p> Welcome back {{ Auth::user()->username }}</p>

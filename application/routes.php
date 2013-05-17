@@ -63,6 +63,8 @@ Route::post('admin/updatepost', 'admin@updatepost');
  * account logic
  */
 Route::controller("account");
+Route::get('account/profile', 'account@profile');
+Route::post('account/update', 'account@update');
 
 /**
  * login/logout logic
@@ -78,7 +80,7 @@ Route::post('login', function(){
   );
 
   if (Auth::attempt($userdata)) {
-    return Redirect::to('account/welcome');
+    return Redirect::to('account');
   } else {
     return Redirect::to('login')->with('login_errors', true);
   }
