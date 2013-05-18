@@ -12,7 +12,7 @@
     <p>Author: {{ $post->author->username }}</p>
     <p>{{ $post->body }}</p>
     @if (!Auth::guest())
-      {{ HTML::link('post/edit/'.$post->id, 'Edit') }}  
+      {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}  
     @endif
   </div>
 @endsection
