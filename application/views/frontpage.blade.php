@@ -4,7 +4,7 @@ Alexanders dope blog
 @endsection
 @section('content')
     <h1>Welcome!</h1>
-@foreach ($posts as $post)
+@foreach ($posts->results as $post)
   <div>
     <h2>{{ HTML::link('post/view/'.$post->id, $post->title) }}</h2>
     <p class="timestamps">
@@ -15,4 +15,5 @@ Alexanders dope blog
     <p>{{ $post->body }}</p>
   </div>
 @endforeach
+{{ $posts->links() }}
 @endsection

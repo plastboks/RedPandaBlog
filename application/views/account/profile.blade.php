@@ -3,6 +3,7 @@
     <h1>My Account</h1>
     <p class="message">{{ $status }}</p>
     {{ Form::open('account/update') }}
+        {{ Form::token() }}
         <!-- title field -->
         <p>{{ Form::label('username', 'Username') }}</p>
         {{ $errors->first('username', '<p class="error">:message</p>') }}

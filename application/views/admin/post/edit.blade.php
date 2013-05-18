@@ -4,6 +4,7 @@ Edit post {{ $post->title }}
 @endsection
 @section('content')
     {{ Form::open('admin/post/update/'.$post->id) }}
+        {{ Form::token() }}
         {{ Form::hidden('author_id', $user->id) }}
         <!-- title field -->
         <p>{{ Form::label('title', 'Title') }}</p>

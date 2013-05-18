@@ -8,6 +8,7 @@ Login
     @if (Session::has('login_errors'))
         <span class="error">Username or password incorrect.</span>
     @endif
+    {{ Form::token() }}
     <!-- username field -->
     <p>{{ Form::label('username', 'Username') }}</p>
     <p>{{ Form::text('email') }}</p>

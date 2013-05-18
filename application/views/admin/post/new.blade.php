@@ -5,6 +5,7 @@ Add new post
 @section('content')
     {{ Form::open('admin/post/create') }}
         {{ Form::hidden('author_id', $user->id) }}
+        {{ Form::token() }}
         <!-- title field -->
         <p>{{ Form::label('title', 'Title') }}</p>
         {{ $errors->first('title', '<p class="error">:message</p>') }}

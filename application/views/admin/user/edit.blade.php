@@ -3,6 +3,7 @@
     <h1>Edit {{ $user->username }}</h1>
     <p class="message">{{ $status }}</p>
     {{ Form::open('admin/user/update/'.$user->id) }}
+        {{ Form::token() }}
         <!-- title field -->
         <p>{{ Form::label('username', 'Username') }}</p>
         {{ $errors->first('username', '<p class="error">:message</p>') }}

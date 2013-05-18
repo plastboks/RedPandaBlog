@@ -17,3 +17,14 @@ body {
 .header ul li {
   display: inline;
 }
+
+.pagination ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.pagination ul li {
+  display: inline;
+  padding-right: 10px;
+}
