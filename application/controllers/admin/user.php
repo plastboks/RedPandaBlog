@@ -8,7 +8,9 @@ class Admin_User_Controller extends Base_Controller {
 
   public function action_list() {
     $data = array(
-      'users' => DB::table('users')->get(),
+      'myself' => Auth::user(),
+      'users' => User::take(100)->where_null('blocked')->get(),
+      'blockedUsers' => User::take(100)->where('blocked', '=', '1')->get(),
       'status' => Session::get('status'),
     );
     return View::make('admin/user/list', $data);
@@ -75,6 +77,21 @@ class Admin_User_Controller extends Base_Controller {
               ->with('status', "User updated");
     }
   }
+  
+  public function action_block($id) {
+    if ($user = User::find($id)) {
+      $user->blocked = 1;
+      $user->save();
+    }
+    return Redirect::to('admin/user/list');
+  }
 
+  public function action_unblock($id) {
+    if ($user = User::find($id)) {
+      $user->blocked = NULL;
+      $user->save();
+    }
+    return Redirect::to('admin/user/list');
+  }
 
 }

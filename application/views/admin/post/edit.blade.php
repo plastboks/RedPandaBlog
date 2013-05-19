@@ -14,6 +14,10 @@ Edit post {{ $post->title }}
         <p>{{ Form::label('body', 'Body') }}</p>
         {{ $errors->first('body', '<p class="error">:message</p>') }}
         <p>{{ Form::textarea('body', $post->body) }}</p>
+        <!-- published field -->
+        <p>{{ Form::label('published', "Published") }}</p>
+        {{ $errors->first('published', '<p class="error">:message</p>')}}
+        <p>{{ Form::checkbox('published', 1, $post->published) }}</p>
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>
     {{ Form::close() }}

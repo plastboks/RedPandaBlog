@@ -19,21 +19,13 @@ Route::controller('post');
  */ 
 Route::controller('admin.user');
 Route::get('admin/user/new', 'admin.user@new');
-Route::post('admin/user/create', array(
-                                  'before' => 'csrf',
-                                  'do' => 'admin.user@create'));
-Route::post('admin/user/update', array(
-                                  'before' => 'csrf',
-                                  'do' => 'admin.user@update'));
+Route::post('admin/user/create', 'admin.user@create');
+Route::post('admin/user/update', 'admin.user@update');
 
 Route::controller('admin.post');
 Route::get('admin/post/new', 'admin.post@new');
-Route::post('admin/post/create', array(
-                                  'before' => 'csrf', 
-                                  'do' => 'admin.post@create'));
-Route::post('admin/post/update', array(
-                                  'before' => 'csrf', 
-                                  'do' => 'admin.post@update'));
+Route::post('admin/post/create', 'admin.post@create');
+Route::post('admin/post/update', 'admin.post@update');
 
 Route::get('admin', array('before' => 'auth', function(){
   return View::make('admin/index');
@@ -62,7 +54,13 @@ Route::post('login', array('before' => 'csrf', function(){
   );
 
   if (Auth::attempt($userdata)) {
-    return Redirect::to('account');
+    $user = Auth::user();
+    if ($user->blocked) {
+      Auth::logout();
+      return Redirect::to('login')->with('login_errors', true);
+    } else {
+      return Redirect::to('account');
+    }
   } else {
     return Redirect::to('login')->with('login_errors', true);
   }

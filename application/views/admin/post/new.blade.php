@@ -14,6 +14,9 @@ Add new post
         <p>{{ Form::label('body', 'Body') }}</p>
         {{ $errors->first('body', '<p class="error">:message</p>') }}
         <p>{{ Form::textarea('body', Input::old('body')) }}</p>
+        <p>{{ Form::label('published', 'Published' )}}</p>
+        {{ $errors->first('published') }}
+        <p>{{ Form::checkbox('published', Input::old('published', true)) }}</p>
         <!-- submit button -->
         <p>{{ Form::submit('Create') }}</p>
     {{ Form::close() }}

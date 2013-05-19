@@ -8,7 +8,8 @@ class Admin_Post_Controller extends Base_Controller {
 
   public function action_list() {
     $data = array(
-      'posts' => Post::all(),
+      'pubPosts' => Post::take(100)->where('published', '=', '1')->get(),
+      'unpubPosts' => Post::take(100)->where_null('published')->get(),
     );
     return View::make('admin/post/list', $data);
   }
@@ -31,7 +32,11 @@ class Admin_Post_Controller extends Base_Controller {
               ->with_input();
     }
 
-    $post = new Post(Input::all());
+    $post = new Post();
+    $post->title = Input::get('title');
+    $post->body = Input::get('body');
+    $post->author_id = Input::get('author_id');
+    $post->published = Input::get('published');
     $post->save();
 
     return Redirect::to('post/view/'.$post->id);
@@ -60,8 +65,18 @@ class Admin_Post_Controller extends Base_Controller {
       $post->title = Input::get('title');
       $post->body = Input::get('body');
       $post->author_id = Input::get('author_id');
+      $post->published = Input::get('published');
       $post->save();
       return Redirect::to('post/view/'.$id);
+    }
+  }
+
+  public function action_delete($id) {
+    if ($post = Post::find($id)) {
+      $post->delete();
+      return Redirect::to('admin/post/list');
+    } else {
+      return Redirect::to('admin/post/list');
     }
   }
 }
