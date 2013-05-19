@@ -71,6 +71,22 @@ class Admin_Post_Controller extends Base_Controller {
     }
   }
 
+  public function action_publish($id) {
+    if ($post = Post::find($id)) {
+      $post->published = 1;   
+      $post->save();
+    }
+    return Redirect::to('admin/post/list');
+  }
+
+  public function action_unpublish($id) {
+    if ($post = Post::find($id)) {
+      $post->published = NULL;
+      $post->save();
+    }
+    return Redirect::to('admin/post/list');
+  }
+
   public function action_delete($id) {
     if ($post = Post::find($id)) {
       $post->delete();

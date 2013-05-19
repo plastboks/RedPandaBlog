@@ -2,7 +2,7 @@
 
 Route::get('/', array('as' => 'frontpage', 'do' => function() {
   $data = array(
-    'posts' => Post::take(4)->paginate(4),
+    'posts' => Post::take(4)->where('published', '=', 1)->paginate(4),
   );
   return View::make('frontpage', $data);
 }));

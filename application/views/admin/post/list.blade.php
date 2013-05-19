@@ -8,6 +8,7 @@
     @foreach ($pubPosts as $post)
       <li>{{ HTML::link('post/view/'.$post->id, $post->title) }}
           - {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}
+          - {{ HTML::link('admin/post/unpublish/'.$post->id, 'Unpublish') }}
           - {{ HTML::link('admin/post/delete/'.$post->id, 'Delete') }}</li>
     @endforeach
     </ul>
@@ -18,6 +19,7 @@
     @foreach ($unpubPosts as $post)
       <li>{{ HTML::link('post/view/'.$post->id, $post->title) }}
           - {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}
+          - {{ HTML::link('admin/post/publish/'.$post->id, 'Publish') }}
           - {{ HTML::link('admin/post/delete/'.$post->id, 'Delete') }}</li>
     @endforeach
     </ul>
