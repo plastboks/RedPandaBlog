@@ -9,5 +9,4 @@ Point your webserver at the public folder.
 run `php artisan migrate:install`
 and `php artisan migrate`
 
-create a user in the users table with a bcrypt hash password
-
+goto /install to create a new user
