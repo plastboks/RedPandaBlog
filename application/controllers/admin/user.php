@@ -94,4 +94,11 @@ class Admin_User_Controller extends Base_Controller {
     return Redirect::to('admin/user/list');
   }
 
+  public function action_delete($id) {
+    if (($id != Auth::user()->id) && ($user = User::find($id))) {
+      $user->delete();
+    }
+    return Redirect::to('admin/user/list');
+  }
+
 }

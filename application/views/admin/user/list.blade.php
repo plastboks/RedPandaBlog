@@ -10,7 +10,8 @@
       <li>{{ $user->username }}, {{ $user->email }}
           - {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
           @unless ($myself->id == $user->id)
-          - {{ HTML::link('admin/user/block/'.$user->id, 'Block') }}</li>
+          - {{ HTML::link('admin/user/block/'.$user->id, 'Block') }}
+          - {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}</li>
           @endunless
     @endforeach
     </ul>
@@ -21,7 +22,8 @@
     @foreach ($blockedUsers as $user)
       <li>{{ $user->username }}, {{ $user->email }}
           - {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
-          - {{ HTML::link('admin/user/unblock/'.$user->id, 'Unblock') }}</li>
+          - {{ HTML::link('admin/user/unblock/'.$user->id, 'Unblock') }}
+          - {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}</li>
     @endforeach
     </ul>
   </p>
