@@ -75,6 +75,14 @@ Route::get('logout', function(){
 
 
 /**
+ * install area
+ */
+Route::controller('install');
+Route::get('install', 'install@index');
+Route::post('install/createuser', 'install@createuser');
+
+
+/**
  * some default error pages
  */
 Event::listen('404', function()
