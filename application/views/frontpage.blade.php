@@ -1,6 +1,6 @@
 @layout('base')
 @section('title')
-Alexanders dope blog
+Welcome
 @endsection
 @section('content')
     <h1>Welcome!</h1>

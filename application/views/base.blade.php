@@ -2,7 +2,7 @@
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8">
-  <title>@yield('title')</title>
+  <title>Red Panda Blog - @yield('title')</title>
   {{ HTML::style('css/style.css') }}
   {{ HTML::style('css/normalize.css') }}
 </head>
