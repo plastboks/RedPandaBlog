@@ -18,6 +18,20 @@ body {
   display: inline;
 }
 
+.header .primarynav {
+}
+
+.header .secondarynav {
+}
+
+.header .search {
+  float: right;  
+}
+
+#content {
+  clear: both;
+}
+
 .pagination ul {
   list-style: none;
   margin-left: 0;

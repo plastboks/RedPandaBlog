@@ -17,4 +17,14 @@ class Post_Controller extends Base_Controller {
     return View::make('post/view', $data);
   }
 
+  public function action_q() {
+    $q = Input::get('q');
+    $data = array(
+      'posts' => Post::order_by('updated_at', 'desc')
+                  ->where('title', 'LIKE', "%$q%")
+                  ->or_where('body', 'LIKE', "%$q%")
+                  ->paginate(4)
+    );
+    return View::make('post/searchresults', $data);
+  }
 }

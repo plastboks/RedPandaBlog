@@ -8,6 +8,13 @@
 </head>
 <body>
   <div class="header">
+    <div class="search">
+      {{ Form::open('post/q') }}  
+        {{ Form::label('q', 'Search') }}
+        {{ Form::text('q') }}
+        {{ Form::submit('Search') }}
+      {{ Form::close() }}
+    </div>
     <div class="primarynav">
       <ul>
       @section('primarynav')
@@ -31,6 +38,8 @@
       </ul>
     </div>
   </div>
-  @yield('content')
+  <div id="content">
+    @yield('content')
+  </div>
 </body>
 </html>
