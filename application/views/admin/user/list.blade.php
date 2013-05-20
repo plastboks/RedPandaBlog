@@ -5,25 +5,51 @@
   <p class="message">{{ $status }}</p>
   <p>
     <h2>Active users</h2>
-    <ul>
+    <ul class="userlist activeusers">
     @foreach ($users as $user)
-      <li>{{ $user->username }}, {{ $user->email }}
-          - {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
+      <li>
+        <ul class="linklist">
+          <li class="username">
+            {{ $user->username }}, {{ $user->email }}
+          </li>
+          <li class="edit">
+            {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
+          </li>
           @unless ($myself->id == $user->id)
-          - {{ HTML::link('admin/user/block/'.$user->id, 'Block') }}
-          - {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}</li>
+          <li class="block">
+            {{ HTML::link('admin/user/block/'.$user->id, 'Block') }}
+          </li>
+          <li class="delete">
+            {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}
+          </li>
           @endunless
+        </ul>
+      </li>
     @endforeach
     </ul>
   </p>
   <p>
     <h2>Blocked users</h2>
-    <ul>
+    <ul class="userlist blockedusers">
     @foreach ($blockedUsers as $user)
-      <li>{{ $user->username }}, {{ $user->email }}
-          - {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
-          - {{ HTML::link('admin/user/unblock/'.$user->id, 'Unblock') }}
-          - {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}</li>
+      <li>
+        <ul class="linklist">
+          <li class="username">
+            {{ $user->username }}, {{ $user->email }}
+          </li>
+          <li class="edit">
+            {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
+          </li>
+          @unless ($myself->id == $user->id)
+          <li class="block">
+            {{ HTML::link('admin/user/unblock/'.$user->id, 'Unblock') }}
+          </li>
+          <li class="delete">
+            {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}
+          </li>
+          @endunless
+        </ul>
+      </li>
     @endforeach
     </ul>
   </p>

@@ -8,8 +8,12 @@ class Admin_Post_Controller extends Base_Controller {
 
   public function action_list() {
     $data = array(
-      'pubPosts' => Post::take(100)->where('published', '=', '1')->get(),
-      'unpubPosts' => Post::take(100)->where_null('published')->get(),
+      'pubPosts' => Post::order_by('created_at', 'desc')
+                            ->where('published', '=', '1')
+                            ->get(),
+      'unpubPosts' => Post::order_by('created_at', 'desc')
+                            ->where_null('published')
+                            ->get(),
     );
     return View::make('admin/post/list', $data);
   }

@@ -9,8 +9,12 @@ class Admin_User_Controller extends Base_Controller {
   public function action_list() {
     $data = array(
       'myself' => Auth::user(),
-      'users' => User::take(100)->where_null('blocked')->get(),
-      'blockedUsers' => User::take(100)->where('blocked', '=', '1')->get(),
+      'users' => User::order_by('id', 'asc')
+                        ->where_null('blocked')
+                        ->get(),
+      'blockedUsers' => User::order_by('id', 'asc')
+                              ->where('blocked', '=', '1')
+                              ->get(),
       'status' => Session::get('status'),
     );
     return View::make('admin/user/list', $data);

@@ -2,7 +2,9 @@
 
 Route::get('/', array('as' => 'frontpage', 'do' => function() {
   $data = array(
-    'posts' => Post::take(4)->where('published', '=', 1)->paginate(4),
+    'posts' => Post::order_by('created_at', 'desc')
+                ->where('published', '=', 1)
+                ->paginate(4),
   );
   return View::make('frontpage', $data);
 }));
