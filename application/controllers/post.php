@@ -27,4 +27,5 @@ class Post_Controller extends Base_Controller {
     );
     return View::make('post/searchresults', $data);
   }
+
 }

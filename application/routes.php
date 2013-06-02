@@ -30,6 +30,9 @@ Route::post('admin/post/create', 'admin.post@create');
 Route::post('admin/post/update', 'admin.post@update');
 
 Route::controller('admin.category');
+Route::get('admin/category/new', 'admin.category@new');
+Route::post('admin/category/create', 'admin.category@create');
+Route::post('admin/category/update', 'admin.category@update');
 
 Route::get('admin', array('before' => 'auth', function(){
   return View::make('admin/index');

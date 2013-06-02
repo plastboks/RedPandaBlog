@@ -20,8 +20,8 @@ class Admin_Category_Controller extends Base_Controller
         return View::make('admin/category/new');
     }
 
-    public function action_create() {
-
+    public function action_create() 
+    {
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
@@ -30,15 +30,42 @@ class Admin_Category_Controller extends Base_Controller
                   ->with_input();
         }
 
-        $post = new Category();
-        $post->title = Input::get('title');
-        $post->slug = Input::get('slug');
-        $post->save();
+        $category = new Category();
+        $category->title = Input::get('title');
+        $category->slug = Input::get('slug');
+        $category->save();
 
         return Redirect::to('admin/category/list');
     }
 
-    public function action_delete($id) {
+    public function action_edit($id) 
+    {
+        $data = array(
+            'category' => Category::find($id),
+        );
+        return View::make('admin/category/edit', $data);
+    }
+
+    public function action_update($id) {
+         
+        $v = Validator::make(Input::all(), Category::defaultRules());
+
+        if ($v->fails()) {
+          return Redirect::to('admin/category/edit/'.$id)
+                  ->with_errors($v)
+                  ->with_input();
+        }
+
+        if ($category = Category::find($id)) {
+          $category->title = Input::get('title');
+          $category->slug = Input::get('slug');
+          $category->save();
+          return Redirect::to('admin/category/list');
+        }
+    }
+
+    public function action_delete($id) 
+    {
         if (($cat = Category::find($id)) && (!Category::find($id)->posts()->get())) {
             $cat->delete();
             return Redirect::to('admin/category/list');
