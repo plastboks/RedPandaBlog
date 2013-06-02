@@ -24,7 +24,7 @@ class Update_Category {
 	{
 		Schema::table('categories', function($table)
         {
-            $table->drop_timestamps();
+            //$table->drop_timestamps();
         });
 	}
 

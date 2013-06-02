@@ -9,12 +9,12 @@ class Create_Cats_Posts {
 	 */
 	public function up()
 	{
-		Schema::create('cats_posts', function($table){
-      $table->increments('id');
-      $table->integer('post');
-      $table->integer('category');
-
-    });
+		Schema::create('category_post', function($table){
+          $table->increments('id');
+          $table->integer('post_id');
+          $table->integer('category_id');
+          $table->timestamps();
+        });
 	}
 
 	/**
@@ -24,7 +24,7 @@ class Create_Cats_Posts {
 	 */
 	public function down()
 	{
-		Schema::drop('cats_posts');
+		Schema::drop('category_post');
 	}
 
 }

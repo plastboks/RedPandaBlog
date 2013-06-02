@@ -21,6 +21,7 @@ class Admin_Post_Controller extends Base_Controller {
   public function action_new() {
     $data = array(
       'user' => Auth::user(),
+      'categories' => Category::all(),
     );
     return View::make('admin/post/new', $data);
   }
@@ -42,6 +43,9 @@ class Admin_Post_Controller extends Base_Controller {
     $post->author_id = Input::get('author_id');
     $post->published = Input::get('published');
     $post->save();
+    if (Input::get('category')) {
+        $post->categories()->sync(Input::get('category'));
+    }
 
     return Redirect::to('post/view/'.$post->id);
   }
@@ -50,6 +54,7 @@ class Admin_Post_Controller extends Base_Controller {
     $data = array(
       'post' => Post::find($id),
       'user' => Auth::user(),
+      'categories' => Category::all(),
     );
     return View::make('admin/post/edit', $data);
   }
@@ -70,6 +75,9 @@ class Admin_Post_Controller extends Base_Controller {
       $post->body = Input::get('body');
       $post->author_id = Input::get('author_id');
       $post->published = Input::get('published');
+      if (Input::get('category')) {
+          $post->categories()->sync(Input::get('category'));
+      }
       $post->save();
       return Redirect::to('post/view/'.$id);
     }

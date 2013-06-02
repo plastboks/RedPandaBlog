@@ -15,9 +15,21 @@ Add new post
         <p>{{ Form::label('body', 'Body') }}</p>
         {{ $errors->first('body', '<p class="error">:message</p>') }}
         <p>{{ Form::textarea('body', Input::old('body')) }}</p>
-        <p>{{ Form::label('published', 'Published' )}}</p>
+        <p>{{ Form::label('published', 'Published' )}}
         {{ $errors->first('published') }}
-        <p>{{ Form::checkbox('published', Input::old('published', true)) }}</p>
+        {{ Form::checkbox('published', Input::old('published', true)) }}
+        </p>
+        <p>
+            <span>Categories</span>
+            <ul>
+            @foreach ($categories as $category)
+                <li>
+                    <label>{{ Form::label('category', $category->title) }}</label>
+                    {{ Form::checkbox('category[]', $category->id) }}
+                </li>
+            @endforeach
+            </ul>
+        </p>
         <!-- submit button -->
         <p>{{ Form::submit('Create') }}</p>
     {{ Form::close() }}

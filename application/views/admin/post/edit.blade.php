@@ -15,9 +15,22 @@ Edit post {{ $post->title }}
         {{ $errors->first('body', '<p class="error">:message</p>') }}
         <p>{{ Form::textarea('body', $post->body) }}</p>
         <!-- published field -->
-        <p>{{ Form::label('published', "Published") }}</p>
-        {{ $errors->first('published', '<p class="error">:message</p>')}}
-        <p>{{ Form::checkbox('published', 1, $post->published) }}</p>
+        <p>
+            {{ Form::label('published', "Published") }}
+            {{ $errors->first('published', '<p class="error">:message</p>')}}
+            {{ Form::checkbox('published', 1, $post->published) }}
+        </p>
+        <p>
+            <span>Categories</span>
+            <ul>
+            @foreach ($categories as $category)
+                <li>
+                    <label>{{ Form::label('category', $category->title) }}</label>
+                    {{ Form::checkbox('category[]',$category->id,$post->categories()->where('title', '=', $category->title)->first())}}
+                </li>
+            @endforeach
+            </ul>
+        </p>
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>
     {{ Form::close() }}
