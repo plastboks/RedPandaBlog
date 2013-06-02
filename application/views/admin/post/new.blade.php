@@ -3,6 +3,7 @@
 Add new post
 @endsection
 @section('content')
+    <h1>New post</h1>
     {{ Form::open('admin/post/create') }}
         {{ Form::hidden('author_id', $user->id) }}
         {{ Form::token() }}

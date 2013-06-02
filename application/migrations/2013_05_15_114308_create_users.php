@@ -28,7 +28,7 @@ class Create_Users {
 	 * @return void
 	 */
 	public function down() {
-    Schema::drop('users');
+        Schema::drop('users');
 	}
 
 }

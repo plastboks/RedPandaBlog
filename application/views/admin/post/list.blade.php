@@ -1,6 +1,6 @@
 @layout('admin/index')
 @section('content')
-  <h1>Posts on this site</h1>
+  <h1>Posts</h1>
   <h2>{{ HTML::link('admin/post/new', 'Add new') }}</h2>
   <p>
     <h2>Published posts</h2>

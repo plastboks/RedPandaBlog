@@ -29,6 +29,8 @@ Route::get('admin/post/new', 'admin.post@new');
 Route::post('admin/post/create', 'admin.post@create');
 Route::post('admin/post/update', 'admin.post@update');
 
+Route::controller('admin.category');
+
 Route::get('admin', array('before' => 'auth', function(){
   return View::make('admin/index');
 }));
