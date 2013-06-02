@@ -8,9 +8,11 @@
     @foreach ($categories as $category)
       <li>
         <ul class="linklist">
-          <li class="title">
-            {{ $category->title }}
-          </li>
+          <li class="title">{{ $category->title }}</li>
+          <li class="count">Post count: {{ count($category->posts()->get()) }}</li>
+          @if (!$category->posts()->get())
+          <li class="delete">{{ HTML::link('admin/category/delete/'.$category->id, 'Delete') }}</li>
+          @endif
         </ul>
       </li>
     @endforeach

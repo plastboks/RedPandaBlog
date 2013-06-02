@@ -101,6 +101,7 @@ class Admin_Post_Controller extends Base_Controller {
 
   public function action_delete($id) {
     if ($post = Post::find($id)) {
+      $post->categories()->delete();
       $post->delete();
       return Redirect::to('admin/post/list');
     } else {

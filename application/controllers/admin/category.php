@@ -37,5 +37,14 @@ class Admin_Category_Controller extends Base_Controller
 
         return Redirect::to('admin/category/list');
     }
+
+    public function action_delete($id) {
+        if (($cat = Category::find($id)) && (!Category::find($id)->posts()->get())) {
+            $cat->delete();
+            return Redirect::to('admin/category/list');
+        } else {
+            return Redirect::to('admin/category/list');
+        }
+    }
   
 }

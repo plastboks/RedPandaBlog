@@ -6,7 +6,7 @@ class Category extends Eloquent
    
     public function posts()
     {
-        return $this->has_many('Post');
+        return $this->has_many_and_belongs_to('Post');
     }
 
     public static function defaultRules()
