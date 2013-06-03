@@ -28,4 +28,13 @@ class Post_Controller extends Base_Controller {
     return View::make('post/searchresults', $data);
   }
 
+  public function action_category($slug)
+  {
+      $cat = Category::where('slug', '=', $slug)->first();
+      $data = array(
+        'category' => $cat,
+        'posts' => Category::find($cat->id)->posts()->paginate(4),
+      );
+      return View::make('post/category', $data);
+  }
 }

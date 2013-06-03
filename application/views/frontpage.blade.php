@@ -14,7 +14,7 @@ Welcome
       @if ($post->categories)
         <li class="categories">Categories: 
         @foreach ($post->categories as $category)
-            {{$category->title }}
+            {{ HTML::link('post/category/'.$category->slug, $category->title) }}
         @endforeach
         </li>
       @endif
