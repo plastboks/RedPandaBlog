@@ -11,9 +11,16 @@ Search results
     <div>
       <h2>{{ HTML::link('post/view/'.$post->id, $post->title) }}</h2>
       <ul class="postinfo">
-        <li class="created">Created: {{ $post->created_at }}</lig>
-        <li class="updated">Updated: {{ $post->updated_at }}</li>
-        <li class="author">Author: {{ $post->author->username }}</li>
+        <li class="created">Created: {{ $post->created_at }}, </li>
+        <li class="updated">Updated: {{ $post->updated_at }}, </li>
+        <li class="author">Author: {{ $post->author->username }}, </li>
+        @if ($post->categories)
+          <li class="categories">Categories: 
+          @foreach ($post->categories as $category)
+              {{ HTML::link('post/category/'.$category->slug, $category->title) }}
+          @endforeach
+          </li>
+        @endif
       </ul>
       <p>{{ substr($post->body, 0, 120). ' [..]' }}</p> 
       <p>{{ HTML::link('post/view/'.$post->id, 'Read more &rarr;') }}</p>

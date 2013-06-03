@@ -3,17 +3,30 @@
 Search results
 @endsection
 @section('content')
-    <h1>Posts in category {{ $category->title }}</h1>
+
+
 @unless ($posts->results)
-  <h2>No results</h2>
+    <h1>No results</h1>
 @else
+  @if (count($posts) > 1)
+      <h1>Posts in category {{ $category->title }}</h1>
+  @else
+      <h1>Post in category {{ $category->title }}</h1>
+  @endif
   @foreach ($posts->results as $post)
     <div>
       <h2>{{ HTML::link('post/view/'.$post->id, $post->title) }}</h2>
       <ul class="postinfo">
-        <li class="created">Created: {{ $post->created_at }}</lig>
-        <li class="updated">Updated: {{ $post->updated_at }}</li>
-        <li class="author">Author: {{ $post->author->username }}</li>
+        <li class="created">Created: {{ $post->created_at }}, </li>
+        <li class="updated">Updated: {{ $post->updated_at }}, </li>
+        <li class="author">Author: {{ $post->author->username }}, </li>
+        @if ($post->categories)
+          <li class="categories">Categories: 
+          @foreach ($post->categories as $category)
+              {{ HTML::link('post/category/'.$category->slug, $category->title) }}
+          @endforeach
+          </li>
+        @endif
       </ul>
       <p>{{ substr($post->body, 0, 120). ' [..]' }}</p> 
       <p>{{ HTML::link('post/view/'.$post->id, 'Read more &rarr;') }}</p>
