@@ -22,6 +22,7 @@ class Post_Controller extends Base_Controller {
     $data = array(
       'posts' => Post::order_by('updated_at', 'desc')
                   ->where('title', 'LIKE', "%$q%")
+                  ->or_where('excerpt', 'LIKE', "%$q%")
                   ->or_where('body', 'LIKE', "%$q%")
                   ->paginate(4)
     );

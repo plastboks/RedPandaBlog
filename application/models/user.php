@@ -13,7 +13,7 @@ class User extends Eloquent {
       return array(
         'username' => "required|min:3|max:32|unique:users,username,{$selfID}",
         'email'  => "required|email|max:64|unique:users,email,{$selfID}",
-        'password' => 'required|confirmed|min:6|max:64',
+        'password' => 'confirmed|min:6|max:64',
       );
     } else {
       return array(

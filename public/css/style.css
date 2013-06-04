@@ -70,6 +70,13 @@ a {
   border-bottom: 1px solid lightgray;
 }
 
+#content .message {
+  border: 1px solid lightgreen;
+  padding: 5px;
+  background: greenyellow;
+  font-size: 0.9em;
+}
+
 #content .tablewrapper {
   padding: 5px;
   border: 1px solid lightgray;

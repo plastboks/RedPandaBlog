@@ -1,7 +1,9 @@
 @layout('admin/index')
 @section('content')
     <h1> Add a new user</h1>
+    @if ($status)
     <p class="message">{{ $status }}</p>
+    @endif
     {{ Form::open('admin/user/create') }}
         {{ Form::token() }}
         <!-- title field -->

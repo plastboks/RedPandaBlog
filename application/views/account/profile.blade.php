@@ -1,7 +1,9 @@
 @layout('account/index')
 @section('content')
     <h1>My Account</h1>
+    @if ($status)
     <p class="message">{{ $status }}</p>
+    @endif
     {{ Form::open('account/update') }}
         {{ Form::token() }}
         <!-- title field -->

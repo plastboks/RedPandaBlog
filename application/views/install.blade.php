@@ -4,7 +4,9 @@ Install
 @endsection
 @section('content')
     <h1> Add a new user</h1>
+    @if ($status)
     <p class="message">{{ $status }}</p>
+    @endif
     {{ Form::open('install/createuser') }}
         {{ Form::token() }}
         <!-- title field -->

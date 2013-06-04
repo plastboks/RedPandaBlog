@@ -2,7 +2,9 @@
 @section('content')
   <h1>Users on this site</h1>
   <h2>{{ HTML::link('admin/user/new', 'Add new user') }}</h2>
+  @if ($status)
   <p class="message">{{ $status }}</p>
+  @endif
   <h3>Active users</h3>
   <div class="tablewrapper round5">
     <table class="list userlist activeusers">
@@ -38,6 +40,7 @@
     </tbody>
     </table>
   </div>
+  @if ($blockedUsers)
   <h3>Blocked users</h3>
   <div class="tablewrapper round5">
     <table class="list userlist blockedusers">
@@ -71,4 +74,5 @@
     @endforeach
     </table>
   </div>
+  @endif
 @endsection

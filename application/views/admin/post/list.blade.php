@@ -2,6 +2,7 @@
 @section('content')
   <h1>Posts</h1>
   <h2>{{ HTML::link('admin/post/new', 'Add new') }}</h2>
+  @if ($pubPosts)
   <h3>Published posts</h3>
   <div class="tablewrapper round5">
     <table class="list postlist publishedposts">
@@ -37,6 +38,8 @@
     </tbody>
     </table>
   </div>
+  @endif
+  @if ($unpubPosts)
   <h3>Unpublised posts</h3>
   <div class="tablewrapper round5">
     <table class="list postlist publishedposts">
@@ -72,4 +75,5 @@
     </tbody>
     </table>
   </div>
+  @endif
 @endsection
