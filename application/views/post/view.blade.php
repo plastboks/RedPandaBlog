@@ -6,21 +6,19 @@
   <div>
     <h1>{{ $post->title }}</h1>
     <ul class="postinfo">
-      <li class="created">Created: {{ $post->created_at }}</li>
-      <li class="updated">Updated: {{ $post->updated_at }}</li>
-      <li class="author">Author: {{ $post->author->username }}</li>
+      <li class="created">Created: {{ $post->created_at }}, </li>
+      <li class="updated">Updated: {{ $post->updated_at }}, </li>
+      <li class="author">Author: {{ $post->author->username }}, </li>
+      @if ($post->categories)
+        <li class="categories">Categories: 
+        @foreach ($post->categories as $category)
+            {{ HTML::link('post/category/'.$category->slug, $category->title) }}
+        @endforeach
+        </li>
+      @endif
     </ul>
-    <p>{{ $post->body }}</p>
-    <p>
-        @if ($post->categories)
-            <span class='categories'>Categories</span>
-            <ul>
-            @foreach ($post->categories as $category)
-                {{ $category->title }}
-            @endforeach
-            </ul>
-        @endif
-    <p>
+    <p class="excerpt">{{ $post->excerpt }}</p>
+    <p class="body">{{ $post->body }}</p>
     @if (!Auth::guest())
       {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}  
     @endif

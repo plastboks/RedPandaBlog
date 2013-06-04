@@ -3,7 +3,7 @@
 Search results
 @endsection
 @section('content')
-    <h1>Searchresults</h1>
+    <h1>Searchresults for: {{Input::get('q')}}</h1>
 @unless ($posts->results)
   <h2>No results</h2>
 @else

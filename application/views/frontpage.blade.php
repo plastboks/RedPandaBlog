@@ -19,7 +19,11 @@ Welcome
         </li>
       @endif
     </ul>
-    <p>{{ substr($post->body, 0, 120). ' [..]' }}</p> 
+    @if ($post->excerpt)
+      <p>{{ substr($post->excerpt, 0, 400). ' [..]' }}</p> 
+    @else
+      <p>{{ substr($post->body, 0, 400). ' [..]' }}</p> 
+    @endif
     <p>{{ HTML::link('post/view/'.$post->id, 'Read more &rarr;') }}</p>
   </div>
 @endforeach

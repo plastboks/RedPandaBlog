@@ -39,6 +39,7 @@ class Admin_Post_Controller extends Base_Controller {
 
     $post = new Post();
     $post->title = Input::get('title');
+    $post->excerpt = Input::get('excerpt');
     $post->body = Input::get('body');
     $post->author_id = Input::get('author_id');
     $post->published = Input::get('published');
@@ -72,6 +73,7 @@ class Admin_Post_Controller extends Base_Controller {
 
     if ($post = Post::find($id)) {
       $post->title = Input::get('title');
+      $post->excerpt = Input::get('excerpt');
       $post->body = Input::get('body');
       $post->author_id = Input::get('author_id');
       $post->published = Input::get('published');

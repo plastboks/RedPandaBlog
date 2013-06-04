@@ -11,6 +11,10 @@ Add new post
         <p>{{ Form::label('title', 'Title') }}</p>
         {{ $errors->first('title', '<p class="error">:message</p>') }}
         <p>{{ Form::text('title', Input::old('title')) }}</p>
+        <!-- excerpt field -->
+        <p>{{ Form::label('excerpt', 'Excerpt') }}</p>
+        {{ $errors->first('excerpt', '<p class="error">:message</p>') }}
+        <p>{{ Form::textarea('excerpt', Input::old('excerpt')) }}</p>
         <!-- body field -->
         <p>{{ Form::label('body', 'Body') }}</p>
         {{ $errors->first('body', '<p class="error">:message</p>') }}
@@ -21,7 +25,7 @@ Add new post
         </p>
         <p>
             <span>Categories</span>
-            <ul>
+            <ul class="categorylist">
             @foreach ($categories as $category)
                 <li>
                     <label>{{ Form::label('category', $category->title) }}</label>

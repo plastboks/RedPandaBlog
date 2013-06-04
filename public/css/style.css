@@ -3,6 +3,20 @@ body {
   width: 800px;
 }
 
+a {
+  text-decoration: none;  
+  color: dimgray;
+}
+
+.round5 {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+/******************
+ * Header section *
+ ******************/
 .header {
   height: 30px;
   padding-bottom: 30px;
@@ -15,7 +29,13 @@ body {
 }
 
 .header ul li {
+  background: whitesmoke;
+  padding: 3px;
   display: inline;
+  border: 1px solid lightgray;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .header .primarynav {
@@ -28,8 +48,88 @@ body {
   float: right;  
 }
 
+.header .search form input[type="text"]{
+  border: 1px solid gray;
+}
+
+.header .search form input[type="submit"]{
+  border: 1px solid lightskyblue;
+  background: lightcyan;
+}
+
+
+/*******************
+ * Content section *
+ *******************/
 #content {
   clear: both;
+}
+
+#content h1 {
+  color: 101010;
+  border-bottom: 1px solid lightgray;
+}
+
+#content .tablewrapper {
+  padding: 5px;
+  border: 1px solid lightgray;
+  background: whitesmoke;
+}
+
+#content .list {
+  width: 100%;
+}
+
+#content .list thead th {
+  text-align: left;
+}
+
+#content .list tbody td:nth-child(1),
+#content .list thead th:nth-child(1) {
+  width: 400px;
+}
+
+#content .list .author,
+#content .list .email,
+#content .list .count,
+#content .list .slug,
+#content .list .date {
+  font-size: 0.8em;
+}
+
+#content .list .action {
+  font-size: 0.6em;
+}
+
+#content .list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#content form input[type="text"],
+#content form input[type="password"]{
+  font-size: 1.3em;
+  font-weight: 300;
+  border: 1px solid gray;  
+}
+
+#content form input[type="submit"] {
+  margin-top: 10px;
+  border: 1px solid lightskyblue;
+  background: lightcyan;
+}
+
+#content form textarea {
+  width: 100%;
+}
+
+#content .categorylist {
+  list-style: none;
+}
+
+#content label {
+  font-size: 0.9em;
 }
 
 .pagination ul {
@@ -69,3 +169,17 @@ body {
 .postlist .linklist .title,
 .userlist .linklist .title {
 }
+
+
+/******************
+ * Footer section *
+ ******************/
+#footer {
+  padding: 5px;
+  margin-top: 25px;
+  border-top: 1px solid lightgray;
+  text-align: center;
+  font-size: 0.7em;
+}
+
+

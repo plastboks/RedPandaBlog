@@ -2,50 +2,74 @@
 @section('content')
   <h1>Posts</h1>
   <h2>{{ HTML::link('admin/post/new', 'Add new') }}</h2>
-  <p>
-    <h2>Published posts</h2>
-    <ul class="postlist publishedposts">
+  <h3>Published posts</h3>
+  <div class="tablewrapper round5">
+    <table class="list postlist publishedposts">
+    <thead>
+        <th>Title</th>
+        <th>Published</th>
+        <th>Author</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
     @foreach ($pubPosts as $post)
-      <li>
-        <ul class="linklist">
-          <li class="title">
+      <tr>
+        <td class="linklist">
             {{ HTML::link('post/view/'.$post->id, $post->title) }}
-          </li>
-          <li class="edit">
-            {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}
-          </li>
-          <li class="unpublish">
-            {{ HTML::link('admin/post/unpublish/'.$post->id, 'Unpublish') }}
-          </li>
-          <li class="delete">
-            {{ HTML::link('admin/post/delete/'.$post->id, 'Delete') }}
-          </li>
+        </td>
+        <td class="date">{{ $post->created_at }}</td>
+        <td class="author">{{ $post->author->username }}</td>
+        <td class="action">
+          <ul>
+            <li class="edit">
+              {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}
+            </li>
+            <li class="unpublish">
+              {{ HTML::link('admin/post/unpublish/'.$post->id, 'Unpublish') }}
+            </li>
+            <li class="delete">
+              {{ HTML::link('admin/post/delete/'.$post->id, 'Delete') }}
+            </li>
+          </ul>
         </ul>
-      </li>
+      </tr>
     @endforeach
-    </ul>
-  </p>
-  <p>
-    <h2>Unpublised posts</h2>
-    <ul class="postlist unpublishedpost">
+    </tbody>
+    </table>
+  </div>
+  <h3>Unpublised posts</h3>
+  <div class="tablewrapper round5">
+    <table class="list postlist publishedposts">
+    <thead>
+        <th>Title</th>
+        <th>Published</th>
+        <th>Author</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
     @foreach ($unpubPosts as $post)
-      <li>
-        <ul class="linklist">
-          <li class="title">
+      <tr>
+        <td class="linklist">
             {{ HTML::link('post/view/'.$post->id, $post->title) }}
-          </li>
-          <li class="edit">
-            {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}
-          </li>
-          <li class="publish">
-            {{ HTML::link('admin/post/publish/'.$post->id, 'Publish') }}
-          </li>
-          <li class="delete">
-            {{ HTML::link('admin/post/delete/'.$post->id, 'Delete') }}
-          </li>
+        </td>
+        <td class="date">{{ $post->created_at }}</td>
+        <td class="author">{{ $post->author->username }}</td>
+        <td class="action">
+          <ul>
+            <li>
+              {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}
+            </li>
+            <li class="unpublish">
+              {{ HTML::link('admin/post/publish/'.$post->id, 'Publish') }}
+            </li>
+            <li class="delete">
+              {{ HTML::link('admin/post/delete/'.$post->id, 'Delete') }}
+            </li>
+          </ul>
         </ul>
-      </li>
+      </tr>
     @endforeach
-    </ul>
-  </p>
+    </tbody>
+    </table>
+  </div>
 @endsection

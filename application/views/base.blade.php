@@ -11,7 +11,7 @@
     <div class="search">
       {{ Form::open('post/q') }}  
         {{ Form::label('q', 'Search') }}
-        {{ Form::text('q') }}
+        {{ Form::text('q', Input::get('q')) }}
         {{ Form::submit('Search') }}
       {{ Form::close() }}
     </div>
@@ -40,6 +40,9 @@
   </div>
   <div id="content">
     @yield('content')
+  </div>
+  <div id="footer">
+    <span>My awesome laravel blog</span>
   </div>
 </body>
 </html>
