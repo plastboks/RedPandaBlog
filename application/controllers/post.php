@@ -18,15 +18,19 @@ class Post_Controller extends Base_Controller {
   }
 
   public function action_q() {
-    $q = Input::get('q');
-    $data = array(
-      'posts' => Post::order_by('updated_at', 'desc')
-                  ->where('title', 'LIKE', "%$q%")
-                  ->or_where('excerpt', 'LIKE', "%$q%")
-                  ->or_where('body', 'LIKE', "%$q%")
-                  ->paginate(4)
-    );
-    return View::make('post/searchresults', $data);
+    if (($q = Input::get('q')) && (strlen(Input::get('q')) > 3) ) {
+      $data = array(
+        'posts' => Post::order_by('updated_at', 'desc')
+                    ->where('title', 'LIKE', "%$q%")
+                    ->or_where('excerpt', 'LIKE', "%$q%")
+                    ->or_where('body', 'LIKE', "%$q%")
+                    ->paginate(4)
+      );
+      return View::make('post/searchresults', $data);
+    } else {
+      return Redirect::to('/')
+                ->with('errormessage', 'Please enter 3 or more characters in search query');
+    }
   }
 
   public function action_category($slug)

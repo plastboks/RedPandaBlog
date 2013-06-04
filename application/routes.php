@@ -5,6 +5,7 @@ Route::get('/', array('as' => 'frontpage', 'do' => function() {
     'posts' => Post::order_by('created_at', 'desc')
                 ->where('published', '=', 1)
                 ->paginate(4),
+    'errormessage' => false,
   );
   return View::make('frontpage', $data);
 }));

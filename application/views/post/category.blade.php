@@ -3,8 +3,6 @@
 Search results
 @endsection
 @section('content')
-
-
 @unless ($posts->results)
     <h1>No results</h1>
 @else
@@ -14,7 +12,7 @@ Search results
       <h1>Post in category {{ $category->title }}</h1>
   @endif
   @foreach ($posts->results as $post)
-    <div>
+    <div class="post">
       <h2>{{ HTML::link('post/view/'.$post->id, $post->title) }}</h2>
       <ul class="postinfo">
         <li class="created">Created: {{ $post->created_at }}, </li>
@@ -28,8 +26,12 @@ Search results
           </li>
         @endif
       </ul>
-      <p>{{ substr($post->body, 0, 120). ' [..]' }}</p> 
-      <p>{{ HTML::link('post/view/'.$post->id, 'Read more &rarr;') }}</p>
+      @if ($post->excerpt)
+        <p>{{ substr($post->excerpt, 0, 400). ' [..]' }}</p> 
+      @else
+        <p>{{ substr($post->body, 0, 400). ' [..]' }}</p> 
+      @endif
+      <p class="readmore">{{ HTML::link('post/view/'.$post->id, 'Read more &rarr;') }}</p>
     </div>
   @endforeach
 @endunless

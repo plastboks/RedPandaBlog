@@ -150,11 +150,16 @@ a {
   padding-right: 10px;
 }
 
+#content .post {
+  border-bottom: 1px solid grey;
+}
+
 .postinfo {
   font-size: 0.7em;
   list-style: none;
   margin-left: 0;
   padding-left: 0;
+  border-bottom: 1px solid whitesmoke;
 }
 
 .postinfo li {
@@ -175,6 +180,11 @@ a {
 
 .postlist .linklist .title,
 .userlist .linklist .title {
+}
+
+#content .readmore {
+  text-align: right;
+  font-size: 0.9em;
 }
 
 .pagination {
