@@ -3,6 +3,7 @@
 Login
 @endsection
 @section('content')
+<h1>Login</h1>
 {{ Form::open('login') }}
     <!-- check for login errors flash var -->
     @if (Session::has('login_errors'))
@@ -10,7 +11,7 @@ Login
     @endif
     {{ Form::token() }}
     <!-- username field -->
-    <p>{{ Form::label('username', 'Username') }}</p>
+    <p>{{ Form::label('username', 'Email') }}</p>
     <p>{{ Form::text('email') }}</p>
     <!-- password field -->
     <p>{{ Form::label('password', 'Password') }}</p>
