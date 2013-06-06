@@ -133,6 +133,12 @@ a {
 
 #content .categorylist {
   list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#content .categorylist li{
+  display: inline;
 }
 
 #content label {
