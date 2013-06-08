@@ -8,12 +8,22 @@ class Admin_Post_Controller extends Base_Controller {
 
   public function action_list() {
     $data = array(
-      'pubPosts' => Post::order_by('created_at', 'desc')
+      'posts' => Post::order_by('created_at', 'desc')
                             ->where('published', '=', '1')
-                            ->get(),
-      'unpubPosts' => Post::order_by('created_at', 'desc')
+                            ->paginate(10),
+      'title' => 'Published posts',
+      'action' => 'unpublish',
+    );
+    return View::make('admin/post/list', $data);
+  }
+
+  public function action_unpublished() {
+    $data = array(
+      'posts' => Post::order_by('created_at', 'desc')
                             ->where_null('published')
-                            ->get(),
+                            ->paginate(10),
+      'title' => 'Unpublished posts',
+      'action' => 'publish',
     );
     return View::make('admin/post/list', $data);
   }
@@ -90,7 +100,7 @@ class Admin_Post_Controller extends Base_Controller {
       $post->published = 1;   
       $post->save();
     }
-    return Redirect::to('admin/post/list');
+    return Redirect::to('admin/post/unpublished');
   }
 
   public function action_unpublish($id) {

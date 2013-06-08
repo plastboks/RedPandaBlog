@@ -30,12 +30,22 @@ class Post_Controller extends Base_Controller {
   public function action_q() 
   {
     if (($q = Input::get('q')) && (strlen(Input::get('q')) > 3) ) {
+      if (!Auth::guest()) {
+        $sql = Post::order_by('updated_at', 'desc')
+              ->where('title', 'LIKE', "%$q%")
+              ->or_where('excerpt', 'LIKE', "%$q%")
+              ->or_where('body', 'LIKE', "%$q%")
+              ->paginate($this->s->postsPerPage);
+      } else {
+        $sql = Post::order_by('updated_at', 'desc')
+              ->where('title', 'LIKE', "%$q%")
+              ->where('published', '=', 1)
+              ->or_where('excerpt', 'LIKE', "%$q%")
+              ->or_where('body', 'LIKE', "%$q%")
+              ->paginate($this->s->postsPerPage);
+      }
       $data = array(
-        'posts' => Post::order_by('updated_at', 'desc')
-                    ->where('title', 'LIKE', "%$q%")
-                    ->or_where('excerpt', 'LIKE', "%$q%")
-                    ->or_where('body', 'LIKE', "%$q%")
-                    ->paginate($this->s->postsPerPage),
+        'posts' => $sql,
         'errormessage' => false,
         'header' => 'Search results for; '.$q,
       );
@@ -49,10 +59,18 @@ class Post_Controller extends Base_Controller {
   public function action_category($slug)
   {
       if ($cat = Category::where('slug', '=', $slug)->first()) {
+        if (!Auth::guest()) {
+          $sql = Category::find($cat->id)
+                ->posts()
+                ->paginate($this->s->postsPerPage);
+        } else {
+          $sql = Category::find($cat->id)
+                ->posts()
+                ->where('published', '=', 1)
+                ->paginate($this->s->postsPerPage);
+        }
         $data = array(
-          'posts' => Category::find($cat->id)
-                      ->posts()
-                      ->paginate($this->s->postsPerPage),
+          'posts' => $sql,
           'errormessage' => false,
           'header' => 'Posts in category; '.$slug,
         );

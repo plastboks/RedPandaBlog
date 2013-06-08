@@ -76,6 +76,22 @@ a {
   border-bottom: 1px solid lightgray;
 }
 
+#content .thirdmenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#content .thirdmenu li {
+  background: whitesmoke;
+  display: inline;
+  padding: 3px;
+  border: 1px solid lightgray;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
 #content .message {
   border: 1px solid lightgreen;
   padding: 5px;
@@ -164,6 +180,19 @@ a {
 
 #content .post {
   border-bottom: 1px solid grey;
+}
+
+#content .unpublished {
+  background: pink;
+  border: 1px solid red;
+  padding: 4px;
+  margin: 5px 0px;
+}
+
+#content .unpublished:after {
+  content: "Unpublished";
+  font-size: 1.5em;
+  color: tomato;
 }
 
 .postinfo {
