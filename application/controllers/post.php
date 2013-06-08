@@ -14,7 +14,7 @@ class Post_Controller extends Base_Controller {
                   ->paginate($this->s->postsPerPage),
       'errormessage' => false,
     );
-    return View::make('frontpage', $data);
+    return View::make('index', $data);
   }
 
   public function action_view($id) {
