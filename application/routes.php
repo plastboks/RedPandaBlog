@@ -41,33 +41,10 @@ Route::post('account/update', 'account@update');
 /**
  * login/logout logic
  */
-Route::get('login', function(){
-  return View::make('login');
-});
-
-Route::post('login', array('before' => 'csrf', function(){
-  $userdata = array(
-    'username' => Input::get('email'),
-    'password' => Input::get('password'),
-  );
-
-  if (Auth::attempt($userdata)) {
-    $user = Auth::user();
-    if ($user->blocked) {
-      Auth::logout();
-      return Redirect::to('login')->with('login_errors', true);
-    } else {
-      return Redirect::to('account');
-    }
-  } else {
-    return Redirect::to('login')->with('login_errors', true);
-  }
-}));
-
-Route::get('logout', function(){
-  Auth::logout();
-  return Redirect::to('login');
-});
+Route::controller('auth');
+Route::get('login', 'auth@login');
+Route::post('login', 'auth@try');
+Route::get('logout', 'auth@logout');
 
 
 /**
