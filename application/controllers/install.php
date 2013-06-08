@@ -4,7 +4,7 @@ class Install_Controller extends Base_Controller {
 
   public function action_index() {
     if (User::all()) {
-      return Redirect::to('login')
+      return Redirect::to('/')
               ->with('status', 'Users exists');
     }
     $data = array(
@@ -17,7 +17,7 @@ class Install_Controller extends Base_Controller {
 
   public function action_createuser() {
     if (User::all()) {
-      return Redirect::to('login')
+      return Redirect::to('/')
               ->with('status', 'Users exists');
     }
     $v = Validator::make(Input::all(), User::defaultRules());
