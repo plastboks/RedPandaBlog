@@ -2,9 +2,13 @@
 
 class Setting extends Eloquent {
 
+  /**
+   * Default values
+   */
   public $blogName = 'Red Panda Blog';
   public $postsPerPage = 5;
   public $footer = 'Red Panda Awesome laravel blog';
+  public $excerptCut = '400';
 
   public function loadSettings($array) {
     foreach((array)$array as $obj) {

@@ -24,6 +24,7 @@ class Admin_Setting_Controller extends Base_Controller
         $this->addMetaData('blogName', Input::get('blogName'));
         $this->addMetaData('footer', Input::get('footertext'));
         $this->addMetaData('postsPerPage', Input::get('postsperpage'));
+        $this->addMetaData('excerptCut', Input::get('excerptCut'));
 
         return Redirect::to('admin/settings');
     }

@@ -23,9 +23,9 @@ Welcome
       @endif
     </ul>
     @if ($post->excerpt)
-      <p>{{ substr($post->excerpt, 0, 400). ' [..]' }}</p> 
+      <p>{{ substr($post->excerpt, 0, $s->excerptCut). ' [..]' }}</p> 
     @else
-      <p>{{ substr($post->body, 0, 400). ' [..]' }}</p> 
+      <p>{{ substr($post->body, 0, $s->excerptCut). ' [..]' }}</p> 
     @endif
     <p class='readmore'>{{ HTML::link('post/view/'.$post->id, 'Read more &rarr;') }}</p>
   </div>
