@@ -31,7 +31,7 @@ class Post_Controller extends Base_Controller {
                     ->where('title', 'LIKE', "%$q%")
                     ->or_where('excerpt', 'LIKE', "%$q%")
                     ->or_where('body', 'LIKE', "%$q%")
-                    ->paginate(4)
+                    ->paginate($this->s->postsPerPage)
       );
       return View::make('post/searchresults', $data);
     } else {
@@ -45,7 +45,9 @@ class Post_Controller extends Base_Controller {
       if ($cat = Category::where('slug', '=', $slug)->first()) {
         $data = array(
           'category' => $cat,
-          'posts' => Category::find($cat->id)->posts()->paginate(4),
+          'posts' => Category::find($cat->id)
+                      ->posts()
+                      ->paginate($this->s->postsPerPage),
         );
         return View::make('post/category', $data);
       }
