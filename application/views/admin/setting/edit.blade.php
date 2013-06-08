@@ -17,6 +17,11 @@ Edit Blog Settings
         {{ $errors->first('footertext', '<p class="error">:message</p>') }}
         <p>{{ Form::text('footertext', $s->footer) }}</p>
 
+        <!-- posts per page field -->
+        <p>{{ Form::label('postperpage', 'Posts per page') }}</p>
+        {{ $errors->first('postsperpage', '<p class="error">:message</p>') }}
+        <p>{{ Form::select('postsperpage', array_combine(range(3, 20), range(3, 20)), $s->postsPerPage) }}</p>
+
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>
     {{ Form::close() }}

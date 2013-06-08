@@ -20,18 +20,25 @@ class Admin_Setting_Controller extends Base_Controller
                   ->with_errors($v)
                   ->with_input();
         }
-
-        if ($setting = Setting::where('meta_key', '=', 'blogName')->first()) {
-          $setting->meta_value = Input::get('blogName');
-          $setting->save();
-        }
-
-        if ($setting = Setting::where('meta_key', '=', 'footer')->first()) {
-          $setting->meta_value = Input::get('footertext');
-          $setting->save();
-        }
+        
+        $this->addMetaData('blogName', Input::get('blogName'));
+        $this->addMetaData('footer', Input::get('footertext'));
+        $this->addMetaData('postsPerPage', Input::get('postsperpage'));
 
         return Redirect::to('admin/settings');
-
     }
+
+    
+    private function addMetaData($key, $value) {
+        if ($setting = Setting::where('meta_key', '=', $key)->first()) {
+          $setting->meta_value = $value;
+          $setting->save();
+        } else {
+          $setting = new Setting;
+          $setting->meta_key = $key;
+          $setting->meta_value = $value;
+          $setting->save();
+        }
+    }
+
 }
