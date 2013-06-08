@@ -1,5 +1,7 @@
 <?php
 
+View::share('s', IoC::resolve('settings'));
+
 /**
  * Post area
  */
@@ -24,6 +26,10 @@ Route::controller('admin.category');
 Route::get('admin/category/new', 'admin.category@new');
 Route::post('admin/category/create', 'admin.category@create');
 Route::post('admin/category/update', 'admin.category@update');
+
+Route::controller('admin.setting');
+Route::get('admin/settings', 'admin.setting@edit');
+Route::post('admin/settings', 'admin.setting@register');
 
 Route::get('admin', array('before' => 'auth', function(){
   return View::make('admin/index');

@@ -3,6 +3,7 @@
 class Post_Controller extends Base_Controller {
 
   public function __construct() {
+    parent::__construct();
     $this->filter('before', 'auth')->only('edit');
   }
 
@@ -10,7 +11,7 @@ class Post_Controller extends Base_Controller {
     $data = array(
       'posts' => Post::order_by('created_at', 'desc')
                   ->where('published', '=', 1)
-                  ->paginate(4),
+                  ->paginate($this->s->postsPerPage),
       'errormessage' => false,
     );
     return View::make('frontpage', $data);

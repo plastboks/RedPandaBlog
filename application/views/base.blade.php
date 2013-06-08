@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="header">
+    <h1>{{ $s->blogName }}</h1>
     <div class="search">
       {{ Form::open('post/q') }}  
         {{ Form::label('q', 'Search') }}
@@ -42,7 +43,7 @@
     @yield('content')
   </div>
   <div id="footer">
-    <span>My awesome laravel blog</span>
+    <span>{{ $s->footer }}</span>
   </div>
 </body>
 </html>

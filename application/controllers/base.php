@@ -1,6 +1,8 @@
 <?php
 
 class Base_Controller extends Controller {
+ 
+  public $s;
 
   /**
    * Catch-all method for requests that can't be matched.
@@ -14,4 +16,9 @@ class Base_Controller extends Controller {
     return Response::error('404');
   }
 
+  public function __construct()
+  {
+    $this->s = IoC::resolve('settings');
+  }
+  
 }
