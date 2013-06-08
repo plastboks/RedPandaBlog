@@ -7,7 +7,13 @@ class Post_Controller extends Base_Controller {
   }
 
   public function action_index() {
-    return View::make('post/index');
+    $data = array(
+      'posts' => Post::order_by('created_at', 'desc')
+                  ->where('published', '=', 1)
+                  ->paginate(4),
+      'errormessage' => false,
+    );
+    return View::make('frontpage', $data);
   }
 
   public function action_view($id) {

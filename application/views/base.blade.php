@@ -18,7 +18,7 @@
     <div class="primarynav">
       <ul>
       @section('primarynav')
-        <li>{{ HTML::link_to_route('frontpage', 'Home') }}</li>
+        <li>{{ HTML::link('/', 'Home') }}</li>
         @if (!Auth::guest())
           <li>{{ HTML::link('account', 'Account') }}</li>
           <li>{{ HTML::link('admin', 'Admin') }}</li>

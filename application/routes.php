@@ -1,20 +1,10 @@
 <?php
 
-Route::get('/', array('as' => 'frontpage', 'do' => function() {
-  $data = array(
-    'posts' => Post::order_by('created_at', 'desc')
-                ->where('published', '=', 1)
-                ->paginate(4),
-    'errormessage' => false,
-  );
-  return View::make('frontpage', $data);
-}));
-
-
 /**
  * Post area
  */
 Route::controller('post');
+Route::get('/', 'post@index');
 
 
 /**
