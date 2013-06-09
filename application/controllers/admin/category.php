@@ -4,6 +4,7 @@ class Admin_Category_Controller extends Base_Controller
 {
     public function __construct() 
     {
+        parent::__construct();
         $this->filter('before', 'auth');
     }
 
@@ -18,11 +19,13 @@ class Admin_Category_Controller extends Base_Controller
 
     public function action_new()
     {
+        if (!$this->p->canI('createCategory')) return Redirect::error(403);
         return View::make('admin/category/new');
     }
 
     public function action_create() 
     {
+        if (!$this->p->canI('createCategory')) return Redirect::error(403);
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
@@ -41,14 +44,16 @@ class Admin_Category_Controller extends Base_Controller
 
     public function action_edit($id) 
     {
+        if (!$this->p->canI('editCategory')) return Redirect::error(403);
         $data = array(
             'category' => Category::find($id),
         );
         return View::make('admin/category/edit', $data);
     }
 
-    public function action_update($id) {
-         
+    public function action_update($id) 
+    {
+        if (!$this->p->canI('editCategory')) return Redirect::error(403);
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
@@ -67,6 +72,8 @@ class Admin_Category_Controller extends Base_Controller
 
     public function action_delete($id) 
     {
+        if (!$this->p->canI('deleteCategory')) return Redirect::error(403);
+
         if (($cat = Category::find($id)) && (!Category::find($id)->posts()->get())) {
             $cat->delete();
             return Redirect::to('admin/category/list');
@@ -74,5 +81,5 @@ class Admin_Category_Controller extends Base_Controller
             return Redirect::to('admin/category/list');
         }
     }
-  
+
 }

@@ -4,7 +4,7 @@ class Admin_Setting_Controller extends Base_Controller
 {
     public function __construct() 
     {
-        $this->filter('before', 'auth');
+        $this->filter('before', array('auth', 'admin'));
     }
     
     public function action_edit() {

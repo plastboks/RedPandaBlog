@@ -3,7 +3,7 @@
 class Admin_User_Controller extends Base_Controller {
 
   public function __construct() {
-    $this->filter('before', array('auth', 'theOne'));
+    $this->filter('before', array('auth', 'admin'));
   }
 
   public function action_list() {
@@ -33,6 +33,8 @@ class Admin_User_Controller extends Base_Controller {
   }
  
   public function action_edit($id) {
+    if ($id == 1) return Redirect::error(403);
+
     $myself = Auth::user();
 
     if ($myself->id == $id) {
@@ -78,6 +80,8 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_update($id) {
+    if ($id == 1) return Redirect::error(403);
+
     $v = Validator::make(Input::all(), User::defaultRules($id));
 
     if ($v->fails()) {
@@ -99,6 +103,8 @@ class Admin_User_Controller extends Base_Controller {
   }
   
   public function action_block($id) {
+    if ($id == 1) return Redirect::error(403);
+
     if ($user = User::find($id)) {
       $user->blocked = 1;
       $user->save();
@@ -115,6 +121,8 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_delete($id) {
+    if ($id == 1) return Redirect::error(403);
+
     if (($id != Auth::user()->id) && ($user = User::find($id))) {
       $user->delete();
     }

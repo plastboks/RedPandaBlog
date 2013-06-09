@@ -15,7 +15,7 @@
     <thead>
       <th>Username</th>
       <th>Email</th>
-      <th>Created</th>
+      <th>Role</th>
       <th>Action</th>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
       <tr>
         <td class="username">{{ $user->username }}</td>
         <td class="email">{{ $user->email }}</td>
-        <td class="date">{{ $user->created_at }}</td>
+        <td class="role">{{ $p->whatAreYou($user->role) }}</td>
         <td class="action">
           <ul>
             <li class="edit">

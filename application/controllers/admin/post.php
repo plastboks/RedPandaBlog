@@ -3,6 +3,7 @@
 class Admin_Post_Controller extends Base_Controller {
   
   public function __construct() {
+    parent::__construct();
     $this->filter('before', 'auth');
   }
 
@@ -29,6 +30,8 @@ class Admin_Post_Controller extends Base_Controller {
   }
 
   public function action_new() {
+    if (!$this->p->canI('createPost')) return Redirect::error(403);
+
     $data = array(
       'user' => Auth::user(),
       'categories' => Category::all(),
@@ -37,6 +40,7 @@ class Admin_Post_Controller extends Base_Controller {
   }
 
   public function action_create() {
+    if (!$this->p->canI('createPost')) return Redirect::error(403);
 
     $v = Validator::make(Input::all(), Post::defaultRules());
 
@@ -52,7 +56,9 @@ class Admin_Post_Controller extends Base_Controller {
     $post->excerpt = Input::get('excerpt');
     $post->body = Input::get('body');
     $post->author_id = Input::get('author_id');
-    $post->published = Input::get('published');
+    if ($this->p->canI('publishPost')) {
+      $post->published = Input::get('published');
+    }
     $post->save();
     if (Input::get('category')) {
         $post->categories()->sync(Input::get('category'));
@@ -71,6 +77,7 @@ class Admin_Post_Controller extends Base_Controller {
   }
 
   public function action_update($id) {
+    if ($this->p->canI('updatePost')) return Redirect::error(403);
 
     $v = Validator::make(Input::all(), Post::defaultRules());
 
@@ -86,7 +93,9 @@ class Admin_Post_Controller extends Base_Controller {
       $post->excerpt = Input::get('excerpt');
       $post->body = Input::get('body');
       $post->author_id = Input::get('author_id');
-      $post->published = Input::get('published');
+      if ($this->p->canI('publishPost')) {
+        $post->published = Input::get('published');
+      }
       if (Input::get('category')) {
           $post->categories()->sync(Input::get('category'));
       }
@@ -96,7 +105,8 @@ class Admin_Post_Controller extends Base_Controller {
   }
 
   public function action_publish($id) {
-    if ($post = Post::find($id)) {
+    if (($this->p->canI('publishPost')) && 
+        ($post = Post::find($id))) {
       $post->published = 1;   
       $post->save();
     }
@@ -104,7 +114,8 @@ class Admin_Post_Controller extends Base_Controller {
   }
 
   public function action_unpublish($id) {
-    if ($post = Post::find($id)) {
+    if (($this->p->canI('unpublishPost')) &&
+        ($post = Post::find($id))) {
       $post->published = NULL;
       $post->save();
     }
@@ -112,12 +123,15 @@ class Admin_Post_Controller extends Base_Controller {
   }
 
   public function action_delete($id) {
-    if ($post = Post::find($id)) {
-      $post->categories()->delete();
+    if (($this->p->canI('deletePost')) &&
+        ($post = Post::find($id))) {
+      if ($post->categories()) {
+        $post->categories()->delete();
+      }
       $post->delete();
       return Redirect::to('admin/post/list');
-    } else {
-      return Redirect::to('admin/post/list');
     }
+
+    return Redirect::to('admin/post/list');
   }
 }

@@ -28,12 +28,16 @@
             <li class="edit">
               {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}
             </li>
+            @if ($p->canI('changePostState'))
             <li class="unpublish">
               {{ HTML::link('admin/post/'.$action.'/'.$post->id, ucwords($action)) }}
             </li>
+            @endif
+            @if ($p->canI('deletePost'))
             <li class="delete">
               {{ HTML::link('admin/post/delete/'.$post->id, 'Delete') }}
             </li>
+            @endif
           </ul>
         </ul>
       </tr>

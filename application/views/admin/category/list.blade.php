@@ -1,7 +1,9 @@
 @layout('admin/index')
 @section('content')
   <h1>Categories</h1>
+  @if ($p->canI('createCategory'))
   <h2>{{ HTML::link('admin/category/new', 'Add new') }}</h2>
+  @endif
   <h3>Categories</h3>
   <div class="tablewrapper round5">
     <table class="list postlist publishedposts">
@@ -19,8 +21,10 @@
         <td class="count">{{ count($category->posts()->get()) }}</td>
         <td class="action">
           <ul>
+            @if ($p->canI('editCategory'))
             <li class="edit">{{ HTML::link('admin/category/edit/'.$category->id, 'Edit') }}</li>
-            @if (!$category->posts()->get())
+            @endif
+            @if (!$category->posts()->get() && $p->canI('deleteCategory'))
             <li class="delete">{{ HTML::link('admin/category/delete/'.$category->id, 'Delete') }}</li>
             @endif
           </ul>

@@ -19,10 +19,13 @@ Add new post
         <p>{{ Form::label('body', 'Body') }}</p>
         {{ $errors->first('body', '<p class="error">:message</p>') }}
         <p>{{ Form::textarea('body', Input::old('body')) }}</p>
-        <p>{{ Form::label('published', 'Published' )}}
-        {{ $errors->first('published') }}
-        {{ Form::checkbox('published', Input::old('published', true)) }}
+        @if ($p->canI('publishPost'))
+        <p>
+          {{ Form::label('published', 'Published' )}}
+          {{ $errors->first('published') }}
+          {{ Form::checkbox('published', Input::old('published', true)) }}
         </p>
+        @endif
         <p>
             <span>Categories</span>
             <ul class="categorylist">

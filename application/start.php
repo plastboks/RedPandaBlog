@@ -179,3 +179,10 @@ IoC::singleton('settings', function()
   return $settings;
 });
 
+
+IoC::singleton('permissions', function()
+{
+  $permissions = new Permission(Auth::user());
+  return $permissions;
+});
+

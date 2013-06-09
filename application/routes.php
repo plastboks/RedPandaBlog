@@ -1,6 +1,7 @@
 <?php
 
 View::share('s', IoC::resolve('settings'));
+View::share('p', IoC::resolve('permissions'));
 
 /**
  * Post area
@@ -42,7 +43,7 @@ Route::post('admin/category/update', array(
 Route::controller('admin.setting');
 Route::get('admin/settings', 'admin.setting@edit');
 Route::post('admin/settings', array(
-                               'before' => 'csrf',
+                               'before' => array('csrf', 'admin'),
                                'uses' => 'admin.setting@register'));
 
 Route::get('admin', array('before' => 'auth', function(){
@@ -118,3 +119,10 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Redirect::to('login');
 });
 
+Route::filter('admin', function()
+{
+  $permissions = IoC::resolve('permissions');
+  if ($permissions->myRole != 'admin') {
+    return Redirect::error(403);
+  }
+});

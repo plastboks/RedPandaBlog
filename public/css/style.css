@@ -115,11 +115,12 @@ a {
 
 #content .list tbody td:nth-child(1),
 #content .list thead th:nth-child(1) {
-  width: 400px;
+  width: 350px;
 }
 
 #content .list .author,
 #content .list .email,
+#content .list .role,
 #content .list .count,
 #content .list .slug,
 #content .list .date {

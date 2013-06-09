@@ -19,11 +19,13 @@ Edit post {{ $post->title }}
         {{ $errors->first('body', '<p class="error">:message</p>') }}
         <p>{{ Form::textarea('body', $post->body) }}</p>
         <!-- published field -->
+        @if ($p->canI('publishPost'))
         <p>
             {{ Form::label('published', "Published") }}
             {{ $errors->first('published', '<p class="error">:message</p>')}}
             {{ Form::checkbox('published', 1, $post->published) }}
         </p>
+        @endif
         <p>
             <span>Categories</span>
             <ul class="categorylist">

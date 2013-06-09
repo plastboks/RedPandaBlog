@@ -32,6 +32,7 @@ class Install_Controller extends Base_Controller {
     $user = new User();
     $user->username = Input::get('username');
     $user->email = Input::get('email');
+    $user->role = 1;
     $user->password = Hash::make(Input::get('password'));
     $user->save();
     return Redirect::to('login')
