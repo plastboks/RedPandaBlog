@@ -3,7 +3,7 @@
 class Admin_User_Controller extends Base_Controller {
 
   public function __construct() {
-    $this->filter('before', 'auth');
+    $this->filter('before', array('auth', 'theOne'));
   }
 
   public function action_list() {
@@ -70,6 +70,7 @@ class Admin_User_Controller extends Base_Controller {
     $user = new User();
     $user->username = Input::get('username');
     $user->email = Input::get('email');
+    $user->role = Input::get('role');
     $user->password = Hash::make(Input::get('password'));
     $user->save();
     return Redirect::to('admin/user/list')
@@ -87,7 +88,10 @@ class Admin_User_Controller extends Base_Controller {
     if ($user = User::find($id)) {
       $user->username = Input::get('username');
       $user->email = Input::get('email');
-      $user->password = Hash::make(Input::get('password'));
+      $user->role = Input::get('role');
+      if (Input::get('password')) {
+        $user->password = Hash::make(Input::get('password'));
+      }
       $user->save();
       return Redirect::to('admin/user/list')
               ->with('status', "User updated");
