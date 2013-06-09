@@ -12,7 +12,7 @@
       <th>Action</th>
     </thead>
     <tbody>
-    @foreach ($categories as $category)
+    @foreach ($categories->results as $category)
       <tr>
         <td class="title">{{ HTML::link('post/category/'.$category->slug, $category->title) }}</td>
         <td class="slug">{{ $category->slug }}</td>
@@ -29,5 +29,6 @@
     @endforeach
     </tbody>
     </table>
-  </p>
+  </div>
+{{ $categories->links() }}
 @endsection

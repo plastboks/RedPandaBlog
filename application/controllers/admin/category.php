@@ -10,7 +10,8 @@ class Admin_Category_Controller extends Base_Controller
     public function action_list()
     {
         $data = array(
-            'categories' => Category::order_by('id', 'asc')->get(),
+            'categories' => Category::order_by('id', 'asc')
+                              ->paginate(10),
         );
         return View::make('admin/category/list', $data);
     }
