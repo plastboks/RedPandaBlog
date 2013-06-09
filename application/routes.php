@@ -14,22 +14,36 @@ Route::get('/', 'post@index');
  */ 
 Route::controller('admin.user');
 Route::get('admin/user/new', 'admin.user@new');
-Route::post('admin/user/create', 'admin.user@create');
-Route::post('admin/user/update', 'admin.user@update');
+Route::post('admin/user/create', array(
+                                  'before' => 'csrf',
+                                  'uses' => 'admin.user@create'));
+Route::post('admin/user/update', array(
+                                  'before' => 'csrf',
+                                  'uses' => 'admin.user@update'));
 
 Route::controller('admin.post');
 Route::get('admin/post/new', 'admin.post@new');
-Route::post('admin/post/create', 'admin.post@create');
-Route::post('admin/post/update', 'admin.post@update');
+Route::post('admin/post/create', array(
+                                  'before' => 'csrf',
+                                  'uses' => 'admin.post@create'));
+Route::post('admin/post/update', array(
+                                  'before' => 'csrf',
+                                  'uses' => 'admin.post@update'));
 
 Route::controller('admin.category');
 Route::get('admin/category/new', 'admin.category@new');
-Route::post('admin/category/create', 'admin.category@create');
-Route::post('admin/category/update', 'admin.category@update');
+Route::post('admin/category/create', array(
+                                      'before' => 'csrf',
+                                      'uses' => 'admin.category@create'));
+Route::post('admin/category/update', array(
+                                      'before' => 'csrf',
+                                      'uses' => 'admin.category@update'));
 
 Route::controller('admin.setting');
 Route::get('admin/settings', 'admin.setting@edit');
-Route::post('admin/settings', 'admin.setting@register');
+Route::post('admin/settings', array(
+                               'before' => 'csrf',
+                               'uses' => 'admin.setting@register'));
 
 Route::get('admin', array('before' => 'auth', function(){
   return View::make('admin/index');
@@ -41,7 +55,9 @@ Route::get('admin', array('before' => 'auth', function(){
  */
 Route::controller("account");
 Route::get('account/profile', 'account@profile');
-Route::post('account/update', 'account@update');
+Route::post('account/update', array(
+                               'before' => 'csrf',
+                               'uses' => 'account@update'));
 
 
 /**
@@ -49,7 +65,9 @@ Route::post('account/update', 'account@update');
  */
 Route::controller('auth');
 Route::get('login', 'auth@login');
-Route::post('login', 'auth@try');
+Route::post('login', array(
+                      'before' => 'csrf', 
+                      'uses' => 'auth@try'));
 Route::get('logout', 'auth@logout');
 
 
@@ -58,7 +76,9 @@ Route::get('logout', 'auth@logout');
  */
 Route::controller('install');
 Route::get('install', 'install@index');
-Route::post('install/createuser', 'install@createuser');
+Route::post('install/createuser', array(
+                                    'before' => 'csrf',
+                                    'uses' => 'install@createuser'));
 
 
 /**

@@ -1,6 +1,6 @@
 @layout('admin/index')
 @section('content')
-    <h1>Edit {{ $user->username }}</h1>
+    <h1>Edit user - {{ $user->username }}</h1>
     @if ($status)
     <p class="message">{{ $status }}</p>
     @endif
