@@ -11,11 +11,23 @@ class Admin_User_Controller extends Base_Controller {
       'myself' => Auth::user(),
       'users' => User::order_by('id', 'asc')
                         ->where_null('blocked')
-                        ->get(),
-      'blockedUsers' => User::order_by('id', 'asc')
-                              ->where('blocked', '=', '1')
-                              ->get(),
+                        ->paginate(10),
       'status' => Session::get('status'),
+      'title' => 'Active users',
+      'action' => 'block',
+    );
+    return View::make('admin/user/list', $data);
+  }
+
+  public function action_blocked() {
+    $data = array(
+      'myself' => Auth::user(),
+      'users' => User::order_by('id', 'asc')
+                        ->where('blocked', '=', '1')
+                        ->paginate(10),
+      'status' => Session::get('status'),
+      'title' => 'Blocked users',
+      'action' => 'unblock',
     );
     return View::make('admin/user/list', $data);
   }
@@ -95,7 +107,7 @@ class Admin_User_Controller extends Base_Controller {
       $user->blocked = NULL;
       $user->save();
     }
-    return Redirect::to('admin/user/list');
+    return Redirect::to('admin/user/blocked');
   }
 
   public function action_delete($id) {
