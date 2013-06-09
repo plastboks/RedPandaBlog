@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="header">
-    <h1>{{ $s->blogName }}</h1>
+    <h1>{{ HTML::link('/', $s->blogName) }}</h1>
     <div class="search">
       {{ Form::open('post/q') }}  
         {{ Form::label('q', 'Search') }}
@@ -19,15 +19,9 @@
     <div class="primarynav">
       <ul>
       @section('primarynav')
-        <li>{{ HTML::link('/', 'Home') }}</li>
         @if (!Auth::guest())
           <li>{{ HTML::link('account', 'Account') }}</li>
           <li>{{ HTML::link('admin', 'Admin') }}</li>
-        @endif
-        @if (Auth::guest())
-          <li>{{ HTML::link('login', 'Login') }}</li>
-        @else 
-          <li>{{ HTML::link('logout', 'Logout') }}</li>
         @endif
       @yield_section
       </ul>
@@ -44,6 +38,11 @@
   </div>
   <div id="footer">
     <span>{{ $s->footer }}</span>
+    @if (Auth::guest())
+      {{ HTML::link('login', 'Login') }}
+    @else 
+      {{ HTML::link('logout', 'Logout') }}
+    @endif
   </div>
 </body>
 </html>
