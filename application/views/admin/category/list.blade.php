@@ -1,9 +1,11 @@
 @layout('admin/index')
 @section('content')
   <h1>Categories</h1>
-  @if ($p->canI('createCategory'))
-  <h2>{{ HTML::link('admin/category/new', 'Add new') }}</h2>
-  @endif
+  <ul class='thirdmenu'>
+    @if ($p->canI('createCategory'))
+      <li>{{ HTML::link('admin/category/new', 'Add new') }}</li>
+    @endif
+  </ul>
   <h3>Categories</h3>
   <div class="tablewrapper round5">
     <table class="list postlist publishedposts">

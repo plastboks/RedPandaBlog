@@ -77,7 +77,7 @@ class Admin_Post_Controller extends Base_Controller {
   }
 
   public function action_update($id) {
-    if ($this->p->canI('updatePost')) return Redirect::error(403);
+    if (!$this->p->canI('updatePost')) return Redirect::error(403);
 
     $v = Validator::make(Input::all(), Post::defaultRules());
 
