@@ -3,6 +3,7 @@
 class Account_Controller extends Base_Controller {
   
   public function __construct() {
+    parent::__construct();
     $this->filter('before', 'auth');
   }
 
@@ -42,6 +43,16 @@ class Account_Controller extends Base_Controller {
                ->with('user', Auth::user())
                ->with('status', 'User updated!');
     }
+  }
+
+  public function action_myposts() {
+    $user = Auth::user();
+    $data = array(
+      'posts' => Post::order_by('created_at', 'desc')
+                  ->where('author_id', '=', $user->id)
+                  ->paginate($this->s->postsPerPage),
+    );
+    return View::make('account/myposts', $data);
   }
 
 }

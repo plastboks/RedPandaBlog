@@ -46,6 +46,16 @@ Route::post('admin/settings', array(
                                'before' => array('csrf', 'admin'),
                                'uses' => 'admin.setting@register'));
 
+Route::controller('admin.role');
+Route::post('admin/role/create', array(
+                                  'before' => array('csrf'),
+                                  'uses' => 'admin.role@create'
+                                  ));
+Route::post('admin/role/update', array(
+                                  'before' => array('csrf'),
+                                  'uses' => 'admin.role@update',
+                                  ));
+
 Route::get('admin', array('before' => 'auth', function(){
   return View::make('admin/index');
 }));

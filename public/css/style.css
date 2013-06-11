@@ -154,6 +154,10 @@ a {
   width: 100%;
 }
 
+#content .capabilitieslist {
+  list-style: none;
+}
+
 #content .categorylist {
   list-style: none;
   padding: 0;

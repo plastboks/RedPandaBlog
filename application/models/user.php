@@ -7,7 +7,11 @@ class User extends Eloquent {
   public function posts() {
     return $this->has_many('Post');
   }
-  
+
+  public function role() {
+    return $this->has_one('Role', 'role');
+  }
+
   public static function defaultRules($selfID = false) {
     if ($selfID) {
       return array(
