@@ -15,7 +15,7 @@ class Create_Users {
         $table->string('email', 320);
         $table->string('password', 64);
 
-        $table->integer('role');
+        $table->integer('role_id');
         $table->boolean('active');
 
         $table->timestamps();

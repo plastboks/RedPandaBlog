@@ -9,11 +9,12 @@ class User extends Eloquent {
   }
 
   public function role() {
-    return $this->has_one('Role', 'id');
+    $role = Role::find($this->role_id);
+    return $role;
   }
 
   public function caps() {
-    return $this->role()->get()[0]->capabilities()->get();
+    return $this->role()->capabilities()->get();
   }
 
   public static function defaultRules($selfID = false) {

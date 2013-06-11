@@ -27,7 +27,9 @@
             <li class="edit">{{ HTML::link('admin/role/edit/'.$role->id, 'Edit') }}</li>
             @endif
             @if ($p->canI('deleteRole') && ($role->id != 1))
-            <li class="delete">{{ HTML::link('admin/role/delete/'.$role->id, 'Delete') }}</li>
+              @unless (count($role->users()->get()))
+                <li class="delete">{{ HTML::link('admin/role/delete/'.$role->id, 'Delete') }}</li>
+              @endunless
             @endif
           </ul>
         </td>

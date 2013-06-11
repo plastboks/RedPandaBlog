@@ -23,7 +23,7 @@
 
         <p>{{ Form::label('role', 'Role')}}</p>
         {{ $errors->first('role', '<p class="error">:message</p>') }}
-        <p>{{ Form::select('role', $roles, 2) }}</p>
+        <p>{{ Form::select('role', $roles, 1) }}</p>
 
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>

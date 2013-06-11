@@ -6,7 +6,7 @@ class Role extends Eloquent
     public static $table = 'roles';
 
     public function users() {
-        return $this->has_many('User', 'role');
+        return $this->has_many('User', 'role_id');
     }
 
     public function capabilities()

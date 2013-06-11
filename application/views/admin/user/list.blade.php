@@ -23,7 +23,7 @@
       <tr>
         <td class="username">{{ $user->username }}</td>
         <td class="email">{{ $user->email }}</td>
-        <td class="role">{{ $p->whatAreYou($user->role) }}</td>
+        <td class="role">{{ $user->role()->name }}</td>
         <td class="action">
           @unless ($user->id == Auth::user()->id)
           <ul>
