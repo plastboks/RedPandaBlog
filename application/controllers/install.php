@@ -35,7 +35,7 @@ class Install_Controller extends Base_Controller {
     $user->role = 1;
     $user->password = Hash::make(Input::get('password'));
     $user->save();
-    return Redirect::to('login')
+    return Redirect::to('/')
             ->with('status', 'New user created');
   }
 
