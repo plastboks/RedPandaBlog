@@ -176,7 +176,7 @@ if ( ! Request::cli() and Config::get('session.driver') !== '')
 IoC::singleton('settings', function()
 {
   $settings = new Setting;
-  //$settings->loadSettings($settings->all());
+  $settings->loadSettings($settings->all());
   return $settings;
 });
 
