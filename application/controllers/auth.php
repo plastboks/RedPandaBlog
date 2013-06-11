@@ -12,7 +12,7 @@ class Auth_Controller extends Base_Controller {
       'password' => Input::get('password'),
     );
 
-    if (Auth::attempt($userdata)) {
+    if (Auth::attempt($userdata, Input::get('remember_me'))) {
       $user = Auth::user();
       if ($user->blocked) {
         Auth::logout();

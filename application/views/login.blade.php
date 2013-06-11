@@ -16,6 +16,10 @@ Login
     <!-- password field -->
     <p>{{ Form::label('password', 'Password') }}</p>
     <p>{{ Form::password('password') }}</p>
+
+    <!-- password field -->
+    <p>{{ Form::label('remember_me', 'Remember me') }}
+    {{ Form::checkbox('remember_me', 1) }}</p>
     <!-- submit button -->
     <p>{{ Form::submit('Login') }}</p>
 {{ Form::close() }}
