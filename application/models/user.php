@@ -5,11 +5,15 @@ class User extends Eloquent {
   public static $table = 'users';
 
   public function posts() {
-    return $this->has_many('Post');
+    return $this->has_many('Post', 'id');
   }
 
   public function role() {
-    return $this->has_one('Role', 'role');
+    return $this->has_one('Role', 'id');
+  }
+
+  public function caps() {
+    return $this->role()->get()[0]->capabilities()->get();
   }
 
   public static function defaultRules($selfID = false) {

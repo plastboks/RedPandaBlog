@@ -46,11 +46,9 @@ class Account_Controller extends Base_Controller {
   }
 
   public function action_myposts() {
-    $user = Auth::user();
+    $user = User::find(Auth::user()->id);
     $data = array(
-      'posts' => Post::order_by('created_at', 'desc')
-                  ->where('author_id', '=', $user->id)
-                  ->paginate($this->s->postsPerPage),
+        'posts' => $user->posts()->paginate(10),
     );
     return View::make('account/myposts', $data);
   }

@@ -25,6 +25,7 @@
         <td class="email">{{ $user->email }}</td>
         <td class="role">{{ $p->whatAreYou($user->role) }}</td>
         <td class="action">
+          @unless ($user->id == Auth::user()->id)
           <ul>
             <li class="edit">
               {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
@@ -38,6 +39,7 @@
             </li>
             @endunless
           </ul>
+          @endunless
         </td>
       </tr>
     @endforeach
