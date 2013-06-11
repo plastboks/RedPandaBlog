@@ -34,8 +34,11 @@ class Admin_User_Controller extends Base_Controller {
  
   public function action_edit($id) {
     if ($id == 1) return Redirect::error(403);
-
     $myself = Auth::user();
+    $formRoles = array();
+    foreach ((array)Role::all() as $role) {
+      $formRoles[$role->id] = ucwords($role->name);
+    } 
 
     if ($myself->id == $id) {
       return Redirect::to('account/profile');
@@ -43,6 +46,7 @@ class Admin_User_Controller extends Base_Controller {
       $data = array(
         'user' => $user,
         'status' => Session::get('status'),
+        'roles' => $formRoles,
       );
       return View::make('admin/user/edit', $data);
     }
@@ -50,10 +54,15 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_new() {
+    $formRoles = array();
+    foreach ((array)Role::all() as $role) {
+      $formRoles[$role->id] = ucwords($role->name);
+    }
     $data = array(
       'status' => Session::get('status'),
       'username' => Session::get('username'),
       'email' => Session::get('email'),
+      'roles' => $formRoles,
     );
     return View::make('admin/user/new', $data);
   }
