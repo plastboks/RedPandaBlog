@@ -9,7 +9,7 @@ class Create_Capabilities {
    */
   public function up()
   {
-    Schema::create('capabilites', function($table)
+    Schema::create('capabilities', function($table)
     {
       $table->increments('id');
       $table->string('name');
@@ -17,19 +17,32 @@ class Create_Capabilities {
     });
 
     $stdCapabilites =  array(
-                                'everything',
+                                // posts
                                 'createPost',
                                 'updatePost',
                                 'publishPost',
                                 'unpublishPost',
                                 'changePostState',
                                 'deletePost',
+                                // categories
                                 'createCategory',
+                                'updateCategory',
                                 'deleteCategory',
-                                'editCategory',
+                                // users
+                                'createUser',
+                                'updateUser',
+                                'deleteUser',
+                                'blockUser',
+                                'unblockUser',
+                                // roles
+                                'createRole',
+                                'updateRole',
+                                'deleteRole',
+                                // other
+                                'siteSettings',
                             );
     foreach ($stdCapabilites as $cap) {
-      DB::table('capabilites')->insert(array(
+      DB::table('capabilities')->insert(array(
                                        'name' => $cap,
                                       ));
     }
@@ -43,7 +56,7 @@ class Create_Capabilities {
    */
   public function down()
   {
-    Schema::drop('capabilites');
+    Schema::drop('capabilities');
   }
 
 }

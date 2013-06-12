@@ -3,7 +3,7 @@
 class Capability extends Eloquent
 {
   
-    public static $table = 'capabilites';
+    public static $table = 'capabilities';
 
     public function roles()
     {
