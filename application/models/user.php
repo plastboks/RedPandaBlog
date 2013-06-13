@@ -33,4 +33,10 @@ class User extends Eloquent {
     }
   }
 
+  public static function passwordRules() {
+    return array(
+        'password' => 'required|confirmed|min:6|max:64',
+    );
+  }
+
 }

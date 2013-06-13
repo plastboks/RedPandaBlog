@@ -99,6 +99,13 @@ a {
   font-size: 0.9em;
 }
 
+#content .error {
+  border: 1px solid red;
+  padding: 5px;
+  background: salmon;
+  font-size: 0.9em;
+}
+
 #content .tablewrapper {
   padding: 5px;
   border: 1px solid lightgray;

@@ -19,6 +19,14 @@ class Account_Controller extends Base_Controller {
     );
     return View::make('account/profile', $data);
   }
+
+  public function action_password() {
+      $data = array(
+        'error' => Session::get('error'),
+        'status' => Session::get('status'),
+      );
+      return View::make('account/password', $data);
+  }
   
   public function action_update() {
     $user = Auth::user();
@@ -35,15 +43,39 @@ class Account_Controller extends Base_Controller {
     if ($dbUser = User::find($user->id)) {
       $dbUser->username = Input::get('username');
       $dbUser->email = Input::get('email');
-      if (Input::get('password')) {
-        $dbUser->password = Hash::make(Input::get('password'));
-      }
       $dbUser->save();
       return Redirect::to('account/profile')
                ->with('user', Auth::user())
                ->with('status', 'User updated!');
     }
   }
+
+  public function action_changepassword() {
+    $user = User::find(Auth::user()->id);
+
+    $v = Validator::make(Input::all(), User::passwordRules());
+
+    if ($v->fails()) {
+      return Redirect::to('account/password')
+              ->with_errors($v)
+              ->with_input();
+    }
+
+    if ($user) {
+      if (Hash::check(Input::get('old_password'), $user->password)) {
+        $user->password = Hash::make(Input::get('password'));
+        $user->save();
+        return Redirect::to('account/password')
+                 ->with('status', 'Password changed');
+      } else {
+        return Redirect::to('account/password')
+                ->with('error', 'Incorrect password');
+      }
+    }
+
+    return Redirect::error(404);
+  }
+
 
   public function action_myposts() {
     $user = User::find(Auth::user()->id);
