@@ -23,7 +23,7 @@
         <td class="count">{{ count($role->users()->get()) }}</td>
         <td class="action">
           <ul>
-            @if ($p->canI('editRole') && ($role->id != 1))
+            @if ($p->canI('updateRole') && ($role->id != 1))
             <li class="edit">{{ HTML::link('admin/role/edit/'.$role->id, 'Edit') }}</li>
             @endif
             @if ($p->canI('deleteRole') && ($role->id != 1))

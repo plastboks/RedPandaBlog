@@ -44,7 +44,7 @@ class Admin_Category_Controller extends Base_Controller
 
     public function action_edit($id) 
     {
-        if (!$this->p->canI('editCategory')) return Redirect::error(403);
+        if (!$this->p->canI('updateCategory')) return Redirect::error(403);
         $data = array(
             'category' => Category::find($id),
         );
@@ -53,7 +53,7 @@ class Admin_Category_Controller extends Base_Controller
 
     public function action_update($id) 
     {
-        if (!$this->p->canI('editCategory')) return Redirect::error(403);
+        if (!$this->p->canI('updateCategory')) return Redirect::error(403);
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {

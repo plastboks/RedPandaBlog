@@ -4,14 +4,22 @@ class Admin_Setting_Controller extends Base_Controller
 {
     public function __construct() 
     {
-        $this->filter('before', array('auth', 'admin'));
+        parent::__construct();
+        $this->filter('before', array('auth'));
     }
     
     public function action_edit() {
-        return View::make('admin/setting/edit');
+        if ($this->p->canI('siteSettings')) {
+            return View::make('admin/setting/edit');
+        }
+        return Redirect::error(403);
     }
 
     public function action_register() {
+
+        if (!$this->p->canI('siteSettings')) {
+          return Redirect::error(403);
+        }
 
         $v = Validator::make(Input::all(), Setting::defaultRules());
 

@@ -43,7 +43,7 @@ Route::post('admin/category/update', array(
 Route::controller('admin.setting');
 Route::get('admin/settings', 'admin.setting@edit');
 Route::post('admin/settings', array(
-                               'before' => array('csrf', 'admin'),
+                               'before' => array('csrf'),
                                'uses' => 'admin.setting@register'));
 
 Route::controller('admin.role');

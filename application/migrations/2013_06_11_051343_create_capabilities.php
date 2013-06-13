@@ -29,12 +29,14 @@ class Create_Capabilities {
                                 'updateCategory',
                                 'deleteCategory',
                                 // users
+                                'seeUsers',
                                 'createUser',
                                 'updateUser',
                                 'deleteUser',
                                 'blockUser',
                                 'unblockUser',
                                 // roles
+                                'seeRoles',
                                 'createRole',
                                 'updateRole',
                                 'deleteRole',

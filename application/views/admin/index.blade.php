@@ -6,10 +6,10 @@ Admin Area
   @if ($p->canI('settings'))
   <li>{{ HTML::link('admin/settings', 'Settings') }}</li>
   @endif
-  @if ($p->canI('users'))
+  @if ($p->canI('seeUsers'))
   <li>{{ HTML::link('admin/user/list', 'Users') }}</li>
   @endif
-  @if ($p->canI('roles'))
+  @if ($p->canI('seeRoles'))
   <li>{{ HTML::link('admin/role/list', 'Roles') }}</li>
   @endif
   <li>{{ HTML::link('admin/post/list', 'Posts') }}</li>

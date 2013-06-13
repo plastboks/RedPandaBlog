@@ -4,7 +4,9 @@
   <ul class="thirdmenu">
     <li>{{ HTML::link('admin/user/list', 'Users') }}</li>
     <li>{{ HTML::link('admin/user/blocked', 'Blocked') }}</li>
+    @if ($p->canI('createUser'))
     <li>{{ HTML::link('admin/user/new', 'Add new') }}</li>
+    @endif
   </ul>
   @if ($status)
   <p class="message">{{ $status }}</p>
@@ -27,16 +29,22 @@
         <td class="action">
           @unless ($user->id == Auth::user()->id)
           <ul>
+            @if ($p->canI('updateUser'))
             <li class="edit">
               {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
             </li>
+            @endif
             @unless ($myself->id == $user->id)
-            <li class="block">
-              {{ HTML::link('admin/user/'.$action.'/'.$user->id, ucwords($action)) }}
-            </li>
+              @if ($p->canI('blockUser') && $p->canI('unblockUser'))
+              <li class="block">
+                {{ HTML::link('admin/user/'.$action.'/'.$user->id, ucwords($action)) }}
+              </li>
+              @endif
+            @if ($p->canI('deleteUser'))
             <li class="delete">
               {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}
             </li>
+            @endif
             @endunless
           </ul>
           @endunless

@@ -3,10 +3,13 @@
 class Admin_User_Controller extends Base_Controller {
 
   public function __construct() {
-    $this->filter('before', array('auth', 'admin'));
+    parent::__construct();
+    $this->filter('before', array('auth'));
   }
 
   public function action_list() {
+    if (!$this->p->canI('seeUsers')) return Redirect::error(403);
+      
     $data = array(
       'myself' => Auth::user(),
       'users' => User::order_by('id', 'asc')
@@ -20,6 +23,8 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_blocked() {
+    if (!$this->p->canI('seeUsers')) return Redirect::error(403);
+
     $data = array(
       'myself' => Auth::user(),
       'users' => User::order_by('id', 'asc')
@@ -33,6 +38,8 @@ class Admin_User_Controller extends Base_Controller {
   }
  
   public function action_edit($id) {
+    if (!$this->p->canI('updateUser')) return Redirect::error(403);
+
     if ($id == 1) return Redirect::error(403);
     $myself = Auth::user();
     $formRoles = array();
@@ -54,6 +61,8 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_new() {
+    if (!$this->p->canI('createUser')) return Redirect::error(403);
+
     $formRoles = array();
     foreach ((array)Role::all() as $role) {
       $formRoles[$role->id] = ucwords($role->name);
@@ -68,6 +77,8 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_create() {
+    if (!$this->p->canI('createUser')) return Redirect::error(403);
+
     $v = Validator::make(Input::all(), User::defaultRules());
 
     if ($v->fails()) {
@@ -89,6 +100,7 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_update($id) {
+    if (!$this->p->canI('updateUser')) return Redirect::error(403);
     if ($id == 1) return Redirect::error(403);
 
     $v = Validator::make(Input::all(), User::defaultRules($id));
@@ -112,6 +124,7 @@ class Admin_User_Controller extends Base_Controller {
   }
   
   public function action_block($id) {
+    if (!$this->p->canI('blockUser')) return Redirect::error(403);
     if ($id == 1) return Redirect::error(403);
 
     if ($user = User::find($id)) {
@@ -122,6 +135,8 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_unblock($id) {
+    if (!$this->p->canI('unblockUser')) return Redirect::error(403);
+
     if ($user = User::find($id)) {
       $user->blocked = NULL;
       $user->save();
@@ -130,6 +145,7 @@ class Admin_User_Controller extends Base_Controller {
   }
 
   public function action_delete($id) {
+    if (!$this->p->canI('deleteUser')) return Redirect::error(403);
     if ($id == 1) return Redirect::error(403);
 
     if (($id != Auth::user()->id) && ($user = User::find($id))) {
