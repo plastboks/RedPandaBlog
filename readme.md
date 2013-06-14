@@ -10,6 +10,7 @@ This is just a simple blog written with the Laravel framework, with features lik
   * Permissions and capabilities.
   * Categories and tags.
   * Images.
+
 The purpose of this is just self educational work with Laravel. 
 
 Installation
