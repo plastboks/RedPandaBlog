@@ -14,6 +14,7 @@ class Admin_Role_Controller extends Base_Controller
           $data = array(
               'roles' => Role::order_by('id', 'asc')
                                 ->paginate(10),
+              'status' => Session::get('status'),
           );
           return View::make('admin/role/list', $data);
         }
@@ -61,7 +62,8 @@ class Admin_Role_Controller extends Base_Controller
             $role->capabilities()->sync(Input::get('caps'));
         }
 
-        return Redirect::to('admin/role/list');
+        return Redirect::to('admin/role/list')
+                 ->with('status', 'New role '.$role->name.' created.');
     }
 
     public function action_update($id)
@@ -82,7 +84,8 @@ class Admin_Role_Controller extends Base_Controller
               $role->capabilities()->sync(Input::get('caps'));
           }
 
-          return Redirect::to('admin/role/list');
+          return Redirect::to('admin/role/list')
+                  ->with('status', 'Role '.$role->name.' updated.');
         }
     }
 
