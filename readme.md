@@ -1,10 +1,16 @@
-# Red Panda Blog
+Red Panda Blog
 ==============
 
 Description
 ===========
-This is just a stupid simple blog written with the Laravel framework.
-The purpose of this is just self educational work with Laravel.
+This is just a simple blog written with the Laravel framework, with features like:
+  * Admin area for administration of the blog.
+  * Site settings.
+  * Users and roles.
+  * Permissions and capabilities.
+  * Categories and tags.
+  * Images.
+The purpose of this is just self educational work with Laravel. 
 
 Installation
 ============
