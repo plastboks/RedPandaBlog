@@ -7,7 +7,7 @@ Login
 {{ Form::open('login') }}
     <!-- check for login errors flash var -->
     @if (Session::has('login_errors'))
-        <span class="error">Username or password incorrect.</span>
+        <p class="error">Username or password incorrect.</p>
     @endif
     {{ Form::token() }}
     <!-- username field -->
