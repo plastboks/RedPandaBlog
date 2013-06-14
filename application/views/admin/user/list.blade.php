@@ -17,6 +17,7 @@
     <thead>
       <th>Username</th>
       <th>Email</th>
+      <th>Posts</th>
       <th>Role</th>
       <th>Action</th>
     </thead>
@@ -25,6 +26,7 @@
       <tr>
         <td class="username">{{ $user->username }}</td>
         <td class="email">{{ $user->email }}</td>
+        <td class="role">{{ count($user->posts()->get()) }}</td>
         <td class="role">{{ $user->role()->name }}</td>
         <td class="action">
           @unless ($user->id == Auth::user()->id)
@@ -40,7 +42,7 @@
                 {{ HTML::link('admin/user/'.$action.'/'.$user->id, ucwords($action)) }}
               </li>
               @endif
-            @if ($p->canI('deleteUser'))
+            @if ($p->canI('deleteUser') && !count($user->posts()->get()))
             <li class="delete">
               {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}
             </li>

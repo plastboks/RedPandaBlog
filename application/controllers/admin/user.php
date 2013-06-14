@@ -155,7 +155,9 @@ class Admin_User_Controller extends Base_Controller {
     if ($id == 1) return Redirect::error(403);
 
     if (($id != Auth::user()->id) && ($user = User::find($id))) {
-      $user->delete();
+      if (!count($user->posts()->get())) {
+        $user->delete();
+      }
     }
     return Redirect::to('admin/user/list');
   }
