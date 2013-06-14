@@ -92,6 +92,9 @@ class Admin_User_Controller extends Base_Controller {
     $user = new User();
     $user->username = Input::get('username');
     $user->email = Input::get('email');
+    $user->givenname = Input::get('givenname');
+    $user->surname = Input::get('surname');
+    $user->info = Input::get('info');
     $user->role_id = Input::get('role');
     $user->password = Hash::make(Input::get('password'));
     $user->save();
@@ -113,6 +116,9 @@ class Admin_User_Controller extends Base_Controller {
     if ($user = User::find($id)) {
       $user->username = Input::get('username');
       $user->email = Input::get('email');
+      $user->givenname = Input::get('givenname');
+      $user->surname = Input::get('surname');
+      $user->info = Input::get('info');
       $user->role_id = Input::get('role');
       if (Input::get('password')) {
         $user->password = Hash::make(Input::get('password'));

@@ -43,6 +43,9 @@ class Account_Controller extends Base_Controller {
     if ($dbUser = User::find($user->id)) {
       $dbUser->username = Input::get('username');
       $dbUser->email = Input::get('email');
+      $dbUser->givenname = Input::get('givenname');
+      $dbUser->surname = Input::get('surname');
+      $dbUser->info = Input::get('info');
       $dbUser->save();
       return Redirect::to('account/profile')
                ->with('user', Auth::user())
