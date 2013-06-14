@@ -10,7 +10,9 @@ class Admin_Setting_Controller extends Base_Controller
     
     public function action_edit() {
         if ($this->p->canI('siteSettings')) {
-            return View::make('admin/setting/edit');
+            return View::make('admin/setting/edit', array(
+                                                        'status' => Session::get('status'),
+                                                      ));
         }
         return Redirect::error(403);
     }
@@ -34,7 +36,8 @@ class Admin_Setting_Controller extends Base_Controller
         $this->addMetaData('postsPerPage', Input::get('postsperpage'));
         $this->addMetaData('excerptCut', Input::get('excerptCut'));
 
-        return Redirect::to('admin/settings');
+        return Redirect::to('admin/settings')
+                  ->with('status', 'Site settings updated');
     }
 
     
