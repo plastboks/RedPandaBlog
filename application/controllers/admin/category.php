@@ -13,6 +13,7 @@ class Admin_Category_Controller extends Base_Controller
         $data = array(
             'categories' => Category::order_by('id', 'asc')
                               ->paginate(10),
+            'status' => Session::get('status'),
         );
         return View::make('admin/category/list', $data);
     }
@@ -39,7 +40,8 @@ class Admin_Category_Controller extends Base_Controller
         $category->slug = Input::get('slug');
         $category->save();
 
-        return Redirect::to('admin/category/list');
+        return Redirect::to('admin/category/list')
+                ->with('status', 'New category '.$category->title.' created.');
     }
 
     public function action_edit($id) 
@@ -66,7 +68,8 @@ class Admin_Category_Controller extends Base_Controller
           $category->title = Input::get('title');
           $category->slug = Input::get('slug');
           $category->save();
-          return Redirect::to('admin/category/list');
+          return Redirect::to('admin/category/list')
+                  ->with('status', 'Category '.$category->title.' updated');
         }
     }
 
