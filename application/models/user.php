@@ -45,4 +45,9 @@ class User extends Eloquent {
     );
   }
 
+  public static function forgotPassword() {
+    return array(
+      'email' => 'required|email',
+    );
+  }
 }
