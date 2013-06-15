@@ -15,4 +15,15 @@ class BaseController extends Controller {
 		}
 	}
 
+	/**
+	 * Loads some IoC classes into the BaseController
+	 *
+	 * @return void
+	 */
+  public function __construct()
+  {
+    $this->s = IoC::resolve('settings');
+    $this->p = IoC::resolve('permissions');
+  }
+
 }
