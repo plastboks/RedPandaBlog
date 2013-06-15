@@ -22,8 +22,8 @@ class BaseController extends Controller {
 	 */
   public function __construct()
   {
-    $this->s = IoC::resolve('settings');
-    $this->p = IoC::resolve('permissions');
+    $this->s = App::make('settings');
+    $this->p = App::make('permissions');
   }
 
 }

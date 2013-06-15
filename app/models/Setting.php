@@ -4,6 +4,13 @@ class Setting extends Eloquent
 {
 
     /**
+     * Database table
+     *
+     * @var string
+     */
+    protected $table = 'settings';
+
+    /**
      * Default class variable
      *
      * @var string
@@ -31,6 +38,17 @@ class Setting extends Eloquent
      */
     public $excerptCut = 400;
 
+
+    /**
+     * Class construct
+     *
+     * @var void
+     */
+    public function __construct()
+    {
+        //$this->loadSettings();
+    }
+
     /**
      * Load settings from database
      *
@@ -38,10 +56,12 @@ class Setting extends Eloquent
      *
      * @return void
      */
-    public function loadSettings($array)
+    public function loadSettings($array = false)
     {
-        foreach((array)$array as $obj) {
-            $this->setVar($obj->attributes['meta_key'] ,$obj->attributes['meta_value']);
+        if ($array) {
+            foreach((array)$array as $obj) {
+                $this->setVar($obj['meta_key'] ,$obj['meta_value']);
+            }
         }
     }
 

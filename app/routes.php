@@ -11,91 +11,123 @@
 |
 */
 
-View::share('s', IoC::resolve('settings'));
-View::share('p', IoC::resolve('permissions'));
+View::share('s', App::make('settings'));
+View::share('p', App::make('permissions'));
 
 /**
  * Post area
  */
-Route::controller('post');
-Route::get('/', 'post@index');
+Route::get('/',
+           array(
+               'uses' => 'PostController@getIndex'));
 
 
 /**
  * admin area
- */ 
-Route::controller('admin.user');
-Route::get('admin/user/new', 'admin.user@new');
-Route::post('admin/user/create', array(
-                                  'before' => 'csrf',
-                                  'uses' => 'admin.user@create'));
-Route::post('admin/user/update', array(
-                                  'before' => 'csrf',
-                                  'uses' => 'admin.user@update'));
+ */
+Route::get('admin/user/new',
+            array(
+                'uses' => 'AdminUserController@getNet'));
 
-Route::controller('admin.post');
-Route::get('admin/post/new', 'admin.post@new');
-Route::post('admin/post/create', array(
-                                  'before' => 'csrf',
-                                  'uses' => 'admin.post@create'));
-Route::post('admin/post/update', array(
-                                  'before' => 'csrf',
-                                  'uses' => 'admin.post@update'));
+Route::post('admin/user/create',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminUserController@postCreate'));
 
-Route::controller('admin.category');
-Route::get('admin/category/new', 'admin.category@new');
-Route::post('admin/category/create', array(
-                                      'before' => 'csrf',
-                                      'uses' => 'admin.category@create'));
-Route::post('admin/category/update', array(
-                                      'before' => 'csrf',
-                                      'uses' => 'admin.category@update'));
+Route::post('admin/user/update',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminUserController@postUpdate'));
 
-Route::controller('admin.setting');
-Route::get('admin/settings', 'admin.setting@edit');
-Route::post('admin/settings', array(
-                               'before' => array('csrf'),
-                               'uses' => 'admin.setting@register'));
+Route::get('admin/post/new',
+           array(
+               'uses' => 'AdminPostController@getNew'));
 
-Route::controller('admin.role');
-Route::post('admin/role/create', array(
-                                  'before' => array('csrf'),
-                                  'uses' => 'admin.role@create'
-                                  ));
-Route::post('admin/role/update', array(
-                                  'before' => array('csrf'),
-                                  'uses' => 'admin.role@update',
-                                  ));
+Route::post('admin/post/create',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminPostController@postCreate'));
+
+Route::post('admin/post/update',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminPostController@postUpdate'));
+
+Route::get('admin/category/new',
+           array(
+               'uses' => 'AdminCategoryController@getNew'));
+
+Route::post('admin/category/create',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminCategoryController@postCreate'));
+
+Route::post('admin/category/update',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminCategoryController@postUpdate'));
+
+Route::get('admin/settings',
+           array(
+               'uses' => 'AdminSettingController@getEdit'));
+
+Route::post('admin/settings',
+            array(
+                'before' => array('csrf'),
+                'uses' => 'AdminSettingController@postRegister'));
+
+Route::post('admin/role/create',
+            array(
+                'before' => array('csrf'),
+                'uses' => 'AdminRoleController@postCreate'));
+
+Route::post('admin/role/update',
+            array(
+                'before' => array('csrf'),
+                'uses' => 'AdminRoleController@postUpdate'));
 
 Route::get('admin', array('before' => 'auth', function(){
   return View::make('admin/index');
 }));
 
+
 /**
  * account logic
  */
-Route::controller("account");
-Route::get('account/profile', 'account@profile');
-Route::post('account/update', array(
-                               'before' => 'csrf',
-                               'uses' => 'account@update'));
+Route::get('account/profile',
+           array(
+               'uses' => 'AccountController@getProfile'));
+
+Route::post('account/update',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AccountController@postUpdate'));
 
 /**
  * login/logout logic
  */
-Route::controller('auth');
-Route::get('login', 'auth@login');
-Route::post('login', array(
-                      'before' => 'csrf', 
-                      'uses' => 'auth@try'));
-Route::get('logout', 'auth@logout');
+Route::get('login',
+           array(
+               'uses' => 'AuthController@getLogin'));
+
+Route::post('login',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AuthController@postTry'));
+
+Route::get('logout',
+           array(
+               'uses' => 'AuthController@getLogout'));
 
 /**
  * install area
  */
-Route::controller('install');
-Route::get('install', 'install@index');
-Route::post('install/createuser', array(
-                                    'before' => 'csrf',
-                                    'uses' => 'install@createuser'));
+Route::get('install',
+           array(
+               'uses' => 'InstallController@getIndex'));
+
+Route::post('install/createuser',
+            array(
+                'before' => 'csrf',
+                'uses' => 'InstallController@postCreateuser'));
 

@@ -81,3 +81,14 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+App::singleton('settings', function()
+{
+    return new Setting;
+});
+
+App::singleton('permissions', function()
+{
+    return new Permission(Auth::user());
+});
+
