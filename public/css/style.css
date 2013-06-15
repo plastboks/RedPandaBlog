@@ -1,0 +1,261 @@
+body {
+  margin: 0 auto !important;
+  width: 800px;
+}
+
+a {
+  text-decoration: none;  
+  color: dimgray;
+}
+
+.round5 {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+/******************
+ * Header section *
+ ******************/
+.header {
+  height: 30px;
+  padding-bottom: 140px;
+}
+
+.header h1 {
+  color: dimgray;  
+  border-bottom: 1px solid gray;
+  font-size: 4em;
+}
+
+.header ul {
+  list-style: none;  
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.header ul li {
+  background: whitesmoke;
+  padding: 3px;
+  display: inline;
+  border: 1px solid lightgray;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.header .primarynav {
+}
+
+.header .secondarynav {
+}
+
+.header .search {
+  float: right;  
+}
+
+.header .search form input[type="text"]{
+  border: 1px solid gray;
+}
+
+.header .search form input[type="submit"]{
+  border: 1px solid lightskyblue;
+  background: lightcyan;
+}
+
+
+/*******************
+ * Content section *
+ *******************/
+#content {
+  clear: both;
+}
+
+#content h1 {
+  color: steelblue;
+  border-bottom: 1px solid lightgray;
+}
+
+#content .thirdmenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#content .thirdmenu li {
+  background: whitesmoke;
+  display: inline;
+  padding: 3px;
+  border: 1px solid lightgray;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#content .message {
+  border: 1px solid lightgreen;
+  padding: 5px;
+  background: greenyellow;
+  font-size: 0.9em;
+}
+
+#content .error {
+  border: 1px solid red;
+  padding: 5px;
+  background: salmon;
+  font-size: 0.9em;
+}
+
+#content .tablewrapper {
+  padding: 5px;
+  border: 1px solid lightgray;
+  background: whitesmoke;
+}
+
+#content .list {
+  width: 100%;
+}
+
+#content .list thead th {
+  text-align: left;
+}
+
+#content .list tbody td:nth-child(1),
+#content .list thead th:nth-child(1) {
+  width: 350px;
+}
+
+#content .list .author,
+#content .list .email,
+#content .list .role,
+#content .list .count,
+#content .list .slug,
+#content .list .date {
+  font-size: 0.8em;
+}
+
+#content .list .action {
+  font-size: 0.6em;
+}
+
+#content .list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#content form input[type="text"],
+#content form input[type="password"]{
+  font-size: 1.3em;
+  font-weight: 300;
+  border: 1px solid gray;  
+}
+
+#content form input[type="submit"] {
+  margin-top: 10px;
+  border: 1px solid lightskyblue;
+  background: lightcyan;
+}
+
+#content form textarea {
+  width: 100%;
+}
+
+#content .capabilitieslist {
+  list-style: none;
+}
+
+#content .categorylist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#content .categorylist li{
+  display: inline;
+}
+
+#content label {
+  font-size: 0.9em;
+}
+
+.pagination ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.pagination ul li {
+  display: inline;
+  padding-right: 10px;
+}
+
+#content .post {
+  border-bottom: 1px solid grey;
+}
+
+#content .unpublished {
+  background: pink;
+  border: 1px solid red;
+  padding: 4px;
+  margin: 5px 0px;
+}
+
+#content .unpublished:after {
+  content: "Unpublished";
+  font-size: 1.5em;
+  color: tomato;
+}
+
+.postinfo {
+  font-size: 0.7em;
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+  border-bottom: 1px solid whitesmoke;
+}
+
+.postinfo li {
+  display: inline;
+}
+
+.postlist, .userlist, .linklist {
+  list-style: none;  
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.postlist .linklist li,
+.userlist .linklist li {
+  display: inline;
+  padding-right: 20px;
+}
+
+.postlist .linklist .title,
+.userlist .linklist .title {
+}
+
+#content .readmore {
+  text-align: right;
+  font-size: 0.9em;
+}
+
+.pagination {
+  margin-top: 15px;
+  font-size: 0.9em;
+  text-align: center;  
+}
+
+
+/******************
+ * Footer section *
+ ******************/
+#footer {
+  padding: 5px;
+  margin-top: 25px;
+  border-top: 1px solid lightgray;
+  text-align: center;
+  font-size: 0.7em;
+}
+
+
