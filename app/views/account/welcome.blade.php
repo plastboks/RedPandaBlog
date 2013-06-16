@@ -1,4 +1,4 @@
-@layout('account/index')
+@extends('account/index')
 @section('content')
 <h1>Holla!</h1>
 <p> Welcome back {{ Auth::user()->username }}</p>

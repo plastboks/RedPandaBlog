@@ -1,10 +1,10 @@
-@layout('base')
+@extends('base')
 @section('title')
 Login
 @endsection
 @section('content')
 <h1>Login</h1>
-{{ Form::open('login') }}
+{{ Form::open(array('url'=>'login')) }}
     <!-- check for login errors flash var -->
     @if (Session::has('login_errors'))
         <p class="error">Username or password incorrect.</p>

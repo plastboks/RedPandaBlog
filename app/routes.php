@@ -94,14 +94,30 @@ Route::get('admin', array('before' => 'auth', function(){
 /**
  * account logic
  */
+Route::get('account',
+           array(
+               'uses' => 'AccountController@getIndex'));
+
 Route::get('account/profile',
            array(
                'uses' => 'AccountController@getProfile'));
 
+Route::get('account/password',
+            array(
+                'uses' => 'AccountController@getPassword'));
+
+Route::get('account/myposts',
+            array(
+                'uses' => 'AccountController@getMyposts'));
 Route::post('account/update',
             array(
                 'before' => 'csrf',
                 'uses' => 'AccountController@postUpdate'));
+
+Route::post('account/changepassword',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AccountController@postChangepassword'));
 
 /**
  * login/logout logic

@@ -1,8 +1,15 @@
 <?php
 
-class Post extends Eloquent 
+class Post extends Eloquent
 {
-    
+
+    /**
+     * Database table
+     *
+     * @var string
+     */
+    protected $table = 'posts';
+
     /**
      * Get post author
      *

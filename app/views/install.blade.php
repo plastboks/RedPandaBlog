@@ -1,4 +1,4 @@
-@layout('base')
+@extends('base')
 @section('title')
 Install
 @endsection
@@ -7,7 +7,7 @@ Install
     @if ($status)
     <p class="message">{{ $status }}</p>
     @endif
-    {{ Form::open('install/createuser') }}
+    {{ Form::open(array('url'=>'install/createuser')) }}
         {{ Form::token() }}
         <!-- title field -->
         <p>{{ Form::label('username', 'Username') }}</p>

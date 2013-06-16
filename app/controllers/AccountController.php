@@ -11,7 +11,7 @@ class AccountController extends BaseController
     public function __construct() 
     {
         parent::__construct();
-        $this->filter('before', 'auth');
+        Route::filter('before', 'auth');
     }
 
     /**
@@ -21,7 +21,7 @@ class AccountController extends BaseController
      */
     public function getIndex() 
     {
-        $this->filter('before', 'auth');
+        Route::filter('before', 'auth');
         return View::make('account/welcome');
     }
 

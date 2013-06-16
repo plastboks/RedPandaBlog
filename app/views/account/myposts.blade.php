@@ -1,4 +1,4 @@
-@layout('account/index')
+@extends('account/index')
 @section('content')
   <h1>My posts</h1>
   <div class="tablewrapper round5">
@@ -10,7 +10,7 @@
         <th>Action</th>
     </thead>
     <tbody>
-    @foreach ($posts->results as $post)
+    @foreach ($posts as $post)
       <tr>
         <td class="linklist">
             {{ HTML::link('post/view/'.$post->id, $post->title) }}

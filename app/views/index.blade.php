@@ -1,4 +1,4 @@
-@layout('base')
+@extends('base')
 @section('title')
 Welcome
 @endsection
@@ -7,8 +7,8 @@ Welcome
     @if ($errormessage)
     <p class="errormessage">{{ $errormessage }}</p>
     @endif
-@if ($posts->results)
-  @foreach ($posts->results as $post)
+@if ($posts)
+  @foreach ($posts as $post)
     <div class="post @if (!$post->published)unpublished @endif">
       <h2>{{ HTML::link('post/view/'.$post->id, $post->title) }}</h2>
       <ul class="postinfo">

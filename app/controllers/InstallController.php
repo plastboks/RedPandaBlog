@@ -10,7 +10,7 @@ class InstallController extends BaseController
      */
     public function getIndex() 
     {
-        if (User::all()) {
+        if (User::first()) {
             return Redirect::to('/')
                       ->with('status', 'Users exists');
         }
@@ -29,7 +29,7 @@ class InstallController extends BaseController
      */
     public function postCreateuser() 
     {
-        if (User::all()) {
+        if (User::first()) {
             return Redirect::to('/')
                             ->with('status', 'Users exists');
         }
@@ -37,9 +37,9 @@ class InstallController extends BaseController
         if ($v->fails()) {
             return Redirect::to('install')
                       ->withErrors($v)
-                      ->withInput();
+                      ->withInput()
                       ->with('username', Input::get('username'))
-                      ->with('email', Input::get('email'))
+                      ->with('email', Input::get('email'));
         }
 
         $user = new User();

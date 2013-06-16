@@ -10,7 +10,7 @@
   <div class="header">
     <h1>{{ HTML::link('/', $s->blogName) }}</h1>
     <div class="search">
-      {{ Form::open('post/q') }}  
+      {{ Form::open(array('url' => 'post/q')) }}  
         {{ Form::label('q', 'Search') }}
         {{ Form::text('q', Input::get('q')) }}
         {{ Form::submit('Search') }}
@@ -23,13 +23,13 @@
           <li>{{ HTML::link('account', 'Account') }}</li>
           <li>{{ HTML::link('admin', 'Admin') }}</li>
         @endif
-      @yield_section
+      @show
       </ul>
     </div>
     <div class="secondarynav">
       <ul>
         @section('secondarynav')
-        @yield_section
+        @show
       </ul>
     </div>
   </div>

@@ -11,7 +11,7 @@ class PostController extends BaseController
     public function __construct() 
     {
         parent::__construct();
-        $this->filter('before', 'auth')->only('edit');
+        //Route::filter('before', 'auth')->only('edit');
     }
 
     /**
@@ -22,7 +22,7 @@ class PostController extends BaseController
     public function getIndex() 
     {
         $data = array(
-            'posts' => Post::order_by('created_at', 'desc')
+            'posts' => Post::orderBy('created_at', 'desc')
                               ->where('published', '=', 1)
                               ->paginate($this->s->postsPerPage),
             'errormessage' => false,
@@ -53,17 +53,17 @@ class PostController extends BaseController
     {
         if (($q = Input::get('q')) && (strlen(Input::get('q')) > 3)) {
             if (!Auth::guest()) {
-                $sql = Post::order_by('updated_at', 'desc')
+                $sql = Post::orderBy('updated_at', 'desc')
                               ->where('title', 'LIKE', "%$q%")
-                              ->or_where('excerpt', 'LIKE', "%$q%")
-                              ->or_where('body', 'LIKE', "%$q%")
+                              ->orWhere('excerpt', 'LIKE', "%$q%")
+                              ->orWhere('body', 'LIKE', "%$q%")
                               ->paginate($this->s->postsPerPage);
             } else {
-                $sql = Post::order_by('updated_at', 'desc')
+                $sql = Post::orderBy('updated_at', 'desc')
                               ->where('title', 'LIKE', "%$q%")
                               ->where('published', '=', 1)
-                              ->or_where('excerpt', 'LIKE', "%$q%")
-                              ->or_where('body', 'LIKE', "%$q%")
+                              ->orWhere('excerpt', 'LIKE', "%$q%")
+                              ->orWhere('body', 'LIKE', "%$q%")
                               ->paginate($this->s->postsPerPage);
             }
             $data = array(

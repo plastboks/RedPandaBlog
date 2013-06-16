@@ -1,19 +1,40 @@
-<?php 
+<?php
 
 class Role extends Eloquent
 {
 
-    public static $table = 'roles';
+    /**
+     * Database table
+     *
+     * @var string
+     */
+    protected $table = 'roles';
 
-    public function users() {
-        return $this->has_many('User', 'role_id');
+    /**
+     * Get role users
+     *
+     * @return object
+     */
+    public function users()
+    {
+        return $this->hasMany('User', 'role_id');
     }
 
+    /**
+     * Get role capabilites
+     *
+     * @return object
+     */
     public function capabilities()
     {
-        return $this->has_many_and_belongs_to('Capability');
+        return $this->belongsToMany('Capability');
     }
 
+    /**
+     * Role form default rules
+     *
+     * @return object
+     */
     public static function defaultRules()
     {
         return array(
