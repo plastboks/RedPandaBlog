@@ -11,7 +11,7 @@ class AdminUserController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->filter('before', array('auth'));
+        Route::filter('before', array('auth'));
     }
 
     /**
@@ -66,11 +66,11 @@ class AdminUserController extends BaseController
     public function getEdit($id)
     {
         if (!$this->p->canI('updateUser')) return Redirect::error(403);
-
         if ($id == 1) return Redirect::error(403);
+
         $myself = Auth::user();
         $formRoles = array();
-        foreach ((array)Role::all() as $role) {
+        foreach (Role::all() as $role) {
             $formRoles[$role->id] = ucwords($role->name);
         }
 
@@ -97,7 +97,7 @@ class AdminUserController extends BaseController
         if (!$this->p->canI('createUser')) return Redirect::error(403);
 
         $formRoles = array();
-        foreach ((array)Role::all() as $role) {
+        foreach (Role::all() as $role) {
             $formRoles[$role->id] = ucwords($role->name);
         }
         $data = array(

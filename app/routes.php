@@ -15,58 +15,99 @@ View::share('s', App::make('settings'));
 View::share('p', App::make('permissions'));
 
 /**
- * Post area
+ * Post part
  */
 Route::get('/',
            array(
                'uses' => 'PostController@getIndex'));
-
+Route::get('post/view/{id}',
+            array(
+                'uses' => 'PostController@getView'));
+Route::get('post/category/{slug}',
+            array(
+                'uses' => 'PostController@getCategory'));
+Route::post('post/query',
+            array(
+                'uses' => 'PostController@getQ'));
 
 /**
- * admin area
+ * Admin User routes
  */
+Route::get('admin/user/list',
+            array(
+                'uses' => 'AdminUserController@getList'));
+Route::get('admin/user/blocked',
+            array(
+                'uses' => 'AdminUserController@getBlocked'));
 Route::get('admin/user/new',
             array(
-                'uses' => 'AdminUserController@getNet'));
-
+                'uses' => 'AdminUserController@getNew'));
+Route::get('admin/user/edit/{id}',
+            array(
+                'uses' => 'AdminUserController@getEdit'));
 Route::post('admin/user/create',
             array(
                 'before' => 'csrf',
                 'uses' => 'AdminUserController@postCreate'));
-
-Route::post('admin/user/update',
+Route::post('admin/user/update/{id}',
             array(
                 'before' => 'csrf',
                 'uses' => 'AdminUserController@postUpdate'));
 
+/**
+ * Admin Post routes
+ */
+Route::get('admin/post/list',
+            array(
+                'uses' => 'AdminPostController@getList'));
+Route::get('admin/post/unpublished',
+            array(
+                'uses' => 'AdminPostController@getUnpublished'));
 Route::get('admin/post/new',
            array(
                'uses' => 'AdminPostController@getNew'));
-
+Route::get('admin/post/edit/{id}',
+            array(
+                'uses' => 'AdminPostController@getEdit'));
+Route::get('admin/post/unpublish/{id}',
+            array(
+                'uses' => 'AdminPostController@getUnpublish'));
+Route::get('admin/post/publish/{id}',
+            array(
+                'uses' => 'AdminPostController@getPublish'));
 Route::post('admin/post/create',
             array(
                 'before' => 'csrf',
                 'uses' => 'AdminPostController@postCreate'));
-
-Route::post('admin/post/update',
+Route::post('admin/post/update/{id}',
             array(
                 'before' => 'csrf',
                 'uses' => 'AdminPostController@postUpdate'));
 
+/**
+ * Admin Category routes
+ */
+Route::get('admin/category/list',
+            array(
+                'uses' => 'AdminCategoryController@getList'));
 Route::get('admin/category/new',
            array(
                'uses' => 'AdminCategoryController@getNew'));
-
+Route::get('admin/category/edit/{id}',
+            array(
+                'uses' => 'AdminCategoryController@getEdit'));
 Route::post('admin/category/create',
             array(
                 'before' => 'csrf',
                 'uses' => 'AdminCategoryController@postCreate'));
-
-Route::post('admin/category/update',
+Route::post('admin/category/update/{id}',
             array(
                 'before' => 'csrf',
                 'uses' => 'AdminCategoryController@postUpdate'));
 
+/**
+ * Admin Settings routes
+ */
 Route::get('admin/settings',
            array(
                'uses' => 'AdminSettingController@getEdit'));
@@ -76,23 +117,37 @@ Route::post('admin/settings',
                 'before' => array('csrf'),
                 'uses' => 'AdminSettingController@postRegister'));
 
+/**
+ * Admin Role routes
+ */
+Route::get('admin/role/list',
+            array(
+                'uses' => 'AdminRoleController@getList'));
+Route::get('admin/role/new',
+            array(
+                'uses' => 'AdminRoleController@getNew'));
+Route::get('admin/role/edit/{id}',
+            array(
+                'uses' => 'AdminRoleController@getEdit'));
 Route::post('admin/role/create',
             array(
                 'before' => array('csrf'),
                 'uses' => 'AdminRoleController@postCreate'));
-
-Route::post('admin/role/update',
+Route::post('admin/role/update/{id}',
             array(
                 'before' => array('csrf'),
                 'uses' => 'AdminRoleController@postUpdate'));
 
+/**
+ * Admin Dash routes
+ */
 Route::get('admin', array('before' => 'auth', function(){
   return View::make('admin/index');
 }));
 
 
 /**
- * account logic
+ * Account routes
  */
 Route::get('account',
            array(
@@ -120,7 +175,7 @@ Route::post('account/changepassword',
                 'uses' => 'AccountController@postChangepassword'));
 
 /**
- * login/logout logic
+ * Login Logout routes
  */
 Route::get('login',
            array(
@@ -136,7 +191,7 @@ Route::get('logout',
                'uses' => 'AuthController@getLogout'));
 
 /**
- * install area
+ * Install routes
  */
 Route::get('install',
            array(

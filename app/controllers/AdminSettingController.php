@@ -11,7 +11,7 @@ class AdminSettingController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->filter('before', array('auth'));
+        Route::filter('before', array('auth'));
     }
 
     /**
@@ -34,7 +34,7 @@ class AdminSettingController extends BaseController
      *
      * @return redirect
      */
-    public function getRegister() {
+    public function postRegister() {
         if (!$this->p->canI('siteSettings')) return Redirect::error(403);
 
         $v = Validator::make(Input::all(), Setting::defaultRules());

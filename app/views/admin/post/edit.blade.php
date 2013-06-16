@@ -1,9 +1,9 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('title')
 Edit post {{ $post->title }}
 @endsection
 @section('content')
-    {{ Form::open('admin/post/update/'.$post->id) }}
+    {{ Form::open(array('url'=>'admin/post/update/'.$post->id)) }}
         {{ Form::token() }}
         {{ Form::hidden('author_id', $user->id) }}
         <!-- title field -->

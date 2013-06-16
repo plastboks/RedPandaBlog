@@ -10,7 +10,7 @@ class AdminCategoryController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->filter('before', 'auth');
+        Route::filter('before', 'auth');
     }
 
     /**
@@ -40,11 +40,27 @@ class AdminCategoryController extends BaseController
     }
 
     /**
-     * Create category view
+     * Edit category view
+     *
+     * @params categoryid
      *
      * @return view
      */
-    public function getCreate()
+    public function getEdit($id)
+    {
+        if (!$this->p->canI('updateCategory')) return Redirect::error(403);
+        $data = array(
+            'category' => Category::find($id),
+        );
+        return View::make('admin/category/edit', $data);
+    }
+
+    /**
+     * Create category view
+     *
+     * @return redirect
+     */
+    public function postCreate()
     {
         if (!$this->p->canI('createCategory')) return Redirect::error(403);
         $v = Validator::make(Input::all(), Category::defaultRules());
@@ -62,22 +78,6 @@ class AdminCategoryController extends BaseController
 
         return Redirect::to('admin/category/list')
                 ->with('status', 'New category '.$category->title.' created.');
-    }
-
-    /**
-     * Edit category view
-     *
-     * @params categoryid
-     *
-     * @return view
-     */
-    public function getEdit($id)
-    {
-        if (!$this->p->canI('updateCategory')) return Redirect::error(403);
-        $data = array(
-            'category' => Category::find($id),
-        );
-        return View::make('admin/category/edit', $data);
     }
 
     /**

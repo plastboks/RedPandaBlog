@@ -10,7 +10,7 @@
   <div class="header">
     <h1>{{ HTML::link('/', $s->blogName) }}</h1>
     <div class="search">
-      {{ Form::open(array('url' => 'post/q')) }}  
+      {{ Form::open(array('url' => 'post/query')) }}  
         {{ Form::label('q', 'Search') }}
         {{ Form::text('q', Input::get('q')) }}
         {{ Form::submit('Search') }}

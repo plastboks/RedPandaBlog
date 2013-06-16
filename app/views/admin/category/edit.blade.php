@@ -1,10 +1,10 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('title')
 Edit Category
 @endsection
 @section('content')
     <h1>Edit category {{ $category->title }}</h1>
-    {{ Form::open('admin/category/update/'.$category->id) }}
+    {{ Form::open(array('url'=>'admin/category/update/'.$category->id)) }}
         {{ Form::token() }}
 
         <!-- title field -->

@@ -1,10 +1,10 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('title')
 Add new post
 @endsection
 @section('content')
     <h1>New post</h1>
-    {{ Form::open('admin/post/create') }}
+    {{ Form::open(array('url'=>'admin/post/create')) }}
         {{ Form::hidden('author_id', $user->id) }}
         {{ Form::token() }}
         <!-- title field -->

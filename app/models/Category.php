@@ -7,7 +7,7 @@ class Category extends Eloquent
      *
      * @var string
      */
-    protected $table = 'capabilities';
+    protected $table = 'categories';
 
     /**
      * Get this categorys posts
@@ -16,7 +16,7 @@ class Category extends Eloquent
      */
     public function posts()
     {
-        return $this->hasManyAndBelongsTo('Post');
+        return $this->belongsToMany('Post');
     }
 
     /**

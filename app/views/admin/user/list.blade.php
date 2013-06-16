@@ -1,4 +1,4 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('content')
   <h1>Users on this site</h1>
   <ul class="thirdmenu">
@@ -22,7 +22,7 @@
       <th>Action</th>
     </thead>
     <tbody>
-    @foreach ($users->results as $user)
+    @foreach ($users as $user)
       <tr>
         <td class="username">{{ $user->username }}</td>
         <td class="email">{{ $user->email }}</td>

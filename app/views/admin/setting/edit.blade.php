@@ -1,4 +1,4 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('title')
 Edit Blog Settings
 @endsection
@@ -7,7 +7,7 @@ Edit Blog Settings
     @if ($status)
       <p class='message'>{{ $status }}</p>
     @endif
-    {{ Form::open('admin/settings') }}
+    {{ Form::open(array('url'=>'admin/settings')) }}
         {{ Form::token() }}
 
         <!-- blogName field -->

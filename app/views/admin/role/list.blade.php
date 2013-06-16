@@ -1,4 +1,4 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('content')
   <h1>Roles</h1>
   <ul class='thirdmenu'>
@@ -19,7 +19,7 @@
       <th>Action</th>
     </thead>
     <tbody>
-    @foreach ($roles->results as $role)
+    @foreach ($roles as $role)
       <tr>
         <td class="title">{{ $role->name }}</td>
         <td class="count">{{ count($role->capabilities()->get()) }}</td>

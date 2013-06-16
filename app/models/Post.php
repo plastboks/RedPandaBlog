@@ -27,7 +27,7 @@ class Post extends Eloquent
      */
     public function categories()
     {
-        return $this->hasManyAndBelongsTo('Category');
+        return $this->belongsToMany('Category');
     }
 
     /**

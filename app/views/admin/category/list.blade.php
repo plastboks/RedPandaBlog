@@ -1,4 +1,4 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('content')
   <h1>Categories</h1>
   <ul class='thirdmenu'>
@@ -19,7 +19,7 @@
       <th>Action</th>
     </thead>
     <tbody>
-    @foreach ($categories->results as $category)
+    @foreach ($categories as $category)
       <tr>
         <td class="title">{{ HTML::link('post/category/'.$category->slug, $category->title) }}</td>
         <td class="slug">{{ $category->slug }}</td>

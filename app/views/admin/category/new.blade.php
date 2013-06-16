@@ -1,10 +1,10 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('title')
 Add new category
 @endsection
 @section('content')
     <h1>New category</h1>
-    {{ Form::open('admin/category/create') }}
+    {{ Form::open(array('url'=>'admin/category/create')) }}
         {{ Form::token() }}
         <!-- title field -->
         <p>{{ Form::label('title', 'Title') }}</p>

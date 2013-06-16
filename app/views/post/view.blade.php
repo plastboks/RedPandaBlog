@@ -1,4 +1,4 @@
-@layout('base')
+@extends('base')
 @section('title')
 {{ $post->title }}
 @endsection

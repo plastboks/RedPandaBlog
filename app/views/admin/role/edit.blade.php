@@ -1,10 +1,10 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('title')
 Edit Role
 @endsection
 @section('content')
     <h1>Edit role {{ $role->title }}</h1>
-    {{ Form::open('admin/role/update/'.$role->id) }}
+    {{ Form::open(array('url'=>'admin/role/update/'.$role->id)) }}
         {{ Form::token() }}
 
         <!-- title field -->

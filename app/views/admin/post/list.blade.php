@@ -1,4 +1,4 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('content')
   <h1>Posts</h1>
   <ul class="thirdmenu">
@@ -16,7 +16,7 @@
         <th>Action</th>
     </thead>
     <tbody>
-    @foreach ($posts->results as $post)
+    @foreach ($posts as $post)
       <tr>
         <td class="linklist">
             {{ HTML::link('post/view/'.$post->id, $post->title) }}

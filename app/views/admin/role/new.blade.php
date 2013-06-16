@@ -1,10 +1,10 @@
-@layout('admin/index')
+@extends('admin/index')
 @section('title')
 Add new role
 @endsection
 @section('content')
     <h1>New role</h1>
-    {{ Form::open('admin/role/create') }}
+    {{ Form::open(array('url'=>'admin/role/create')) }}
         {{ Form::token() }}
         <!-- title field -->
         <p>{{ Form::label('name', 'Name') }}</p>
