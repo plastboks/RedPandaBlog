@@ -84,7 +84,9 @@ require app_path().'/filters.php';
 
 App::singleton('settings', function()
 {
-    return new Setting;
+    $s = new Setting;
+    $s->loadSettings($s->all());
+    return $s;
 });
 
 App::singleton('permissions', function()

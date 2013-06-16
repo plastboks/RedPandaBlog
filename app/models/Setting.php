@@ -38,17 +38,6 @@ class Setting extends Eloquent
      */
     public $excerptCut = 400;
 
-
-    /**
-     * Class construct
-     *
-     * @var void
-     */
-    public function __construct()
-    {
-        //$this->loadSettings();
-    }
-
     /**
      * Load settings from database
      *
@@ -59,7 +48,7 @@ class Setting extends Eloquent
     public function loadSettings($array = false)
     {
         if ($array) {
-            foreach((array)$array as $obj) {
+            foreach($array as $obj) {
                 $this->setVar($obj['meta_key'] ,$obj['meta_value']);
             }
         }
