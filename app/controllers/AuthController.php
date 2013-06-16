@@ -37,6 +37,27 @@ class AuthController extends BaseController
     }
 
     /**
+     * New password view
+     *
+     * @return redirect
+     */
+    public function getNewPassword()
+    {
+        if (!Auth::guest()) return Redirect::to('/'); 
+        if (!Input::has('token')) return Redirect::to('/');
+        if (!User::where('confirmation_code', '=', Input::get('token'))->first()) {
+            return Redirect::to('/');
+        }
+
+        $data = array(
+                    'status' => Session::get('status'),
+                    'error' => Session::get('error'),
+                    'token' => Input::get('token'),
+                );
+        return View::make('auth/newpassword', $data);
+    }
+
+    /**
      * Try to login user action
      *
      * @return redirect
@@ -44,7 +65,7 @@ class AuthController extends BaseController
     public function postTry() 
     {
         $userdata = array(
-            'username' => Input::get('email'),
+            'email' => Input::get('email'),
             'password' => Input::get('password'),
         );
 
@@ -68,9 +89,8 @@ class AuthController extends BaseController
      *
      * @return redirect
      */
-    public function postSendemail() 
+    public function postSendmail() 
     {
-
         $v = Validator::make(Input::all(), User::forgotPassword());
 
         if ($v->fails()) {
@@ -80,18 +100,44 @@ class AuthController extends BaseController
         }
     
         if ($user = User::where('email', '=', Input::get('email'))->first()) {
-            $salt = $this->genRndstr();
-            $email = 'alex@plastboks.net';
-            $user->confirmation_code = substr(Hash::make($salt.$email), 7);
+            $rnd = $this->genRndstr();
+            $user->confirmation_code = substr(Hash::make($rnd.$user->email), 7);
             $user->save();
-            Mail::send('emails.forgot', $data, function($message){
+            $data = array(
+              'token' => $user->confirmation_code,
+            );
+            Mail::send('emails.auth.reminder', $data, function($message) use ($user){
                 $message->to($user->email, $user->username)
                         ->subject('Reset email for ...');
             });
             return Redirect::to('/');
         }
-
         return Redirect::to('/');
+    }
+
+    /**
+     * Send forgot password action
+     *
+     * @return redirect
+     */
+    public function postSetnewpass()
+    {
+        if (!Input::has('confirmcode')) return Redirect::to('/');
+        if (!$user = User::where('confirmation_code', '=', Input::get('confirmcode'))->first()) {
+            return Redirect::to('/');
+        }
+        
+        $v = Validator::make(Input::all(), User::passwordRules());
+        if ($v->fails()) {
+            return Redirect::back()
+                            ->withErrors($v)
+                            ->withInput();
+        }
+
+        $user->confirmation_code = false;
+        $user->password = Hash::make(Input::get('password'));
+        $user->save();
+        return Redirect::to('login');
     }
 
     /**

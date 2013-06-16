@@ -1,10 +1,10 @@
-@layout('base')
+@extends('base')
 @section('title')
 Forgot password
 @endsection
 @section('content')
 <h1>Forgot password</h1>
-{{ Form::open('auth/sendemail') }}
+{{ Form::open(array('url'=>'auth/sendmail')) }}
     {{ Form::token() }}
     {{ $errors->first('email', '<p class="error">:message</p>') }}
     <!-- username field -->

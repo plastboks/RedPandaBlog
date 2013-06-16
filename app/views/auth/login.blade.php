@@ -23,4 +23,5 @@ Login
     <!-- submit button -->
     <p>{{ Form::submit('Login') }}</p>
 {{ Form::close() }}
+<p>{{ HTML::link('auth/forgot', 'Forgot password?') }}</p>
 @endsection

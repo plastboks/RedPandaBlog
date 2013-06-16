@@ -111,7 +111,6 @@ Route::post('admin/category/update/{id}',
 Route::get('admin/settings',
            array(
                'uses' => 'AdminSettingController@getEdit'));
-
 Route::post('admin/settings',
             array(
                 'before' => array('csrf'),
@@ -152,15 +151,12 @@ Route::get('admin', array('before' => 'auth', function(){
 Route::get('account',
            array(
                'uses' => 'AccountController@getIndex'));
-
 Route::get('account/profile',
            array(
                'uses' => 'AccountController@getProfile'));
-
 Route::get('account/password',
             array(
                 'uses' => 'AccountController@getPassword'));
-
 Route::get('account/myposts',
             array(
                 'uses' => 'AccountController@getMyposts'));
@@ -168,7 +164,6 @@ Route::post('account/update',
             array(
                 'before' => 'csrf',
                 'uses' => 'AccountController@postUpdate'));
-
 Route::post('account/changepassword',
             array(
                 'before' => 'csrf',
@@ -180,15 +175,27 @@ Route::post('account/changepassword',
 Route::get('login',
            array(
                'uses' => 'AuthController@getLogin'));
-
 Route::post('login',
             array(
                 'before' => 'csrf',
                 'uses' => 'AuthController@postTry'));
-
 Route::get('logout',
            array(
                'uses' => 'AuthController@getLogout'));
+Route::get('auth/forgot',
+            array(
+                'uses' => 'AuthController@getForgot'));
+Route::get('password/forgot',
+            array(
+                'uses' => 'AuthController@getNewpassword'));
+Route::post('auth/sendmail',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AuthController@postSendmail'));
+Route::post('password/forgot',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AuthController@postSetnewpass'));
 
 /**
  * Install routes
