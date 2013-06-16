@@ -25,9 +25,11 @@
         <td class="author">{{ $post->author->username }}</td>
         <td class="action">
           <ul>
+            @if ($p->canI('updatePost'))
             <li class="edit">
               {{ HTML::link('admin/post/edit/'.$post->id, 'Edit') }}
             </li>
+            @endif
             @if ($p->canI('changePostState'))
             <li class="unpublish">
               {{ HTML::link('admin/post/'.$action.'/'.$post->id, ucwords($action)) }}

@@ -29,7 +29,7 @@ class AdminRoleController extends BaseController
           );
           return View::make('admin/role/list', $data);
         }
-        return Redirect::error(403);
+        return App::abort(403, 'Forbidden');
     }
 
     /**
@@ -39,7 +39,8 @@ class AdminRoleController extends BaseController
      */
     public function getNew()
     {
-        if (!$this->p->canI('createRole')) return Redirect::error(403);
+        if (!$this->p->canI('createRole')) return App::abort(403, 'Forbidden');
+
         $data = array(
             'caps' => Capability::all(),
         );
@@ -55,7 +56,8 @@ class AdminRoleController extends BaseController
      */
     public function getEdit($id)
     {
-        if (!$this->p->canI('updateRole')) return Redirect::error(403);
+        if (!$this->p->canI('updateRole')) return App::abort(403, 'Forbidden');
+
         $data = array(
             'role' => Role::find($id),
             'caps' => Capability::all(),
@@ -70,7 +72,7 @@ class AdminRoleController extends BaseController
      */
     public function postCreate()
     {
-        if (!$this->p->canI('createRole')) return Redirect::error(403);
+        if (!$this->p->canI('createRole')) return App::abort(403, 'Forbidden');
 
         $v = Validator::make(Input::all(), Role::defaultRules());
 
@@ -97,7 +99,8 @@ class AdminRoleController extends BaseController
      */
     public function postUpdate($id)
     {
-        if (!$this->p->canI('updateRole')) return Redirect::error(403);
+        if (!$this->p->canI('updateRole')) return App::abort(403, 'Forbidden');
+
         $v = Validator::make(Input::all(), Role::defaultRules());
 
         if ($v->fails()) {
@@ -125,7 +128,7 @@ class AdminRoleController extends BaseController
     public function getDelete($id)
     {
         if (!$this->p->canI('deleteRole') && $id != 1) {
-            return Redirect::error(403);
+            return App::abort(403, 'Forbidden');
         }
 
         if (($cat = Role::find($id)) && (!Role::find($id)->users()->get())) {

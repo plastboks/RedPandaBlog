@@ -26,7 +26,7 @@ class AdminSettingController extends BaseController
                                   'status' => Session::get('status'),
                               ));
         }
-        return Redirect::error(403);
+        return App::abort(403, 'Forbidden');
     }
 
     /**
@@ -35,7 +35,7 @@ class AdminSettingController extends BaseController
      * @return redirect
      */
     public function postRegister() {
-        if (!$this->p->canI('siteSettings')) return Redirect::error(403);
+        if (!$this->p->canI('siteSettings')) return App::abort(403, 'Forbidden');
 
         $v = Validator::make(Input::all(), Setting::defaultRules());
 

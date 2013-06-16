@@ -10,7 +10,6 @@
 | your classes in the "global" namespace without Composer updating.
 |
 */
-
 ClassLoader::addDirectories(array(
 
 	app_path().'/commands',
@@ -30,7 +29,6 @@ ClassLoader::addDirectories(array(
 | build a rotating log file setup which creates a new file each day.
 |
 */
-
 $logFile = 'log-'.php_sapi_name().'.txt';
 
 Log::useDailyFiles(storage_path().'/logs/'.$logFile);
@@ -47,7 +45,6 @@ Log::useDailyFiles(storage_path().'/logs/'.$logFile);
 | shown, which includes a detailed stack trace during debug.
 |
 */
-
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
@@ -63,7 +60,6 @@ App::error(function(Exception $exception, $code)
 | to the user if maintenace mode is in effect for this application.
 |
 */
-
 App::down(function()
 {
 	return Response::make("Be right back!", 503);
@@ -79,9 +75,25 @@ App::down(function()
 | definitions instead of putting them all in the main routes file.
 |
 */
-
 require app_path().'/filters.php';
 
+/*
+|--------------------------------------------------------------------------
+| Application Missing handler
+|--------------------------------------------------------------------------
+|
+*/
+App::missing(function($exception)
+{
+    return Response::view('error.404', array(), 404);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Application IoC custom containers
+|--------------------------------------------------------------------------
+|
+*/
 App::singleton('settings', function()
 {
     $s = new Setting;
@@ -93,4 +105,5 @@ App::singleton('permissions', function()
 {
     return new Permission(Auth::user());
 });
+
 

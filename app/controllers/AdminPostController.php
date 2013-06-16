@@ -55,7 +55,7 @@ class AdminPostController extends BaseController
 	 */
     public function getNew()
     {
-        if (!$this->p->canI('createPost')) return Redirect::error(403);
+        if (!$this->p->canI('createPost')) return App::abort(403, 'Forbidden');
 
         $data = array(
             'user' => Auth::user(),
@@ -69,8 +69,9 @@ class AdminPostController extends BaseController
 	 *
 	 * @return redirect
 	 */
-    public function postCreate() {
-        if (!$this->p->canI('createPost')) return Redirect::error(403);
+    public function postCreate()
+    {
+        if (!$this->p->canI('createPost')) return App::abort(403, 'Forbidden');
 
         $v = Validator::make(Input::all(), Post::defaultRules());
 
@@ -106,6 +107,7 @@ class AdminPostController extends BaseController
 	 */
     public function getEdit($id)
     {
+        if (!$this->p->canI('updatePost')) return App::abort(403, 'Forbidden');
         $data = array(
             'post' => Post::find($id),
             'user' => Auth::user(),
@@ -123,7 +125,7 @@ class AdminPostController extends BaseController
 	 */
     public function postUpdate($id)
     {
-        if (!$this->p->canI('updatePost')) return Redirect::error(403);
+        if (!$this->p->canI('updatePost')) return App::abort(403, 'Forbidden');
 
         $v = Validator::make(Input::all(), Post::defaultRules());
 

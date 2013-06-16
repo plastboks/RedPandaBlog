@@ -35,7 +35,8 @@ class AdminCategoryController extends BaseController
      */
     public function getNew()
     {
-        if (!$this->p->canI('createCategory')) return Redirect::error(403);
+        if (!$this->p->canI('createCategory')) return App::abort(403, 'Forbidden');
+
         return View::make('admin/category/new');
     }
 
@@ -48,7 +49,8 @@ class AdminCategoryController extends BaseController
      */
     public function getEdit($id)
     {
-        if (!$this->p->canI('updateCategory')) return Redirect::error(403);
+        if (!$this->p->canI('updateCategory')) return App::abort(403, 'Forbidden');
+
         $data = array(
             'category' => Category::find($id),
         );
@@ -62,7 +64,8 @@ class AdminCategoryController extends BaseController
      */
     public function postCreate()
     {
-        if (!$this->p->canI('createCategory')) return Redirect::error(403);
+        if (!$this->p->canI('createCategory')) return App::abort(403, 'Forbidden');
+
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
@@ -89,7 +92,8 @@ class AdminCategoryController extends BaseController
      */
     public function postUpdate($id)
     {
-        if (!$this->p->canI('updateCategory')) return Redirect::error(403);
+        if (!$this->p->canI('updateCategory')) return App::abort(403, 'Forbidden');
+
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
@@ -116,7 +120,7 @@ class AdminCategoryController extends BaseController
      */
     public function postDelete($id)
     {
-        if (!$this->p->canI('deleteCategory')) return Redirect::error(403);
+        if (!$this->p->canI('deleteCategory')) return App::abort(403, 'Forbidden');
 
         if (($cat = Category::find($id)) && (!Category::find($id)->posts()->get())) {
             $cat->delete();

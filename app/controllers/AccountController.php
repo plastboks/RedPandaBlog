@@ -127,7 +127,7 @@ class AccountController extends BaseController
             }
         }
 
-        return Redirect::error(404);
+        return App::abort(403, 'Forbidden');
     }
 
 }

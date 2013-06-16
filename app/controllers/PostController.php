@@ -11,7 +11,7 @@ class PostController extends BaseController
     public function __construct() 
     {
         parent::__construct();
-        //Route::filter('before', 'auth')->only('edit');
+        Route::filter('before', 'auth');
     }
 
     /**
@@ -74,7 +74,7 @@ class PostController extends BaseController
             return View::make('index', $data);
         } else {
             return Redirect::to('/')
-                                ->with('errormessage', 'Please enter 3 or more characters in search query');
+                      ->with('errormessage', 'Please enter 3 or more characters in search query');
         }
     }
  
