@@ -1,5 +1,32 @@
 <?php
+/**
+ * File: AdminUserController
+ *
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 
+
+/**
+ * Class AdminUserController
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 class AdminUserController extends BaseController
 {
 
@@ -21,7 +48,9 @@ class AdminUserController extends BaseController
      */
     public function getList()
     {
-        if (!$this->p->canI('seeUsers')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('seeUsers')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $data = array(
             'myself' => Auth::user(),
@@ -42,7 +71,9 @@ class AdminUserController extends BaseController
      */
     public function getBlocked()
     {
-        if (!$this->p->canI('seeUsers')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('seeUsers')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $data = array(
             'myself' => Auth::user(),
@@ -59,14 +90,19 @@ class AdminUserController extends BaseController
     /**
      * User edit view
      *
-     * @params userid
+     * @param int $id user_id
      *
      * @return view
      */
     public function getEdit($id)
     {
-        if (!$this->p->canI('updateUser')) return App::abort(403, 'Forbidden');
-        if ($id == 1) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('updateUser')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if ($id == 1) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $myself = Auth::user();
         $formRoles = array();
@@ -94,7 +130,9 @@ class AdminUserController extends BaseController
      */
     public function getNew()
     {
-        if (!$this->p->canI('createUser')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('createUser')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $formRoles = array();
         foreach (Role::all() as $role) {
@@ -116,7 +154,9 @@ class AdminUserController extends BaseController
      */
     public function postCreate()
     {
-        if (!$this->p->canI('createUser')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('createUser')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), User::defaultRules());
 
@@ -144,14 +184,19 @@ class AdminUserController extends BaseController
     /**
      * Users update action
      *
-     * @params userid
+     * @param int $id user_id
      *
      * @return redirect
      */
     public function postUpdate($id)
     {
-        if (!$this->p->canI('updateUser')) return App::abort(403, 'Forbidden');
-        if ($id == 1) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('updateUser')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if ($id == 1) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), User::defaultRules($id));
 
@@ -179,14 +224,19 @@ class AdminUserController extends BaseController
     /**
      * Block user action
      *
-     * @params userid
+     * @param int $id user_id
      *
      * @return redirect
      */
     public function getBlock($id)
     {
-        if (!$this->p->canI('blockUser')) return App::abort(403, 'Forbidden');
-        if ($id == 1) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('blockUser')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if ($id == 1) {
+            return App::abort(403, 'Forbidden');
+        }
 
         if ($user = User::find($id)) {
             $user->blocked = 1;
@@ -198,16 +248,18 @@ class AdminUserController extends BaseController
     /**
      * Unblock user action
      *
-     * @params userid
+     * @param int $id user_id
      *
      * @return redirect
      */
     public function getUnblock($id)
     {
-        if (!$this->p->canI('unblockUser')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('unblockUser')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         if ($user = User::find($id)) {
-            $user->blocked = NULL;
+            $user->blocked = null;
             $user->save();
         }
         return Redirect::to('admin/user/blocked');
@@ -216,12 +268,19 @@ class AdminUserController extends BaseController
     /**
      * Delete user action
      *
+     * @param int $id user_id
+     *
      * @return redirect
      */
     public function getDelete($id)
     {
-        if (!$this->p->canI('deleteUser')) return App::abort(403, 'Forbidden');
-        if ($id == 1) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('deleteUser')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if ($id == 1) {
+            return App::abort(403, 'Forbidden');
+        }
 
         if (($id != Auth::user()->id) && ($user = User::find($id))) {
             if (!count($user->posts()->get())) {

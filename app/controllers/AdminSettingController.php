@@ -1,5 +1,32 @@
 <?php
+/**
+ * File: AdminSettingController
+ * 
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ * 
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ * 
+ */
 
+
+/**
+ * Class AdminSettingController
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 class AdminSettingController extends BaseController
 {
 
@@ -19,12 +46,13 @@ class AdminSettingController extends BaseController
      *
      * @return view
      */
-    public function getEdit() {
+    public function getEdit()
+    {
         if ($this->p->canI('siteSettings')) {
-            return View::make('admin/setting/edit',
-                              array(
-                                  'status' => Session::get('status'),
-                              ));
+            $data = array(
+                'status' => Session::get('status'),
+            );
+            return View::make('admin/setting/edit', $data);
         }
         return App::abort(403, 'Forbidden');
     }
@@ -34,21 +62,24 @@ class AdminSettingController extends BaseController
      *
      * @return redirect
      */
-    public function postRegister() {
-        if (!$this->p->canI('siteSettings')) return App::abort(403, 'Forbidden');
+    public function postRegister()
+    {
+        if (!$this->p->canI('siteSettings')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), Setting::defaultRules());
 
         if ($v->fails()) {
-          return Redirect::to('admin/settings')
-                    ->withErrors($v)
-                    ->withInput();
+            return Redirect::to('admin/settings')
+                      ->withErrors($v)
+                      ->withInput();
         }
 
-        $this->addMetaData('blogName', Input::get('blogName'));
-        $this->addMetaData('footer', Input::get('footertext'));
-        $this->addMetaData('postsPerPage', Input::get('postsperpage'));
-        $this->addMetaData('excerptCut', Input::get('excerptCut'));
+        $this->_addMetaData('blogName', Input::get('blogName'));
+        $this->_addMetaData('footer', Input::get('footertext'));
+        $this->_addMetaData('postsPerPage', Input::get('postsperpage'));
+        $this->_addMetaData('excerptCut', Input::get('excerptCut'));
 
         return Redirect::to('admin/settings')
                   ->with('status', 'Site settings updated');
@@ -57,10 +88,13 @@ class AdminSettingController extends BaseController
     /**
      * Register site setting action
      *
-     * @params setting_key, setting_value
+     * @param int $key   setting_key
+     * @param int $value setting_value
+     *
      * @return redirect
      */
-    private function addMetaData($key, $value) {
+    private function _addMetaData($key, $value)
+    {
         if ($setting = Setting::where('meta_key', '=', $key)->first()) {
             $setting->meta_value = $value;
             $setting->save();

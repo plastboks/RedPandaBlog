@@ -1,6 +1,34 @@
-<?php 
+<?php
+/**
+ * File: PostController
+ *
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 
-class PostController extends BaseController 
+
+/**
+ * Class PostController
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
+
+class PostController extends BaseController
 {
 
     /**
@@ -8,7 +36,7 @@ class PostController extends BaseController
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
         Route::filter('before', 'auth');
@@ -19,7 +47,7 @@ class PostController extends BaseController
      *
      * @return view
      */
-    public function getIndex() 
+    public function getIndex()
     {
         $data = array(
             'posts' => Post::orderBy('created_at', 'desc')
@@ -34,9 +62,11 @@ class PostController extends BaseController
     /**
      * Post View
      *
+     * @param int $id post_id
+     *
      * @return view
      */
-    public function getView($id) 
+    public function getView($id)
     {
         $data = array (
             'post' => Post::find($id),
@@ -49,7 +79,7 @@ class PostController extends BaseController
      *
      * @return view
      */
-    public function getQ() 
+    public function getQ()
     {
         if (($q = Input::get('q')) && (strlen(Input::get('q')) > 3)) {
             if (!Auth::guest()) {
@@ -73,13 +103,16 @@ class PostController extends BaseController
             );
             return View::make('index', $data);
         } else {
+            $message = 'Please enter 3 og more character in the search query';
             return Redirect::to('/')
-                      ->with('errormessage', 'Please enter 3 or more characters in search query');
+                      ->with('errormessage', $message);
         }
     }
- 
+
     /**
      * Category search view
+     *
+     * @param string $slug post slug
      *
      * @return view
      */
@@ -95,7 +128,7 @@ class PostController extends BaseController
                           ->posts()
                           ->where('published', '=', 1)
                           ->paginate($this->s->postsPerPage);
-          }
+            }
             $data = array(
                 'posts' => $sql,
                 'errormessage' => false,

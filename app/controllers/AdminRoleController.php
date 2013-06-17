@@ -1,5 +1,32 @@
 <?php
+/**
+ * File: AdminRoleController
+ * 
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ * 
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ * 
+ */
 
+
+/**
+ * Class AdminRoleController
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 class AdminRoleController extends BaseController
 {
 
@@ -22,12 +49,12 @@ class AdminRoleController extends BaseController
     public function getList()
     {
         if ($this->p->canI('seeRoles')) {
-          $data = array(
-              'roles' => Role::orderBy('id', 'asc')
-                                ->paginate(10),
-              'status' => Session::get('status'),
-          );
-          return View::make('admin/role/list', $data);
+            $data = array(
+                'roles' => Role::orderBy('id', 'asc')
+                                  ->paginate(10),
+                'status' => Session::get('status'),
+            );
+            return View::make('admin/role/list', $data);
         }
         return App::abort(403, 'Forbidden');
     }
@@ -39,7 +66,9 @@ class AdminRoleController extends BaseController
      */
     public function getNew()
     {
-        if (!$this->p->canI('createRole')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('createRole')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $data = array(
             'caps' => Capability::all(),
@@ -50,13 +79,15 @@ class AdminRoleController extends BaseController
     /**
      * Role edit view
      *
-     * @params roleid
+     * @param int $id role_id
      *
      * @return view
      */
     public function getEdit($id)
     {
-        if (!$this->p->canI('updateRole')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('updateRole')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $data = array(
             'role' => Role::find($id),
@@ -72,14 +103,16 @@ class AdminRoleController extends BaseController
      */
     public function postCreate()
     {
-        if (!$this->p->canI('createRole')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('createRole')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), Role::defaultRules());
 
         if ($v->fails()) {
-          return Redirect::to('admin/role/new')
-                  ->withErrors($v)
-                  ->withInput();
+            return Redirect::to('admin/role/new')
+                    ->withErrors($v)
+                    ->withInput();
         }
 
         $role = new Role();
@@ -95,33 +128,39 @@ class AdminRoleController extends BaseController
     /**
      * Update role action
      *
+     * @param int $id role_id
+     *
      * @return redirect
      */
     public function postUpdate($id)
     {
-        if (!$this->p->canI('updateRole')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('updateRole')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), Role::defaultRules());
 
         if ($v->fails()) {
-          return Redirect::to('admin/role/edit/'.$id)
-                  ->withErrors($v)
-                  ->withInput();
+            return Redirect::to('admin/role/edit/'.$id)
+                    ->withErrors($v)
+                    ->withInput();
         }
 
         if ($role = Role::find($id)) {
-          $role->name = Input::get('name');
-          $role->save();
-          if (Input::get('caps')) {
-              $role->capabilities()->sync(Input::get('caps'));
-          }
-          return Redirect::to('admin/role/list')
-                  ->with('status', 'Role '.$role->name.' updated.');
+            $role->name = Input::get('name');
+            $role->save();
+            if (Input::get('caps')) {
+                $role->capabilities()->sync(Input::get('caps'));
+            }
+            return Redirect::to('admin/role/list')
+                    ->with('status', 'Role '.$role->name.' updated.');
         }
     }
 
     /**
      * Delete role action
+     *
+     * @param int $id role_id
      *
      * @return redirect
      */

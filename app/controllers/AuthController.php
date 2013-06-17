@@ -1,6 +1,33 @@
 <?php
+/**
+ * AuthController
+ *
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 
-class AuthController extends BaseController 
+
+/**
+ * Class AuthController
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
+class AuthController extends BaseController
 {
 
     /**
@@ -8,9 +35,11 @@ class AuthController extends BaseController
      *
      * @return view
      */
-    public function getLogin() 
+    public function getLogin()
     {
-        if (!Auth::guest()) return Redirect::to('/'); 
+        if (!Auth::guest()) {
+            return Redirect::to('/');
+        }
         return View::make('auth/login');
     }
 
@@ -19,7 +48,7 @@ class AuthController extends BaseController
      *
      * @return redirect
      */
-    public function getLogout() 
+    public function getLogout()
     {
         Auth::logout();
         return Redirect::to('login');
@@ -30,9 +59,11 @@ class AuthController extends BaseController
      *
      * @return redirect
      */
-    public function getForgot() 
+    public function getForgot()
     {
-        if (!Auth::guest()) return Redirect::to('/'); 
+        if (!Auth::guest()) {
+            return Redirect::to('/');
+        }
         return View::make('auth/forgot');
     }
 
@@ -43,8 +74,14 @@ class AuthController extends BaseController
      */
     public function getNewPassword()
     {
-        if (!Auth::guest()) return Redirect::to('/'); 
-        if (!Input::has('token')) return Redirect::to('/');
+        if (!Auth::guest()) {
+            return Redirect::to('/');
+        }
+
+        if (!Input::has('token')) {
+            return Redirect::to('/');
+        }
+
         if (!User::where('confirmation_code', '=', Input::get('token'))->first()) {
             return Redirect::to('/');
         }
@@ -62,7 +99,7 @@ class AuthController extends BaseController
      *
      * @return redirect
      */
-    public function postTry() 
+    public function postTry()
     {
         $userdata = array(
             'email' => Input::get('email'),
@@ -83,13 +120,13 @@ class AuthController extends BaseController
                       ->with('login_errors', true);
         }
     }
-    
+
     /**
      * Send forgot password action
      *
      * @return redirect
      */
-    public function postSendmail() 
+    public function postSendmail()
     {
         $v = Validator::make(Input::all(), User::forgotPassword());
 
@@ -98,18 +135,20 @@ class AuthController extends BaseController
                             ->withErrors($v)
                             ->withInput();
         }
-    
+
         if ($user = User::where('email', '=', Input::get('email'))->first()) {
-            $rnd = $this->genRndstr();
+            $rnd = $this->_genRndStr();
             $user->confirmation_code = substr(Hash::make($rnd.$user->email), 7);
             $user->save();
             $data = array(
               'token' => $user->confirmation_code,
             );
-            Mail::send('emails.auth.reminder', $data, function($message) use ($user){
-                $message->to($user->email, $user->username)
+            Mail::send(
+                'emails.auth.reminder', $data, function ($message) use ($user) {
+                    $message->to($user->email, $user->username)
                         ->subject('Reset email for ...');
-            });
+                }
+            );
             return Redirect::to('/');
         }
         return Redirect::to('/');
@@ -122,11 +161,17 @@ class AuthController extends BaseController
      */
     public function postSetnewpass()
     {
-        if (!Input::has('confirmcode')) return Redirect::to('/');
-        if (!$user = User::where('confirmation_code', '=', Input::get('confirmcode'))->first()) {
+        if (!Input::has('confirmcode')) {
             return Redirect::to('/');
         }
-        
+
+        $cD = Input::get('confirmcode');
+
+        if (!$user = User::where('confirmation_code', '=', $cD)->first()
+        ) {
+            return Redirect::to('/');
+        }
+
         $v = Validator::make(Input::all(), User::passwordRules());
         if ($v->fails()) {
             return Redirect::back()
@@ -143,9 +188,11 @@ class AuthController extends BaseController
     /**
      * Generate random string
      *
+     * @param int $len return length
+     *
      * @return string
      */
-    private function genRndstr($len = 32) 
+    private function _genRndStr($len = 32)
     {
         $char  = "0123456789abcdefghijklmnopqrs";
         $char .= "iuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

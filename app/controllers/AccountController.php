@@ -1,22 +1,22 @@
 <?php
 /**
  * AccountController
- * 
+ *
  * PHP version 5.4
  *
  * @category Development
  * @package  BaseController
  * @author   Alexander Skjolden <alex@plastboks.net>
  * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
- * 
+ *
  * @link     http://github.com/plastboks/red-panda-blog
  * @date     2013-06-17
- * 
+ *
  */
 
 
 /**
- * AccountController class for handling accounts.
+ * Class AccountController
  *
  * @category Development
  * @package  BaseController

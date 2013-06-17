@@ -1,6 +1,33 @@
 <?php
+/**
+ * File: InstallController
+ *
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 
-class InstallController extends BaseController 
+
+/**
+ * Class InstallController
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
+class InstallController extends BaseController
 {
 
     /**
@@ -8,12 +35,13 @@ class InstallController extends BaseController
      *
      * @return view
      */
-    public function getIndex() 
+    public function getIndex()
     {
         if (User::first()) {
             return Redirect::to('/')
                       ->with('status', 'Users exists');
         }
+
         $data = array(
             'status' => Session::get('status'),
             'username' => Session::get('username'),
@@ -27,7 +55,7 @@ class InstallController extends BaseController
      *
      * @return redirect
      */
-    public function postCreateuser() 
+    public function postCreateuser()
     {
         if (User::first()) {
             return Redirect::to('/')
