@@ -1,36 +1,63 @@
-<?php 
+<?php
+/**
+ * AccountController
+ * 
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ * 
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ * 
+ */
 
-class AccountController extends BaseController 
+
+/**
+ * AccountController class for handling accounts.
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
+class AccountController extends BaseController
 {
-    
+
     /**
      * Sets persmission and loads the parents contruct
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
         Route::filter('before', 'auth');
     }
 
     /**
-     * Index view 
+     * Index view
      *
      * @return view
      */
-    public function getIndex() 
+    public function getIndex()
     {
         Route::filter('before', 'auth');
         return View::make('account/welcome');
     }
 
     /**
-     * Profile view 
+     * Profile view
      *
      * @return view
      */
-    public function getProfile() 
+    public function getProfile()
     {
         $data = array(
             'user' => Auth::user(),
@@ -40,11 +67,11 @@ class AccountController extends BaseController
     }
 
     /**
-     * Password view 
+     * Password view
      *
      * @return view
      */
-    public function getPassword() 
+    public function getPassword()
     {
             $data = array(
                 'error' => Session::get('error'),
@@ -58,7 +85,7 @@ class AccountController extends BaseController
      *
      * @return view
      */
-    public function getMyposts() 
+    public function getMyposts()
     {
         $user = User::find(Auth::user()->id);
         $data = array(
@@ -66,13 +93,13 @@ class AccountController extends BaseController
         );
         return View::make('account/myposts', $data);
     }
-    
+
     /**
      * Update user action
      *
      * @return redirect
      */
-    public function postUpdate() 
+    public function postUpdate()
     {
         $user = Auth::user();
 
@@ -103,7 +130,7 @@ class AccountController extends BaseController
      *
      * @return redirect
      */
-    public function postChangepassword() 
+    public function postChangepassword()
     {
         $user = User::find(Auth::user()->id);
 

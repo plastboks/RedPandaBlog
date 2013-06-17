@@ -1,24 +1,51 @@
 <?php
+/**
+ * File: AdminPostController
+ * 
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ * 
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ * 
+ */
 
+
+/**
+ * Class AdminPostController
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 class AdminPostController extends BaseController
 {
 
-	/**
-	 * Sets permisssions and loads parent construct
-	 *
-	 * @return void
-	 */
+    /**
+     * Sets permisssions and loads parent construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct();
         Route::filter('before', array('auth'));
     }
 
-	/**
-	 * Post list (published)
-	 *
-	 * @return view
-	 */
+    /**
+     * Post list (published)
+     *
+     * @return view
+     */
     public function getList()
     {
         $data = array(
@@ -31,11 +58,11 @@ class AdminPostController extends BaseController
         return View::make('admin/post/list', $data);
     }
 
-	/**
-	 * Post unpublished
-	 *
-	 * @return view
-	 */
+    /**
+     * Post unpublished
+     *
+     * @return view
+     */
     public function getUnpublished()
     {
         $data = array(
@@ -48,14 +75,16 @@ class AdminPostController extends BaseController
         return View::make('admin/post/list', $data);
     }
 
-	/**
-	 * New post view
-	 *
-	 * @return view
-	 */
+    /**
+     * New post view
+     *
+     * @return view
+     */
     public function getNew()
     {
-        if (!$this->p->canI('createPost')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('createPost')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $data = array(
             'user' => Auth::user(),
@@ -64,14 +93,16 @@ class AdminPostController extends BaseController
         return View::make('admin/post/new', $data);
     }
 
-	/**
-	 * Create post action
-	 *
-	 * @return redirect
-	 */
+    /**
+     * Create post action
+     *
+     * @return redirect
+     */
     public function postCreate()
     {
-        if (!$this->p->canI('createPost')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('createPost')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), Post::defaultRules());
 
@@ -98,16 +129,19 @@ class AdminPostController extends BaseController
         return Redirect::to('post/view/'.$post->id);
     }
 
-	/**
-	 * Post edit view
-	 *
-   * @params postid
-   *
-	 * @return view
-	 */
+    /**
+     * Post edit view
+     *
+     * @param int $id post_id
+     *
+     * @return view
+     */
     public function getEdit($id)
     {
-        if (!$this->p->canI('updatePost')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('updatePost')) {
+            return App::abort(403, 'Forbidden');
+        }
+
         $data = array(
             'post' => Post::find($id),
             'user' => Auth::user(),
@@ -116,16 +150,18 @@ class AdminPostController extends BaseController
         return View::make('admin/post/edit', $data);
     }
 
-	/**
-	 * Update post action
-	 *
-   * @params postid
-   *
-	 * @return view
-	 */
+    /**
+     * Update post action
+     *
+     * @param int $id post_id
+     *
+     * @return view
+     */
     public function postUpdate($id)
     {
-        if (!$this->p->canI('updatePost')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('updatePost')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), Post::defaultRules());
 
@@ -152,17 +188,18 @@ class AdminPostController extends BaseController
         }
     }
 
-	/**
-	 * Publish post action
-	 *
-   * @params postid
-   *
-	 * @return redirect
-	 */
+    /**
+     * Publish post action
+     *
+     * @param int $id post_id
+     *
+     * @return redirect
+     */
     public function getPublish($id)
     {
-        if (($this->p->canI('publishPost')) &&
-            ($post = Post::find($id))) {
+        if (($this->p->canI('publishPost'))
+            && ($post = Post::find($id))
+        ) {
 
             $post->published = 1;
             $post->save();
@@ -170,33 +207,37 @@ class AdminPostController extends BaseController
         return Redirect::to('admin/post/unpublished');
     }
 
-	/**
-	 * Unpublish post action
-	 *
-   * @params postid
-   *
-	 * @return redirect
-	 */
+    /**
+     * Unpublish post action
+     *
+     * @param int $id post_id
+     *
+     * @return redirect
+     */
     public function getUnpublish($id)
     {
-        if (($this->p->canI('unpublishPost')) &&
-            ($post = Post::find($id))) {
+        if (($this->p->canI('unpublishPost'))
+            && ($post = Post::find($id))
+        ) {
 
-            $post->published = NULL;
+            $post->published = null;
             $post->save();
         }
         return Redirect::to('admin/post/list');
     }
 
-	/**
-	 * Delete post action
-	 *
-	 * @return redirect
-	 */
+    /**
+     * Delete post action
+     *
+     * @param int $id category_id
+     *
+     * @return redirect
+     */
     public function getDelete($id)
     {
-        if (($this->p->canI('deletePost')) &&
-            ($post = Post::find($id))) {
+        if (($this->p->canI('deletePost'))
+            && ($post = Post::find($id))
+        ) {
 
             if ($post->categories()) {
                 $post->categories()->delete();

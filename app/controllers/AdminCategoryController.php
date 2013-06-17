@@ -1,5 +1,32 @@
 <?php
+/**
+ * File: AdminCategoryController
+ * 
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ * 
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ * 
+ */
 
+
+/**
+ * Class AdminCategoryController
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 class AdminCategoryController extends BaseController
 {
     /**
@@ -35,7 +62,9 @@ class AdminCategoryController extends BaseController
      */
     public function getNew()
     {
-        if (!$this->p->canI('createCategory')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('createCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         return View::make('admin/category/new');
     }
@@ -43,13 +72,15 @@ class AdminCategoryController extends BaseController
     /**
      * Edit category view
      *
-     * @params categoryid
+     * @param int $id category_id
      *
      * @return view
      */
     public function getEdit($id)
     {
-        if (!$this->p->canI('updateCategory')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('updateCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $data = array(
             'category' => Category::find($id),
@@ -64,7 +95,9 @@ class AdminCategoryController extends BaseController
      */
     public function postCreate()
     {
-        if (!$this->p->canI('createCategory')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('createCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), Category::defaultRules());
 
@@ -86,13 +119,15 @@ class AdminCategoryController extends BaseController
     /**
      * Update category action
      *
-     * @params categoryid
+     * @param int $id category_id
      *
      * @return redirect
      */
     public function postUpdate($id)
     {
-        if (!$this->p->canI('updateCategory')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('updateCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         $v = Validator::make(Input::all(), Category::defaultRules());
 
@@ -114,13 +149,15 @@ class AdminCategoryController extends BaseController
     /**
      * Category search view
      *
-     * @params categoryid
+     * @param int $id category_id
      *
      * @return view
      */
     public function postDelete($id)
     {
-        if (!$this->p->canI('deleteCategory')) return App::abort(403, 'Forbidden');
+        if (!$this->p->canI('deleteCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
 
         if (($cat = Category::find($id)) && (!Category::find($id)->posts()->get())) {
             $cat->delete();
