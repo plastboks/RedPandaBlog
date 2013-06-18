@@ -1,5 +1,32 @@
 <?php
+/**
+ * PermissionModel
+ *
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 
+
+/**
+ * Class Permission
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 class Permission extends Eloquent
 {
 
@@ -27,13 +54,15 @@ class Permission extends Eloquent
     /**
      * Class construct
      *
+     * @param int $user user_id
+     *
      * @return void
      */
     public function __construct($user)
     {
         if ($user) {
             $this->user = User::find($user->id);
-            $this->loadCapabilities();
+            $this->_loadCapabilities();
         }
     }
 
@@ -42,7 +71,8 @@ class Permission extends Eloquent
      *
      * @return void
      */
-    private function loadCapabilities() {
+    private function _loadCapabilities()
+    {
         $this->myCaps = $this->user->caps();
         $this->myRole = $this->user->role()->name;
     }
@@ -50,10 +80,17 @@ class Permission extends Eloquent
     /**
      * Default form rule
      *
+     * @param string $function function string
+     *
+     * @usage `canI('editPosts)`
+     *
      * @return array
      */
-    public function canI($function) {
-        if ($this->myRole == 'admin') return true;
+    public function canI($function)
+    {
+        if ($this->myRole == 'admin') {
+            return true;
+        }
 
         foreach ($this->myCaps as $cap) {
             if ($cap->name == $function) {

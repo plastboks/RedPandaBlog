@@ -1,8 +1,35 @@
 <?php
+/**
+ * UserModel
+ *
+ * PHP version 5.4
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
+
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
+/**
+ * Class User
+ *
+ * @category Development
+ * @package  BaseController
+ * @author   Alexander Skjolden <alex@plastboks.net>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
+ *
+ * @link     http://github.com/plastboks/red-panda-blog
+ * @date     2013-06-17
+ *
+ */
 class User extends Eloquent implements UserInterface, RemindableInterface
 {
 
@@ -83,14 +110,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     /**
      * Default form rule
      *
+     * @param int $id user_id
+     *
      * @return array
      */
-    public static function defaultRules($selfID = false)
+    public static function defaultRules($id = false)
     {
-        if ($selfID) {
+        if ($id) {
             return array(
-                'username' => "required|min:3|max:32|unique:users,username,{$selfID}",
-                'email'    => "required|email|max:64|unique:users,email,{$selfID}",
+                'username' => "required|min:3|max:32|unique:users,username,{$id}",
+                'email'    => "required|email|max:64|unique:users,email,{$id}",
                 'givenname' => 'max:32',
                 'surname' => 'max:48',
                 'info' => 'max:512',
