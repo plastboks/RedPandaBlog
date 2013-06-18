@@ -97,7 +97,9 @@ App::missing(function($exception)
 App::singleton('settings', function()
 {
     $s = new Setting;
-    $s->loadSettings($s->all());
+    if (Schema::hasTable('settings')) {
+        $s->loadSettings($s->all());
+    }
     return $s;
 });
 

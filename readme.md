@@ -16,11 +16,11 @@ The purpose of this is just self educational work with Laravel.
 
 Installation
 ============
-
 Point your webserver at the /public folder.
 
 * Run `composer install`
 * Setup database in app/config/database.php
+* If using sqlite touch a file in app/database (eg: `touch app/database/production.sqlite`)
 * Generate app key via `php artisan key:generate` 
 * Run `php artisan migrate`
 * Goto http://hostname/install to create a new admin user
@@ -30,4 +30,4 @@ Point your webserver at the /public folder.
 
 Issues
 ======
-
+No known issues.
