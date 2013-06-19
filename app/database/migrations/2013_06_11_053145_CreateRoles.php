@@ -15,8 +15,6 @@ class CreateRoles {
       $table->string('name');
       $table->timestamps();
     });
-
-    DB::table('roles')->insert(array('name' => 'admin'));
 	}
 
 	/**

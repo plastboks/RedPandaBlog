@@ -15,40 +15,6 @@ class CreateCapabilities {
       $table->string('name');
       $table->timestamps();
     });
-
-    $stdCapabilites =  array(
-                                // posts
-                                'createPost',
-                                'updatePost',
-                                'publishPost',
-                                'unpublishPost',
-                                'changePostState',
-                                'deletePost',
-                                // categories
-                                'createCategory',
-                                'updateCategory',
-                                'deleteCategory',
-                                // users
-                                'seeUsers',
-                                'createUser',
-                                'updateUser',
-                                'deleteUser',
-                                'blockUser',
-                                'unblockUser',
-                                // roles
-                                'seeRoles',
-                                'createRole',
-                                'updateRole',
-                                'deleteRole',
-                                // other
-                                'siteSettings',
-                            );
-    foreach ($stdCapabilites as $cap) {
-      DB::table('capabilities')->insert(array(
-                                       'name' => $cap,
-                                      ));
-    }
-
   }
 
   /**
