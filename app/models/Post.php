@@ -58,6 +58,16 @@ class Post extends Eloquent
     }
 
     /**
+     * Get post images
+     *
+     * @return object
+     */
+    public function images()
+    {
+        return $this->belongsToMang('Image');
+    }
+
+    /**
      * Default form rules
      *
      * @return array
