@@ -85,6 +85,13 @@ Route::post('admin/post/update/{id}',
                 'uses' => 'AdminPostController@postUpdate'));
 
 /**
+ * Admin Image routes
+ */
+Route::get('admin/image/list',
+            array(
+                'uses' => 'AdminImageController@getList'));
+
+/**
  * Admin Category routes
  */
 Route::get('admin/category/list',
