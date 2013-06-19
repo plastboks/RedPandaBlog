@@ -22,7 +22,11 @@
     @foreach ($roles as $role)
       <tr>
         <td class="title">{{ $role->name }}</td>
-        <td class="count">{{ count($role->capabilities()->get()) }}</td>
+        @if ($role->name == 'admin')
+          <td class="count">All</td>
+        @else
+          <td class="count">{{ count($role->capabilities()->get()) }}</td>
+        @endif
         <td class="count">{{ count($role->users()->get()) }}</td>
         <td class="action">
           <ul>
