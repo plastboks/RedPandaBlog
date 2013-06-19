@@ -16,11 +16,6 @@ class CreateConfig {
       $table->string('meta_value');
       $table->timestamps();
     });
-
-    DB::table('settings')->insert(array(
-                                      'meta_key' => 'blogName',
-                                      'meta_value' => 'Red Panda Blog',
-                                    ));
   }
 
   /**

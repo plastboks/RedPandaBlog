@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder {
         Eloquent::unguard();
 
         $this->call('CapabilitySeeder');
+        $this->call('SettingsSeeder');
         $this->call('RoleSeeder');
     }
 
@@ -59,6 +60,27 @@ class CapabilitySeeder extends Seeder
             Capability::create(array(
                 'id' => $id,
                 'name' => $cap,
+                'created_at' => new DateTime,
+                'updated_at' => new DateTime,
+            ));
+        }
+    }
+}
+
+class SettingsSeeder extends Seeder
+{
+    protected $stdSettings = array(
+                                  1 => array('blogName', 'Red Panda Blog'),
+                               );
+
+    public function run()
+    {
+        DB::table('settings')->delete();
+        foreach ($this->stdSettings as $id => $settings) {
+            Setting::create(array(
+                'id' => $id,
+                'meta_key' => $settings[0],
+                'meta_value' => $settings[1],
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime,
             ));
