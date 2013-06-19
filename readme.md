@@ -32,7 +32,7 @@ Point your webserver at the /public folder.
 Branches
 ========
 There will mainly be two branches in this repo (@github) at all times. The master and develop branch.
-The master branch will be kept back feature wise of the develop branch. This to ensure stability of the master branch.
+The master branch will be kept back featurewise of the develop branch. This is to ensure the stability of the master branch.
 
 
 Todos
