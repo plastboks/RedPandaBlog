@@ -49,7 +49,6 @@ Most of the plans for this blog is kept as issues and milestones on Github. A sm
 * Captcha
 * Document...
 
-
 Upgrading
 =========
 Be careful using `php artisan db:seed` when upgrading. This routine is programmed to delete existing records in the database.
@@ -57,6 +56,3 @@ Be careful using `php artisan db:seed` when upgrading. This routine is programme
 * Run `php artisan db:seed`
 
 
-Issues
-======
-No known issues (master).
