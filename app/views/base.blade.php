@@ -18,12 +18,8 @@
     </div>
     <div class="primarynav">
       <ul>
-      @section('primarynav')
-        @if (!Auth::guest())
-          <li>{{ HTML::link('account', 'Account') }}</li>
-          <li>{{ HTML::link('admin', 'Admin') }}</li>
-        @endif
-      @show
+        @section('primarynav')
+        @show
       </ul>
     </div>
     <div class="secondarynav">
@@ -36,13 +32,11 @@
   <div id="content">
     @yield('content')
   </div>
+  <div id="sidebar" class="round5">
+    @include('sidebar')
+  </div>
   <div id="footer">
     <span>{{ $s->footer }}</span>
-    @if (Auth::guest())
-      {{ HTML::link('login', 'Login') }}
-    @else 
-      {{ HTML::link('logout', 'Logout') }}
-    @endif
   </div>
 </body>
 </html>
