@@ -47,4 +47,16 @@ class Image extends Eloquent
         return $this->belongsToMany('Post');
     }
 
+    /**
+     * Image form default rules
+     *
+     * @return object
+     */
+    public static function defaultRules()
+    {
+        return array(
+            'title'  => 'required|alpha_dash|min:2|max:32',
+            'image' => 'image|max:3000',
+        );
+    }
 }

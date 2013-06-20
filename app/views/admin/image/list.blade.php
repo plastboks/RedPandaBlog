@@ -19,7 +19,6 @@
             {{ HTML::link('image/view/'.$image->id, $image->title) }}
         </td>
         <td class="date">{{ $image->created_at }}</td>
-        <td class="author">{{ $image->author->username }}</td>
         <td class="action">
           <ul>
             @if ($p->canI('updateImage'))

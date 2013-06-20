@@ -82,7 +82,30 @@ class AdminImageController extends BaseController
      */
     public function postCreate()
     {
-        return Redirect::back();
+        if (!$this->p->canI('createImage')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $v = Validator::make(Input::all(), Image::defaultRules());
+
+        if ($v->fails()) {
+            return Redirect::back()
+                      ->withErrors($v)
+                      ->withInput();
+        }
+
+        $file = Input::file('image');
+        $filename = $file->getClientOriginalName();
+        $file->move('uploads/', str_random(8).'-'.$filename);
+
+        $image = new Image;
+        $image->title = Input::get('title');
+        $image->uploader = Auth::user()->id;
+        $image->filename = $filename;
+
+        $image->save();
+         
+        return Redirect::to('admin/image/list');
     }
 
     /**
