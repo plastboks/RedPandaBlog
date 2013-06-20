@@ -49,7 +49,7 @@ class AdminImageController extends BaseController
     public function getList()
     {
         $data = array(
-            'images' => Post::orderBy('created_at', 'desc')
+            'images' => Image::orderBy('created_at', 'desc')
                                 ->paginate(10),
         );
         return View::make('admin/image/list', $data);

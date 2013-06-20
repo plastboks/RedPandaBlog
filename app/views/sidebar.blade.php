@@ -1,9 +1,11 @@
 @unless (Auth::guest())
+<h2>Account</h2>
 <ul id="accountmenu">
   <li>{{ HTML::link('account/profile', 'Profile') }}</li>
   <li>{{ HTML::link('account/password', 'Password') }}</li>
   <li>{{ HTML::link('account/myposts', 'My Posts') }}</li>
 </ul>
+<h2>Admin</h2>
 <ul id="adminmenu">
   @if ($p->canI('settings'))
   <li>{{ HTML::link('admin/settings', 'Settings') }}</li>

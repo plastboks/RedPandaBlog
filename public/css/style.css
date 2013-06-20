@@ -258,12 +258,13 @@ a {
   margin: 55px 15px 15px 15px;
   padding: 10px;
   background: ghostwhite;
+  border: 1px solid powderblue;
   float: left;
 }
 
 #sidebar ul {
   list-style: none;
-  padding: 2px;
+  padding: 0px 15px;
 }
 
 
