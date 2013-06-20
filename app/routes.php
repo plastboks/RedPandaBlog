@@ -90,6 +90,20 @@ Route::post('admin/post/update/{id}',
 Route::get('admin/image/list',
             array(
                 'uses' => 'AdminImageController@getList'));
+Route::get('admin/image/new',
+            array(
+                'uses' => 'AdminImageController@getNew'));
+Route::get('admin/image/edit',
+            array(
+                'uses' => 'AdminImageController@getEdit'));
+Route::post('admin/image/create',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminImageController@postCreate'));
+Route::post('admin/image/update',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminImageController@postUpdate'));
 
 /**
  * Admin Category routes

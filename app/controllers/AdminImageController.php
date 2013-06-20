@@ -54,6 +54,45 @@ class AdminImageController extends BaseController
         );
         return View::make('admin/image/list', $data);
     }
+    
+    /**
+     * New image
+     *
+     * @return view
+     */
+    public function getNew()
+    {
+        return View::make('admin/image/new');
+    }
 
+    /**
+     * Edit image
+     *
+     * @return view
+     */
+    public function getEdit()
+    {
+        return View::make('admin/image/edit');
+    }
+
+    /**
+     * Post create image
+     *
+     * @return view
+     */
+    public function postCreate()
+    {
+        return Redirect::back();
+    }
+
+    /**
+     * Post update image
+     *
+     * @return view
+     */
+    public function postUpdate()
+    {
+        return Redirect::back();
+    }
 }
 

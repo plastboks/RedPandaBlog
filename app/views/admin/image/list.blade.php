@@ -2,7 +2,9 @@
 @section('content')
   <h1>Images</h1>
   <ul class="thirdmenu">
+    <li>{{ HTML::link('admin/image/new', 'Add new') }}</li>
   </ul>
+  <h3>Images</h3>
   <div class="tablewrapper round5">
     <table class="list imagelist publishedimages">
     <thead>
