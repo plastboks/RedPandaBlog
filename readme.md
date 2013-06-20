@@ -48,7 +48,3 @@ Most of the plans for this blog is kept as issues and milestones on Github. A sm
 * Captcha
 * Document...
 
-
-Issues
-======
-No known issues (master).
