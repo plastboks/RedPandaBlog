@@ -38,7 +38,7 @@ class AccountController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        Route::filter('before', 'auth');
+        $this->beforeFilter('auth');
     }
 
     /**
@@ -48,7 +48,6 @@ class AccountController extends BaseController
      */
     public function getIndex()
     {
-        Route::filter('before', 'auth');
         return View::make('account/welcome');
     }
 

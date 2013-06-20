@@ -38,7 +38,7 @@ class AdminPostController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        Route::filter('before', array('auth'));
+        $this->beforeFilter('auth');
     }
 
     /**

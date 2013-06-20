@@ -1,6 +1,7 @@
 Red Panda Blog
 ==============
-Red panda blog got its name from the 'Code happy' book for Laravel 3 (http://codehappy.daylerees.com/). Although the project has evolved since then, it is where it all began.
+Red panda blog got its name from the 'Code happy' book for Laravel 3 (http://codehappy.daylerees.com/). Although the project has evolved since then, it is where it all began. Red panda blog is now a Laravel 4 only.
+
 
 Description
 ===========
@@ -9,10 +10,10 @@ This is just a simple blog written with the Laravel framework, with features lik
   * Site settings.
   * Users and roles.
   * Permissions and capabilities.
-  * Categories and tags.
-  * Images.
+  * Categories
 
 The purpose of this is just self educational work with Laravel. 
+
 
 Installation
 ============
@@ -26,7 +27,27 @@ Point your webserver at the /public folder.
 * Run `php artisan db:seed`
 * Goto http://hostname/install to create a new admin user
 * Login via http://hostname/login
-* Success :)
+* Success :-)
+
+
+Branches
+========
+There will mainly be two branches in this repo (@github) at all times. The master and develop branch.
+The master branch will be kept back featurewise of the develop branch. This is to ensure the stability of the master branch.
+
+
+Todos
+=====
+Most of the plans for this blog is kept as issues and milestones on Github. A small feature list follows:
+
+* Images
+* Tags alongside categories
+* OpenID login
+* Gravatar
+* Comments
+* User registration
+* Captcha
+* Document...
 
 
 Upgrading
@@ -38,4 +59,4 @@ Be careful using `php artisan db:seed` when upgrading. This routine is programme
 
 Issues
 ======
-No known issues.
+No known issues (master).
