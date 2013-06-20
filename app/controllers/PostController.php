@@ -39,7 +39,6 @@ class PostController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        Route::filter('before', 'auth');
     }
 
     /**

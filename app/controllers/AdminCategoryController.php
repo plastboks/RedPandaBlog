@@ -37,7 +37,7 @@ class AdminCategoryController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        Route::filter('before', 'auth');
+        $this->beforeFilter('auth');
     }
 
     /**
