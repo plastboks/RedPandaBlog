@@ -51,6 +51,8 @@ class AdminImageController extends BaseController
         $data = array(
             'images' => Image::orderBy('created_at', 'desc')
                                 ->paginate(10),
+            'status' => Session::get('status'),
+            'error' => Session::get('error'),
         );
         return View::make('admin/image/list', $data);
     }
@@ -70,9 +72,49 @@ class AdminImageController extends BaseController
      *
      * @return view
      */
-    public function getEdit()
+    public function getEdit($id)
     {
-        return View::make('admin/image/edit');
+        if (!$this->p->canI('editImage')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$image = Image::find($id)) {
+            return Redirect::to('admin/image/list')
+                      ->with('error', 'Unknown image');
+        }
+
+        $data = array(
+            'image' => $image,
+        );
+        return View::make('admin/image/edit', $data);
+    }
+
+    /**
+     * Post update image
+     *
+     * @return view
+     */
+    public function getDelete($id)
+    {
+        if (!$this->p->canI('deleteImage')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$image = Image::find($id)) {
+            return Redirect::to('admin/image/list')
+                      ->with('error', 'Unknown image');
+        }
+        
+        if (count($image->posts()->get())) {
+            $errorMsg = 'You cannot delete an image that is connected to posts';
+            return Redirect::back()
+                      ->with('error', $errorMsg);
+        }
+
+        $image->delete();
+
+        return Redirect::back()
+                  ->with('status', 'Image '.$image->title.' deleted');
     }
 
     /**
@@ -105,7 +147,8 @@ class AdminImageController extends BaseController
 
         $image->save();
          
-        return Redirect::to('admin/image/list');
+        return Redirect::to('admin/image/list')
+                  ->with('status', 'New image '.$image->title.' created');
     }
 
     /**
@@ -113,9 +156,31 @@ class AdminImageController extends BaseController
      *
      * @return view
      */
-    public function postUpdate()
+    public function postUpdate($id)
     {
-        return Redirect::back();
+        if (!$this->p->canI('editImage')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $v = Validator::make(Input::all(), Image::defaultRules());
+
+        if ($v->fails()) {
+            return Redirect::back()
+                      ->withErrors($v)
+                      ->withInput();
+        }
+        
+        if ($image = Image::find($id)) {
+            $image->title = Input::get('title');
+            $image->save();
+            
+            return Redirect::to('admin/image/list')
+                      ->with('status', 'Image '.$image->title.' updated');
+        }
+
+        return Redirect::back()
+                  ->with('error', 'Unknown image');
     }
+
 }
 

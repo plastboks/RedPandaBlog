@@ -93,14 +93,17 @@ Route::get('admin/image/list',
 Route::get('admin/image/new',
             array(
                 'uses' => 'AdminImageController@getNew'));
-Route::get('admin/image/edit',
+Route::get('admin/image/edit/{id}',
             array(
                 'uses' => 'AdminImageController@getEdit'));
+Route::get('admin/image/delete/{id}',
+           array(
+               'uses' => 'AdminImageController@getDelete'));
 Route::post('admin/image/create',
             array(
                 'before' => 'csrf',
                 'uses' => 'AdminImageController@postCreate'));
-Route::post('admin/image/update',
+Route::post('admin/image/update/{id}',
             array(
                 'before' => 'csrf',
                 'uses' => 'AdminImageController@postUpdate'));

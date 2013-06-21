@@ -8,9 +8,9 @@ Edit Image
         {{ Form::token() }}
 
         <!-- name field -->
-        <p>{{ Form::label('name', 'Name') }}</p>
-        {{ $errors->first('name', '<p class="error">:message</p>') }}
-        <p>{{ Form::text('name', $image->name) }}</p>
+        <p>{{ Form::label('title', 'Title') }}</p>
+        {{ $errors->first('title', '<p class="error">:message</p>') }}
+        <p>{{ Form::text('title', $image->title) }}</p>
 
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>
