@@ -70,6 +70,8 @@ class AdminImageController extends BaseController
     /**
      * Edit image
      *
+     * @param int $id image_id
+     *
      * @return view
      */
     public function getEdit($id)
@@ -91,6 +93,8 @@ class AdminImageController extends BaseController
 
     /**
      * Post update image
+     *
+     * @param int $id image_id
      *
      * @return view
      */
@@ -138,12 +142,14 @@ class AdminImageController extends BaseController
 
         $file = Input::file('image');
         $filename = $file->getClientOriginalName();
-        $file->move('uploads/', str_random(8).'-'.$filename);
+        $newFilename = str_random(8).'-'.$filename;
+
+        $file->move('uploads/', $newFilename);
 
         $image = new Image;
         $image->title = Input::get('title');
         $image->uploader = Auth::user()->id;
-        $image->filename = $filename;
+        $image->filename = $newFilename;
 
         $image->save();
          
@@ -153,6 +159,8 @@ class AdminImageController extends BaseController
 
     /**
      * Post update image
+     *
+     * @param int $id image_id
      *
      * @return view
      */
