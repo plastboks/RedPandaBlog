@@ -125,7 +125,7 @@ class AuthController extends BaseController
         $v = Validator::make(Input::all(), User::forgotPassword());
 
         if ($v->fails()) {
-            return Redirect::to('auth/forgot')
+            return Redirect::back()
                             ->withErrors($v)
                             ->withInput();
         }

@@ -103,7 +103,7 @@ class AdminCategoryController extends BaseController
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
-            return Redirect::to('admin/category/new')
+            return Redirect::back()
                     ->withErrors($v)
                     ->withInput();
         }
@@ -133,7 +133,7 @@ class AdminCategoryController extends BaseController
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
-            return Redirect::to('admin/category/edit/'.$id)
+            return Redirect::back()
                     ->withErrors($v)
                     ->withInput();
         }

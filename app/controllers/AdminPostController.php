@@ -94,42 +94,6 @@ class AdminPostController extends BaseController
     }
 
     /**
-     * Create post action
-     *
-     * @return redirect
-     */
-    public function postCreate()
-    {
-        if (!$this->p->canI('createPost')) {
-            return App::abort(403, 'Forbidden');
-        }
-
-        $v = Validator::make(Input::all(), Post::defaultRules());
-
-        if ($v->fails()) {
-            return Redirect::to('admin/post/new')
-                      ->with('user', Auth::user())
-                      ->withErrors($v)
-                      ->withInput();
-        }
-
-        $post = new Post();
-        $post->title = Input::get('title');
-        $post->excerpt = Input::get('excerpt');
-        $post->body = Input::get('body');
-        $post->author_id = Input::get('author_id');
-        if ($this->p->canI('publishPost')) {
-            $post->published = Input::get('published');
-        }
-        $post->save();
-        if (Input::get('category')) {
-            $post->categories()->sync(Input::get('category'));
-        }
-
-        return Redirect::to('post/view/'.$post->id);
-    }
-
-    /**
      * Post edit view
      *
      * @param int $id post_id
@@ -148,46 +112,6 @@ class AdminPostController extends BaseController
             'categories' => Category::all(),
         );
         return View::make('admin/post/edit', $data);
-    }
-
-    /**
-     * Update post action
-     *
-     * @param int $id post_id
-     *
-     * @return view
-     */
-    public function postUpdate($id)
-    {
-        if (!$this->p->canI('updatePost')) {
-            return App::abort(403, 'Forbidden');
-        }
-
-        $v = Validator::make(Input::all(), Post::defaultRules());
-
-        if ($v->fails()) {
-            return Redirect::to('admin/post/edit/'.$id)
-                      ->with('user', Auth::user())
-                      ->withErrors($v)
-                      ->withInput();
-        }
-
-        if ($post = Post::find($id)) {
-            $post->title = Input::get('title');
-            $post->excerpt = Input::get('excerpt');
-            $post->body = Input::get('body');
-            $post->author_id = Input::get('author_id');
-            if ($this->p->canI('publishPost')) {
-                $post->published = Input::get('published');
-            }
-            if (Input::has('category')) {
-                $post->categories()->sync(Input::get('category'));
-            } else {
-                $post->categories()->detach();
-            }
-            $post->save();
-            return Redirect::to('post/view/'.$id);
-        }
     }
 
     /**
@@ -249,6 +173,82 @@ class AdminPostController extends BaseController
         }
 
         return Redirect::to('admin/post/list');
+    }
+
+    /**
+     * Create post action
+     *
+     * @return redirect
+     */
+    public function postCreate()
+    {
+        if (!$this->p->canI('createPost')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $v = Validator::make(Input::all(), Post::defaultRules());
+
+        if ($v->fails()) {
+            return Redirect::back()
+                      ->with('user', Auth::user())
+                      ->withErrors($v)
+                      ->withInput();
+        }
+
+        $post = new Post();
+        $post->title = Input::get('title');
+        $post->excerpt = Input::get('excerpt');
+        $post->body = Input::get('body');
+        $post->author_id = Input::get('author_id');
+        if ($this->p->canI('publishPost')) {
+            $post->published = Input::get('published');
+        }
+        $post->save();
+        if (Input::get('category')) {
+            $post->categories()->sync(Input::get('category'));
+        }
+
+        return Redirect::to('post/view/'.$post->id);
+    }
+
+    /**
+     * Update post action
+     *
+     * @param int $id post_id
+     *
+     * @return view
+     */
+    public function postUpdate($id)
+    {
+        if (!$this->p->canI('updatePost')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $v = Validator::make(Input::all(), Post::defaultRules());
+
+        if ($v->fails()) {
+            return Redirect::back()
+                      ->with('user', Auth::user())
+                      ->withErrors($v)
+                      ->withInput();
+        }
+
+        if ($post = Post::find($id)) {
+            $post->title = Input::get('title');
+            $post->excerpt = Input::get('excerpt');
+            $post->body = Input::get('body');
+            $post->author_id = Input::get('author_id');
+            if ($this->p->canI('publishPost')) {
+                $post->published = Input::get('published');
+            }
+            if (Input::has('category')) {
+                $post->categories()->sync(Input::get('category'));
+            } else {
+                $post->categories()->detach();
+            }
+            $post->save();
+            return Redirect::to('post/view/'.$id);
+        }
     }
 
 }

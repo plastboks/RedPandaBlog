@@ -105,7 +105,7 @@ class AccountController extends BaseController
         $v = Validator::make(Input::all(), User::defaultRules($user->id));
 
         if ($v->fails()) {
-            return Redirect::to('account/profile')
+            return Redirect::back()
                       ->with('user', Auth::user())
                       ->withErrors($v)
                       ->withInput();
@@ -118,7 +118,7 @@ class AccountController extends BaseController
             $dbUser->surname = Input::get('surname');
             $dbUser->info = Input::get('info');
             $dbUser->save();
-            return Redirect::to('account/profile')
+            return Redirect::back()
                        ->with('user', Auth::user())
                        ->with('status', 'User updated!');
         }
@@ -136,7 +136,7 @@ class AccountController extends BaseController
         $v = Validator::make(Input::all(), User::passwordRules());
 
         if ($v->fails()) {
-            return Redirect::to('account/password')
+            return Redirect::back()
                       ->withErrors($v)
                       ->withInput();
         }
@@ -145,10 +145,10 @@ class AccountController extends BaseController
             if (Hash::check(Input::get('old_password'), $user->password)) {
                 $user->password = Hash::make(Input::get('password'));
                 $user->save();
-                return Redirect::to('account/password')
+                return Redirect::back()
                           ->with('status', 'Password changed');
             } else {
-                return Redirect::to('account/password')
+                return Redirect::back()
                           ->with('error', 'Incorrect password');
             }
         }

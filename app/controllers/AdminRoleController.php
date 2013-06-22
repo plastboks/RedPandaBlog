@@ -97,6 +97,29 @@ class AdminRoleController extends BaseController
     }
 
     /**
+     * Delete role action
+     *
+     * @param int $id role_id
+     *
+     * @return redirect
+     */
+    public function getDelete($id)
+    {
+        if (!$this->p->canI('deleteRole') && $id != 1) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (($cat = Role::find($id)) 
+            && (!count(Role::find($id)->users()->get()))
+        ) {
+            $cat->capabilities()->detach();
+            $cat->delete();
+            return Redirect::to('admin/role/list');
+        }
+        return Redirect::to('admin/role/list');
+    }
+
+    /**
      * Create role action
      *
      * @return redirect
@@ -110,7 +133,7 @@ class AdminRoleController extends BaseController
         $v = Validator::make(Input::all(), Role::defaultRules());
 
         if ($v->fails()) {
-            return Redirect::to('admin/role/new')
+            return Redirect::back()
                     ->withErrors($v)
                     ->withInput();
         }
@@ -141,7 +164,7 @@ class AdminRoleController extends BaseController
         $v = Validator::make(Input::all(), Role::defaultRules());
 
         if ($v->fails()) {
-            return Redirect::to('admin/role/edit/'.$id)
+            return Redirect::back()
                     ->withErrors($v)
                     ->withInput();
         }
@@ -157,29 +180,6 @@ class AdminRoleController extends BaseController
             return Redirect::to('admin/role/list')
                     ->with('status', 'Role '.$role->name.' updated.');
         }
-    }
-
-    /**
-     * Delete role action
-     *
-     * @param int $id role_id
-     *
-     * @return redirect
-     */
-    public function getDelete($id)
-    {
-        if (!$this->p->canI('deleteRole') && $id != 1) {
-            return App::abort(403, 'Forbidden');
-        }
-
-        if (($cat = Role::find($id)) 
-            && (!count(Role::find($id)->users()->get()))
-        ) {
-            $cat->capabilities()->detach();
-            $cat->delete();
-            return Redirect::to('admin/role/list');
-        }
-        return Redirect::to('admin/role/list');
     }
 
 }

@@ -71,7 +71,7 @@ class AdminSettingController extends BaseController
         $v = Validator::make(Input::all(), Setting::defaultRules());
 
         if ($v->fails()) {
-            return Redirect::to('admin/settings')
+            return Redirect::back()
                       ->withErrors($v)
                       ->withInput();
         }
@@ -81,7 +81,7 @@ class AdminSettingController extends BaseController
         $this->_addMetaData('postsPerPage', Input::get('postsperpage'));
         $this->_addMetaData('excerptCut', Input::get('excerptCut'));
 
-        return Redirect::to('admin/settings')
+        return Redirect::back()
                   ->with('status', 'Site settings updated');
     }
 

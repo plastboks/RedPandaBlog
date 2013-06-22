@@ -61,9 +61,11 @@ class InstallController extends BaseController
             return Redirect::to('/')
                             ->with('status', 'Users exists');
         }
+
         $v = Validator::make(Input::all(), User::defaultRules());
+
         if ($v->fails()) {
-            return Redirect::to('install')
+            return Redirect::back()
                       ->withErrors($v)
                       ->withInput()
                       ->with('username', Input::get('username'))
