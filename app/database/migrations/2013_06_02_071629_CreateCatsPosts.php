@@ -15,6 +15,7 @@ class CreateCatsPosts extends Migration
     Schema::create('category_post', function($table)
     {
       $table->increments('id');
+
       $table->integer('post_id');
       $table->integer('category_id');
 

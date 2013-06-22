@@ -15,7 +15,8 @@ class CreateRoles extends Migration
     Schema::create('roles', function($table)
     {
       $table->increments('id');
-      $table->string('name');
+
+      $table->string('name', 256);
 
       $table->timestamps();
       $table->softDeletes();

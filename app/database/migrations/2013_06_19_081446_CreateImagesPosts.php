@@ -14,6 +14,7 @@ class CreateImagesPosts extends Migration {
         Schema::create('image_post', function($table)
         {
           $table->increments('id');
+
           $table->integer('image_id');
           $table->integer('post_id');
 

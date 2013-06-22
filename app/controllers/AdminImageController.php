@@ -148,7 +148,7 @@ class AdminImageController extends BaseController
 
         $image = new Image;
         $image->title = Input::get('title');
-        $image->uploader = Auth::user()->id;
+        $image->uploader_id = Auth::user()->id;
         $image->filename = $newFilename;
 
         $image->save();

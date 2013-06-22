@@ -14,9 +14,11 @@ class CreateImages extends Migration {
         Schema::create('images', function($table)
         {
           $table->increments('id');
-          $table->string('title');
-          $table->string('filename');
-          $table->string('uploader');
+
+          $table->string('title', 512);
+          $table->string('filename', 512);
+
+          $table->integer('uploader_id');
 
           $table->timestamps();
           $table->softDeletes();

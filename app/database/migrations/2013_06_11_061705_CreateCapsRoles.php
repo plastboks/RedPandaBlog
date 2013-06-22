@@ -15,6 +15,7 @@ class CreateCapsRoles extends Migration
     Schema::create('capability_role', function($table)
     {
       $table->increments('id');
+
       $table->integer('capability_id');
       $table->integer('role_id');
 

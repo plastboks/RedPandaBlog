@@ -15,8 +15,9 @@ class CreateConfig extends Migration
     Schema::create('settings', function($table)
     {
       $table->increments('id');
+
       $table->string('meta_key', 128);
-      $table->string('meta_value');
+      $table->string('meta_value', 1024);
 
       $table->timestamps();
     });

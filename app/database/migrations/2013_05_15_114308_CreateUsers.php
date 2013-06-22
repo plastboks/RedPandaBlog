@@ -18,9 +18,10 @@ class CreateUsers extends Migration
 
         $table->string('username', 32);
         $table->string('email', 320);
-        $table->string('givenname');
-        $table->string('surname');
-        $table->string('info');
+        $table->string('givenname', 120);
+        $table->string('surname', 120);
+
+        $table->text('info');
 
         $table->string('password', 64);
         $table->string('confirmation_code');

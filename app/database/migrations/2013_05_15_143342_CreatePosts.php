@@ -15,9 +15,11 @@ class CreatePosts extends Migration
       Schema::create('posts', function($table)
       {
         $table->increments('id');
-        $table->string('title', 128);
+        $table->string('title', 256);
+
         $table->text('body');
         $table->text('excerpt');
+
         $table->integer('author_id');
         $table->boolean('archived');
         $table->boolean('published');
