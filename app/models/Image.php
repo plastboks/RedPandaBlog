@@ -36,6 +36,13 @@ class Image extends Eloquent
      * @var string
      */
     protected $table = 'images';
+
+    /**
+     * Do not delete from database
+     *
+     * @var $softDelete
+     */
+    protected $softDelete = true;
   
     /**
      * Get role users

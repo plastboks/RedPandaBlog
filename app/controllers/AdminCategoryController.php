@@ -31,12 +31,6 @@ class AdminCategoryController extends BaseController
 {
 
     /**
-     * Do not delete from database
-     *
-     * @var $softDelete
-     */
-    protected $softDelete = true;
-    /**
      * Sets persmission and load parents contruct
      *
      * @return void

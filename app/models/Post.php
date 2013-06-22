@@ -38,6 +38,13 @@ class Post extends Eloquent
     protected $table = 'posts';
 
     /**
+     * Do not delete from database
+     *
+     * @var $softDelete
+     */
+    protected $softDelete = true;
+
+    /**
      * Get post author
      *
      * @return object

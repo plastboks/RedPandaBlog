@@ -37,6 +37,13 @@ class Category extends Eloquent
     protected $table = 'categories';
 
     /**
+     * Do not delete from database
+     *
+     * @var $softDelete
+     */
+    protected $softDelete = true;
+
+    /**
      * Get this categorys posts
      *
      * @return string
