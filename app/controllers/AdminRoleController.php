@@ -151,6 +151,8 @@ class AdminRoleController extends BaseController
             $role->save();
             if (Input::get('caps')) {
                 $role->capabilities()->sync(Input::get('caps'));
+            } else {
+                $role->capabilities()->detach();
             }
             return Redirect::to('admin/role/list')
                     ->with('status', 'Role '.$role->name.' updated.');
@@ -170,7 +172,10 @@ class AdminRoleController extends BaseController
             return App::abort(403, 'Forbidden');
         }
 
-        if (($cat = Role::find($id)) && (!Role::find($id)->users()->get())) {
+        if (($cat = Role::find($id)) 
+            && (!count(Role::find($id)->users()->get()))
+        ) {
+            $cat->capabilities()->detach();
             $cat->delete();
             return Redirect::to('admin/role/list');
         }

@@ -29,7 +29,7 @@
             @if ($p->canI('updateCategory'))
             <li class="edit">{{ HTML::link('admin/category/edit/'.$category->id, 'Edit') }}</li>
             @endif
-            @if (!$category->posts()->get() && $p->canI('deleteCategory'))
+            @if (!count($category->posts()->get()) && $p->canI('deleteCategory'))
             <li class="delete">{{ HTML::link('admin/category/delete/'.$category->id, 'Delete') }}</li>
             @endif
           </ul>

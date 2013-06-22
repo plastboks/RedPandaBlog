@@ -55,7 +55,7 @@ class Category extends Eloquent
     {
         return array(
             'title' => 'required|min:2|max:64',
-            'slug'  => 'required|alpha_dash|min:2|max:32',
+            'slug'  => 'required|alpha_dash|min:2|max:32|unique:categories,slug',
         );
     }
 
