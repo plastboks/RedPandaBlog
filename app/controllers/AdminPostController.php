@@ -89,6 +89,7 @@ class AdminPostController extends BaseController
         $data = array(
             'user' => Auth::user(),
             'categories' => Category::all(),
+            'images' => Image::all(),
         );
         return View::make('admin/post/new', $data);
     }
@@ -110,6 +111,7 @@ class AdminPostController extends BaseController
             'post' => Post::find($id),
             'user' => Auth::user(),
             'categories' => Category::all(),
+            'images' => Image::all(),
         );
         return View::make('admin/post/edit', $data);
     }
@@ -200,13 +202,27 @@ class AdminPostController extends BaseController
         $post->excerpt = Input::get('excerpt');
         $post->body = Input::get('body');
         $post->author_id = Input::get('author_id');
+
         if ($this->p->canI('publishPost')) {
             $post->published = Input::get('published');
         }
-        $post->save();
+
         if (Input::get('category')) {
             $post->categories()->sync(Input::get('category'));
         }
+
+        if (Input::has('image')) {
+            $post->images()->detach();
+            foreach (Input::get('image') as $img) {
+              $post->images()->attach($img, array(
+                       'placement' => Input::get('placement')[$img],
+                       ));
+            }
+        } else {
+            $post->images()->detach();
+        }
+
+        $post->save();
 
         return Redirect::to('post/view/'.$post->id);
     }
@@ -238,17 +254,32 @@ class AdminPostController extends BaseController
             $post->excerpt = Input::get('excerpt');
             $post->body = Input::get('body');
             $post->author_id = Input::get('author_id');
+
             if ($this->p->canI('publishPost')) {
                 $post->published = Input::get('published');
             }
+
             if (Input::has('category')) {
                 $post->categories()->sync(Input::get('category'));
             } else {
                 $post->categories()->detach();
             }
+
+            if (Input::has('image')) {
+                $post->images()->detach();
+                foreach (Input::get('image') as $img) {
+                  $post->images()->attach($img, array(
+                           'placement' => Input::get('placement')[$img],
+                           ));
+                }
+            } else {
+                $post->images()->detach();
+            }
+
             $post->save();
             return Redirect::to('post/view/'.$id);
         }
+
     }
 
 }

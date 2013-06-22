@@ -37,6 +37,22 @@ Add new post
             @endforeach
             </ul>
         </p>
+        <p>
+            <span>Images</span>
+            <ul class="imagelist">
+            @foreach($images as $image)
+                <li>
+                    <label>{{ Form::label('image', $image->title) }}</label>
+                    {{ Form::checkbox('image[]', $image->id) }}
+                    <label>{{ Form::label('placement', 'Placement')}}</label>
+                    {{ Form::select('placement['.$image->id.']', array(
+                      'main' => 'Main',
+                      'list' => 'In lists',
+                    ))}}
+                </li>
+            @endforeach 
+            </ul>
+        </p>
         <!-- submit button -->
         <p>{{ Form::submit('Create') }}</p>
     {{ Form::close() }}

@@ -71,7 +71,7 @@ class Post extends Eloquent
      */
     public function images()
     {
-        return $this->belongsToMang('Image');
+        return $this->belongsToMany('Image')->withPivot('placement');
     }
 
     /**

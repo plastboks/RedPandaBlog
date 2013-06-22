@@ -47,5 +47,5 @@ class Capability extends Eloquent
         return $this->hasMany('Role');
     }
 
-
 }
+

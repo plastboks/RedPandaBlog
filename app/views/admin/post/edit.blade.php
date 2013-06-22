@@ -37,6 +37,27 @@ Edit post {{ $post->title }}
             @endforeach
             </ul>
         </p>
+        <p>
+            <span>Images</span>
+            <ul class="imagelist">
+            @foreach($images as $image)
+                <li>
+                    <label>{{ Form::label('image', $image->title) }}</label>
+                    {{ Form::checkbox('image[]', $image->id, $post->images()->where('title', '=', $image->title)->first()) }}
+                    <label>{{ Form::label('placement', 'Placement')}}</label>
+                    @if ($post->images()->where('title', '=', $image->title)->first())
+                      {{ $selected = $post->images()->where('title', '=', $image->title)->first()->pivot->placement }}
+                    @else
+                      {{ $selected = null }}
+                    @endif
+                    {{ Form::select('placement['.$image->id.']', array(
+                      'main' => 'Main',
+                      'list' => 'In lists',
+                    ), $selected ) }}
+                </li>
+            @endforeach 
+            </ul>
+        </p>
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>
     {{ Form::close() }}
