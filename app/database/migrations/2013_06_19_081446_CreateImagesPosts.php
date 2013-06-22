@@ -16,6 +16,7 @@ class CreateImagesPosts extends Migration {
           $table->increments('id');
           $table->integer('image_id');
           $table->integer('post_id');
+
           $table->timestamps();
         });
     }

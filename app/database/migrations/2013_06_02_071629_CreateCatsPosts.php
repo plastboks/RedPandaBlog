@@ -1,6 +1,9 @@
 <?php
 
-class CreateCatsPosts {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCatsPosts extends Migration
+{
 
   /**
    * Make changes to the database.

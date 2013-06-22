@@ -1,6 +1,9 @@
 <?php
 
-class CreateConfig {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateConfig extends Migration
+{
 
   /**
    * Make changes to the database.
@@ -14,6 +17,7 @@ class CreateConfig {
       $table->increments('id');
       $table->string('meta_key', 128);
       $table->string('meta_value');
+
       $table->timestamps();
     });
   }

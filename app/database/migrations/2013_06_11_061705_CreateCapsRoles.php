@@ -1,6 +1,9 @@
 <?php
 
-class CreateCapsRoles {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCapsRoles extends Migration
+{
 
   /**
    * Make changes to the database.

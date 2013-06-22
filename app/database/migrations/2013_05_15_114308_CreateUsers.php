@@ -1,6 +1,9 @@
 <?php
 
-class CreateUsers {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateUsers extends Migration
+{
 
   /**
    * Make changes to the database.
@@ -29,6 +32,7 @@ class CreateUsers {
         $table->boolean('active');
 
         $table->timestamps();
+        $table->softDeletes();
       });
     }
 

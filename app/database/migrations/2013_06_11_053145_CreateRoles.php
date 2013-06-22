@@ -1,6 +1,9 @@
 <?php
 
-class CreateRoles {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateRoles extends Migration
+{
 
 	/**
 	 * Make changes to the database.
@@ -13,7 +16,9 @@ class CreateRoles {
     {
       $table->increments('id');
       $table->string('name');
+
       $table->timestamps();
+      $table->softDeletes();
     });
 	}
 

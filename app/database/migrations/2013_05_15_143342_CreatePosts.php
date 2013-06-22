@@ -1,6 +1,9 @@
 <?php
 
-class CreatePosts {
+use Illuminate\Database\Migrations\Migration;
+
+class CreatePosts extends Migration
+{
 
   /**
    * Make changes to the database.
@@ -18,7 +21,9 @@ class CreatePosts {
         $table->integer('author_id');
         $table->boolean('archived');
         $table->boolean('published');
+
         $table->timestamps();
+        $table->softDeletes();
       });
   }
 

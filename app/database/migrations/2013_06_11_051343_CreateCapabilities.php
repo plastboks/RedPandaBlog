@@ -1,6 +1,9 @@
 <?php
 
-class CreateCapabilities {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCapabilities extends Migration
+{
 
   /**
    * Make changes to the database.
@@ -13,6 +16,7 @@ class CreateCapabilities {
     {
       $table->increments('id');
       $table->string('name');
+
       $table->timestamps();
     });
   }

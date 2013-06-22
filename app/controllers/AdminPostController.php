@@ -29,6 +29,13 @@
  */
 class AdminPostController extends BaseController
 {
+    
+    /**
+     * Do not delete from database
+     *
+     * @var $softDelete
+     */
+    protected $softDelete = true;
 
     /**
      * Sets permisssions and loads parent construct

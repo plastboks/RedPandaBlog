@@ -16,8 +16,10 @@ class CreateImages extends Migration {
           $table->increments('id');
           $table->string('title');
           $table->string('filename');
-          $table->timestamps();
+          $table->string('uploader');
 
+          $table->timestamps();
+          $table->softDeletes();
         });
     }
 

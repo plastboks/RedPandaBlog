@@ -1,6 +1,9 @@
 <?php
 
-class CreateCategories {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCategories extends Migration
+{
 
   /**
    * Make changes to the database.
@@ -17,6 +20,7 @@ class CreateCategories {
       $table->boolean('active');
 
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 
