@@ -160,13 +160,15 @@ class AdminCategoryController extends BaseController
      *
      * @return view
      */
-    public function postDelete($id)
+    public function getDelete($id)
     {
         if (!$this->p->canI('deleteCategory')) {
             return App::abort(403, 'Forbidden');
         }
 
-        if (($cat = Category::find($id)) && (!Category::find($id)->posts()->get())) {
+        if (($cat = Category::find($id))
+            && (!count(Category::find($id)->posts()->get()))
+        ) {
             $cat->delete();
             return Redirect::to('admin/category/list');
         } else {
