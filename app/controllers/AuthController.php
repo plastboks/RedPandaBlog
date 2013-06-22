@@ -104,17 +104,11 @@ class AuthController extends BaseController
         $userdata = array(
             'email' => Input::get('email'),
             'password' => Input::get('password'),
+            'blocked' => null,
         );
 
         if (Auth::attempt($userdata, Input::get('remember_me'))) {
-            $user = Auth::user();
-            if ($user->blocked) {
-                Auth::logout();
-                return Redirect::to('login')
-                          ->with('login_errors', true);
-            } else {
-                return Redirect::to('account');
-            }
+            return Redirect::to('account');
         } else {
             return Redirect::to('login')
                       ->with('login_errors', true);
