@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Red Panda Blog - @yield('title')</title>
-  {{ HTML::style('css/style.css') }}
   {{ HTML::style('css/normalize.css') }}
+  {{ HTML::style('css/style.css') }}
+  {{ HTML::style('css/smoothness/jquery-ui-1.10.3.custom.min.css') }}
+  {{ HTML::script('js/jquery-2.0.2.min.js') }}
+  {{ HTML::script('js/jquery-ui-1.10.3.custom.min.js') }}
+  {{ HTML::script('js/commons.js') }}
 </head>
 <body>
   <div class="header">

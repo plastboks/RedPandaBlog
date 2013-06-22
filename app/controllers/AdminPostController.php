@@ -89,7 +89,6 @@ class AdminPostController extends BaseController
         $data = array(
             'user' => Auth::user(),
             'categories' => Category::all(),
-            'images' => Image::all(),
         );
         return View::make('admin/post/new', $data);
     }
@@ -111,7 +110,7 @@ class AdminPostController extends BaseController
             'post' => Post::find($id),
             'user' => Auth::user(),
             'categories' => Category::all(),
-            'images' => Image::all(),
+            'images' => Post::find($id)->images()->get(),
         );
         return View::make('admin/post/edit', $data);
     }

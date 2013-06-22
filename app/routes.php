@@ -102,6 +102,9 @@ Route::post('admin/post/update/{id}',
 Route::get('admin/image/list',
             array(
                 'uses' => 'AdminImageController@getList'));
+Route::get('admin/image/ajaxlist/{postid?}',
+            array(
+                'uses' => 'AdminImageController@ajaxList'));
 Route::get('admin/image/new',
             array(
                 'uses' => 'AdminImageController@getNew'));

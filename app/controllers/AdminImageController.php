@@ -56,6 +56,43 @@ class AdminImageController extends BaseController
         );
         return View::make('admin/image/list', $data);
     }
+
+    /**
+     * Ajax image list
+     *
+     * @param int $postid Optional id for getting images in post
+     *
+     * @return view
+     */
+    public function ajaxList($postid = false)
+    {
+        if (($post = Post::find($postid))
+            && (!Input::has('opposite'))
+        ) {
+            $data = array(
+                'images' => $post->images()->paginate(10),
+                'postid' => $postid,
+            );
+        } elseif (($post = Post::find($postid))
+                  && (Input::has('opposite'))
+        ) {
+            $excludedIDs = array();
+            foreach ($post->images()->get() as $img) {
+                $excludedIDs[] = $img->id;
+            }
+            $data = array(
+                'images' => Image::whereNotIn('id', $excludedIDs)->paginate(10),
+                'postid' => null,
+            );
+        } else {
+            $data = array(
+                'images' => Image::orderBy('created_at', 'desc')
+                                    ->paginate(10),
+                'postid' => null,
+            );
+        }
+        return View::make('admin/image/ajaxlist', $data);
+    }
     
     /**
      * New image
