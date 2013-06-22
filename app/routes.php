@@ -45,6 +45,12 @@ Route::get('admin/user/new',
 Route::get('admin/user/edit/{id}',
             array(
                 'uses' => 'AdminUserController@getEdit'));
+Route::get('admin/user/block/{id}',
+            array(
+                'uses' => 'AdminUserController@getBlock'));
+Route::get('admin/user/unblock/{id}',
+            array(
+                'uses' => 'AdminUserController@getUnblock'));
 Route::post('admin/user/create',
             array(
                 'before' => 'csrf',
