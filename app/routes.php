@@ -51,6 +51,9 @@ Route::get('admin/user/block/{id}',
 Route::get('admin/user/unblock/{id}',
             array(
                 'uses' => 'AdminUserController@getUnblock'));
+Route::get('admin/user/delete/{id}',
+            array(
+                'uses' => 'AdminUserController@getDelete'));
 Route::post('admin/user/create',
             array(
                 'before' => 'csrf',
@@ -81,6 +84,9 @@ Route::get('admin/post/unpublish/{id}',
 Route::get('admin/post/publish/{id}',
             array(
                 'uses' => 'AdminPostController@getPublish'));
+Route::get('admin/post/delete/{id}',
+            array(
+                'uses' => 'AdminPostController@getDelete'));
 Route::post('admin/post/create',
             array(
                 'before' => 'csrf',
@@ -102,6 +108,9 @@ Route::get('admin/category/new',
 Route::get('admin/category/edit/{id}',
             array(
                 'uses' => 'AdminCategoryController@getEdit'));
+Route::get('admin/category/delete/{id}',
+            array(
+                'uses' => 'AdminCategoryController@getDelete'));
 Route::post('admin/category/create',
             array(
                 'before' => 'csrf',
@@ -134,6 +143,9 @@ Route::get('admin/role/new',
 Route::get('admin/role/edit/{id}',
             array(
                 'uses' => 'AdminRoleController@getEdit'));
+Route::get('admin/role/delete/{id}',
+            array(
+                'uses' => 'AdminRoleController@getDelete'));
 Route::post('admin/role/create',
             array(
                 'before' => array('csrf'),
