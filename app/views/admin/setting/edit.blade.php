@@ -30,6 +30,11 @@ Edit Blog Settings
         {{ $errors->first('excerptCut', '<p class="error">:message</p>') }}
         <p>{{ Form::select('excerptCut', array_combine(range(50, 800, 50), range(50, 800, 50)), $s->excerptCut) }}</p>
 
+        <!-- category on fronpage -->
+        <p>{{ Form::label('frontpagecategory', 'Frontpage category')}}</p>
+        {{ $errors->first('frontpagecategory', '<p class="error">:message</p>')}}
+        <p>{{ Form::select('frontpagecategory', $s->getCatIncDefault(), $s->frontpagecategory)}}</p>
+
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>
     {{ Form::close() }}

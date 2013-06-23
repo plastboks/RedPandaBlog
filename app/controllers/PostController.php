@@ -49,12 +49,22 @@ class PostController extends BaseController
     public function getIndex()
     {
         $data = array(
-            'posts' => Post::orderBy('created_at', 'desc')
-                              ->where('published', '=', 1)
-                              ->paginate($this->s->postsPerPage),
-            'errormessage' => false,
+            'errormessage' => Session::get('error'),
             'header' => null,
         );
+
+        if (($this->s->frontpagecategory)
+            && ($this->s->frontpagecategory != 'all')
+        ) {
+            $data['posts'] = Category::find((int)$this->s->frontpagecategory)
+                                ->posts()
+                                ->where('published', '=', 1)
+                                ->paginate($this->s->postsPerPage);
+        } else {
+            $data['posts'] = Post::orderBy('created_at', 'desc')
+                                ->where('published', '=', 1)
+                                ->paginate($this->s->postsPerPage);
+        }
         return View::make('index', $data);
     }
 

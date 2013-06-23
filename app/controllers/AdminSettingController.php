@@ -80,6 +80,7 @@ class AdminSettingController extends BaseController
         $this->_addMetaData('footer', Input::get('footertext'));
         $this->_addMetaData('postsPerPage', Input::get('postsperpage'));
         $this->_addMetaData('excerptCut', Input::get('excerptCut'));
+        $this->_addMetaData('frontpagecategory', Input::get('frontpagecategory'));
 
         return Redirect::back()
                   ->with('status', 'Site settings updated');
