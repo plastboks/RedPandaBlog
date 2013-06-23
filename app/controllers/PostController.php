@@ -53,7 +53,7 @@ class PostController extends BaseController
                               ->where('published', '=', 1)
                               ->paginate($this->s->postsPerPage),
             'errormessage' => false,
-            'header' => 'Welcome !',
+            'header' => null,
         );
         return View::make('index', $data);
     }

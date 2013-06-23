@@ -3,7 +3,9 @@
 Welcome
 @endsection
 @section('content')
+    @if ($header)
     <h1>{{ $header }}</h1>
+    @endif
     @if ($errormessage)
     <p class="errormessage">{{ $errormessage }}</p>
     @endif
