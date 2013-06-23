@@ -214,9 +214,11 @@ class AdminPostController extends BaseController
 
         if (Input::has('image')) {
             foreach (Input::get('image') as $img) {
-                $post->images()->attach($img, array(
-                       'placement' => Input::get('placement')[$img],
-                ));
+                $post->images()->attach(
+                    $img, array(
+                        'placement' => Input::get('placement')[$img],
+                    )
+                );
             }
         }
 
@@ -264,9 +266,11 @@ class AdminPostController extends BaseController
             if (Input::has('image')) {
                 $post->images()->detach();
                 foreach (Input::get('image') as $img) {
-                  $post->images()->attach($img, array(
+                    $post->images()->attach(
+                        $img, array(
                            'placement' => Input::get('placement')[$img],
-                           ));
+                        )
+                    );
                 }
             } else {
                 $post->images()->detach();

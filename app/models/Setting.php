@@ -93,7 +93,7 @@ class Setting extends Eloquent
 
         $siteCat = $this->_getCategories();
         foreach ($siteCat as $cat) {
-          $array[$cat->id] = $cat->slug;
+            $array[$cat->id] = $cat->slug;
         }
         return $array;
     }
