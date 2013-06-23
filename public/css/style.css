@@ -73,6 +73,7 @@ a {
   width: 750px;
 }
 
+.ajaxcontent h1,
 #content h1 {
   color: steelblue;
   border-bottom: 1px solid lightgray;
@@ -108,16 +109,19 @@ a {
   font-size: 0.9em;
 }
 
+.ajaxcontent .tablewrapper,
 #content .tablewrapper {
   padding: 5px;
   border: 1px solid lightgray;
   background: whitesmoke;
 }
 
+.ajaxcontent .list,
 #content .list {
   width: 100%;
 }
 
+.ajaxcontent .list thead th,
 #content .list thead th {
   text-align: left;
 }
@@ -153,6 +157,7 @@ a {
   border: 1px solid gray;  
 }
 
+#content form input[type="button"],
 #content form input[type="submit"] {
   margin-top: 10px;
   border: 1px solid lightskyblue;
@@ -193,7 +198,23 @@ a {
 }
 
 #content .post {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid whitesmoke;
+  clear: both;
+  overflow: hidden;
+  padding: 10px 0px;
+}
+
+#content .singlepost .postmainimage {
+  width: 750px;
+  height: auto;
+}
+
+#content .post .listimage {
+  float: left;
+  padding-right: 10px;
+  padding-top: 5px;
+  height: 150px;
+  width: auto;
 }
 
 #content .unpublished {
@@ -255,7 +276,7 @@ a {
 
 #sidebar {
   width: 220px;
-  margin: 55px 15px 15px 15px;
+  margin: 55px 0px 0px 30px;
   padding: 10px;
   background: ghostwhite;
   border: 1px solid powderblue;
@@ -273,7 +294,7 @@ a {
  ******************/
 #footer {
   clear: both;
-  padding: 5px;
+  padding: 40px;
   margin-top: 25px;
   border-top: 1px solid lightgray;
   text-align: center;

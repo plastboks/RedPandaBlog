@@ -23,6 +23,20 @@ Welcome
           </li>
         @endif
       </ul>
+      @if ($post->images()->get())
+        @foreach ($post->images()->get() as $img)
+          @if ($img->pivot->placement == 'list')
+
+            <a href="/post/view/{{$post->id}}">
+            {{ HTML::image('uploads/'.$img->filename, $img->title,
+                array(
+                  'class' => 'listimage',
+                  'title' => $img->title,
+                )) }}
+            </a>
+          @endif
+        @endforeach
+      @endif
       @if ($post->excerpt)
         <p>{{ substr($post->excerpt, 0, $s->excerptCut). ' [..]' }}</p> 
       @else

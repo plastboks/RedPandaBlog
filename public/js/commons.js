@@ -14,17 +14,35 @@ $(function() {
   if ($('#jqPostImageList').length) {
       var container = $('#jqPostImageList');
       var id = container.attr('data-id');
-      $.ajax({
-          url: '/admin/image/ajaxlist/'+id,
-          dataType: 'html',
-          type: 'GET',
-          success: function(data) {
-              container.html(data);
-          },
-          error: function() {
-              container.html('Error');
-          }
-      });
+      var data = container.attr('data-type');
+      if (id) {
+        $.ajax({
+            url: '/admin/image/ajaxlist/'+id,
+            dataType: 'html',
+            type: 'GET',
+            success: function(data) {
+                container.html(data);
+            },
+            error: function() {
+                container.html('Error');
+            }
+        });
+      } else {
+        $.ajax({
+            url: '/admin/image/ajaxlist/',
+            dataType: 'html',
+            type: 'GET',
+            data: {
+                'newpost' : '1',
+            },
+            success: function(data) {
+                container.html(data);
+            },
+            error: function() {
+                container.html('Error');
+            }
+        });
+      }
   }
   
   $(document).on('click', '.jqDetachImageFromPost', function(){
@@ -52,7 +70,7 @@ $(function() {
         success: function(data) {
             $('<div />').html(data).dialog({
                 title: 'Choose an image',
-                width: 400,
+                width: 600,
             })
         },
         error: function() {

@@ -3,6 +3,7 @@
 Edit post {{ $post->title }}
 @endsection
 @section('content')
+    <h1>Edit post - {{ $post->title }}</h1>
     {{ Form::open(array('url'=>'admin/post/update/'.$post->id)) }}
         {{ Form::token() }}
         {{ Form::hidden('author_id', $user->id) }}
@@ -38,11 +39,8 @@ Edit post {{ $post->title }}
             </ul>
         </p>
         <p>
-            <span>Images:</span>
-            <p>{{ HTML::link('#', 'Add Image', array(
-                                                'class' => 'jqGetImages',
-                                                'data-id' => $post->id))}}</p>
             <div id="jqPostImageList" data-id="{{ $post->id }} "></div>
+            <p><input type="button" class="jqGetImages" data-id="{{$post->id}}" value="Add image"/></p>
         </p>
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>

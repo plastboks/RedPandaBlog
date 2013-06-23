@@ -59,6 +59,7 @@ class AdminImageController extends BaseController
 
     /**
      * Ajax image list
+     * A serious cleanup is needed below...
      *
      * @param int $postid Optional id for getting images in post
      *
@@ -66,6 +67,8 @@ class AdminImageController extends BaseController
      */
     public function ajaxList($postid = false)
     {
+        //butt ugly code follows...
+
         if (($post = Post::find($postid))
             && (!Input::has('opposite'))
         ) {
@@ -82,6 +85,11 @@ class AdminImageController extends BaseController
             }
             $data = array(
                 'images' => Image::whereNotIn('id', $excludedIDs)->paginate(10),
+                'postid' => null,
+            );
+        } elseif (Input::has('newpost')) {
+            $data = array(
+                'images' => array(),
                 'postid' => null,
             );
         } else {
