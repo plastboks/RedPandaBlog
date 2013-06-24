@@ -180,8 +180,10 @@ class AdminPostController extends BaseController
             if ($this->p->canI('publishPost')) {
                 $post->published = Input::get('published');
             }
-            if (Input::get('category')) {
+            if (Input::has('category')) {
                 $post->categories()->sync(Input::get('category'));
+            } else {
+                $post->categories()->detach();
             }
             $post->save();
             return Redirect::to('post/view/'.$id);
@@ -239,8 +241,8 @@ class AdminPostController extends BaseController
             && ($post = Post::find($id))
         ) {
 
-            if ($post->categories()) {
-                $post->categories()->delete();
+            if (count($post->categories()->get())) {
+                $post->categories()->detach();
             }
             $post->delete();
             return Redirect::to('admin/post/list');
