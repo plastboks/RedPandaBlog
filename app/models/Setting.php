@@ -129,8 +129,8 @@ class Setting extends Eloquent
     public static function defaultRules()
     {
         return array(
-            'blogName' => 'min:3|max:64',
-            'footer' => 'max:64',
+            'blogName' => 'required|min:3|max:64',
+            'footertext' => 'max:1024',
         );
     }
 
