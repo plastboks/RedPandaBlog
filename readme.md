@@ -3,6 +3,11 @@ Red Panda Blog
 Red panda blog got its name from the 'Code happy' book for Laravel 3 (http://codehappy.daylerees.com/). Although the project has evolved since then, it is where it all began. Red panda blog is now a Laravel 4 only.
 
 
+Laravel
+=======
+This blog is based on the [Laravel PHP Framework](https://github.com/laravel/laravel)
+
+
 Description
 ===========
 This is just a simple blog written with the Laravel framework, with features like:
@@ -48,3 +53,7 @@ Most of the plans for this blog is kept as issues and milestones on Github. A sm
 * Captcha
 * Document...
 
+License
+=======
+The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+All the Red panda blog code is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
