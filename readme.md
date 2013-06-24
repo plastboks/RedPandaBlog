@@ -55,5 +55,5 @@ Most of the plans for this blog is kept as issues and milestones on Github. A sm
 
 License
 =======
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-All the Red panda blog code is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+All the Red panda blog code is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
