@@ -2,6 +2,10 @@
 @section('content')
   <h1>Categories</h1>
   <ul class='thirdmenu'>
+    <li>{{ HTML::link('admin/category/list', 'Public')}}</li>
+    @if ($p->canI('seeArchivedCategories'))
+      <li>{{ HTML::link('admin/category/archived', 'Archived') }}</li>
+    @endif
     @if ($p->canI('createCategory'))
       <li>{{ HTML::link('admin/category/new', 'Add new') }}</li>
     @endif
@@ -26,12 +30,21 @@
         <td class="count">{{ count($category->posts()->get()) }}</td>
         <td class="action">
           <ul>
+          @unless ($archived)
             @if ($p->canI('updateCategory'))
-            <li class="edit">{{ HTML::link('admin/category/edit/'.$category->id, 'Edit') }}</li>
+              <li class="edit">{{ HTML::link('admin/category/edit/'.$category->id, 'Edit') }}</li>
             @endif
             @if (!count($category->posts()->get()) && $p->canI('deleteCategory'))
-            <li class="delete">{{ HTML::link('admin/category/delete/'.$category->id, 'Delete') }}</li>
+              <li class="delete">{{ HTML::link('admin/category/delete/'.$category->id, 'Archive') }}</li>
             @endif
+          @else
+            @if ($p->canI('undeleteCategory'))
+              <li class="delete">{{ HTML::link('admin/category/undelete/'.$category->id, 'Unarchive') }}</li>
+            @endif
+            @if ($p->canI('truedeleteCategory'))
+              <li class="delete">{{ HTML::link('admin/category/truedelete/'.$category->id, 'Delete') }}</li>
+            @endif
+          @endunless
           </ul>
         </td>
       </tr>

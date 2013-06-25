@@ -52,6 +52,24 @@ class AdminCategoryController extends BaseController
             'categories' => Category::orderBy('id', 'asc')
                               ->paginate(10),
             'status' => Session::get('status'),
+            'archived' => false,
+        );
+        return View::make('admin/category/list', $data);
+    }
+
+    /**
+     * Archived categories list
+     *
+     * @return view
+     */
+    public function getArchived()
+    {
+        $data = array(
+            'categories' => Category::onlyTrashed()
+                                  ->orderBy('id', 'asc')
+                                  ->paginate(10),
+            'status' => Session::get('status'),
+            'archived' => true,
         );
         return View::make('admin/category/list', $data);
     }
@@ -148,7 +166,7 @@ class AdminCategoryController extends BaseController
     }
 
     /**
-     * Category search view
+     * Delete (archive) category
      *
      * @param int $id category_id
      *
@@ -164,10 +182,46 @@ class AdminCategoryController extends BaseController
             && (!count(Category::find($id)->posts()->get()))
         ) {
             $cat->delete();
-            return Redirect::to('admin/category/list');
-        } else {
-            return Redirect::to('admin/category/list');
         }
+        return Redirect::to('admin/category/list');
+    }
+
+    /**
+     * Undelete (unarchive) category
+     *
+     * @param int $id category_id
+     *
+     * @return view
+     */
+    public function getUndelete($id)
+    {
+        if (!$this->p->canI('undeleteCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (($cat = Category::onlyTrashed()->where('id', '=', $id))) {
+            $cat->restore();
+        }
+        return Redirect::to('admin/category/archived');
+    }
+
+    /**
+     * Forcedelete category
+     *
+     * @param int $id category_id
+     *
+     * @return view
+     */
+    public function getTrueDelete($id)
+    {
+        if (!$this->p->canI('forcedeleteCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (($cat = Category::onlyTrashed()->where('id', '=', $id))) {
+            $cat->forceDelete();
+        }
+        return Redirect::to('admin/category/archived');
     }
 
 }

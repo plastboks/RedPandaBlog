@@ -35,6 +35,9 @@ class CapabilitySeeder extends Seeder
                                         20 => 'createCategory',
                                         21 => 'updateCategory',
                                         22 => 'deleteCategory',
+                                        23 => 'undeleteCategory',
+                                        24 => 'forcedeleteCategory',
+                                        25 => 'seeArchivedCategories',
                                         // users
                                         30 => 'seeUsers',
                                         31 => 'createUser',

@@ -141,6 +141,9 @@ Route::post('admin/image/update/{id}',
 Route::get('admin/category/list',
             array(
                 'uses' => 'AdminCategoryController@getList'));
+Route::get('admin/category/archived',
+            array(
+                'uses' => 'AdminCategoryController@getArchived'));
 Route::get('admin/category/new',
            array(
                'uses' => 'AdminCategoryController@getNew'));
@@ -150,6 +153,12 @@ Route::get('admin/category/edit/{id}',
 Route::get('admin/category/delete/{id}',
             array(
                 'uses' => 'AdminCategoryController@getDelete'));
+Route::get('admin/category/undelete/{id}',
+            array(
+                'uses' => 'AdminCategoryController@getUndelete'));
+Route::get('admin/category/truedelete/{id}',
+            array(
+                'uses' => 'AdminCategoryController@getTrueDelete'));
 Route::post('admin/category/create',
             array(
                 'before' => 'csrf',
