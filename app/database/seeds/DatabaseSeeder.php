@@ -29,28 +29,30 @@ class CapabilitySeeder extends Seeder
                                         4 => 'unpublishPost',
                                         5 => 'changePostState',
                                         6 => 'deletePost',
+                                        7 => 'undeletePost',
+                                        8 => 'truedeletePost',
                                         // categories
-                                        7 => 'createCategory',
-                                        8 => 'updateCategory',
-                                        9 => 'deleteCategory',
+                                        20 => 'createCategory',
+                                        21 => 'updateCategory',
+                                        22 => 'deleteCategory',
                                         // users
-                                        10 => 'seeUsers',
-                                        11 => 'createUser',
-                                        12 => 'updateUser',
-                                        13 => 'deleteUser',
-                                        14 => 'blockUser',
-                                        15 => 'unblockUser',
+                                        30 => 'seeUsers',
+                                        31 => 'createUser',
+                                        32 => 'updateUser',
+                                        33 => 'deleteUser',
+                                        34 => 'blockUser',
+                                        35 => 'unblockUser',
                                         // roles
-                                        16 => 'seeRoles',
-                                        17 => 'createRole',
-                                        18 => 'updateRole',
-                                        19 => 'deleteRole',
+                                        40 => 'seeRoles',
+                                        41 => 'createRole',
+                                        42 => 'updateRole',
+                                        43 => 'deleteRole',
                                         // other
-                                        20 => 'siteSettings',
+                                        50 => 'siteSettings',
                                         // images
-                                        21 => 'createImage',
-                                        22 => 'updateImage',
-                                        23 => 'deleteImage',
+                                        70 => 'createImage',
+                                        71 => 'updateImage',
+                                        72 => 'deleteImage',
                                         // only add in bottom of list
                                       );
     public function run()

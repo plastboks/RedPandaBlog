@@ -72,6 +72,9 @@ Route::get('admin/post/list',
 Route::get('admin/post/unpublished',
             array(
                 'uses' => 'AdminPostController@getUnpublished'));
+Route::get('admin/post/archived',
+            array(
+                'uses' => 'AdminPostController@getArchived'));
 Route::get('admin/post/new',
            array(
                'uses' => 'AdminPostController@getNew'));
@@ -84,9 +87,15 @@ Route::get('admin/post/unpublish/{id}',
 Route::get('admin/post/publish/{id}',
             array(
                 'uses' => 'AdminPostController@getPublish'));
+Route::get('admin/post/undelete/{id}',
+            array(
+                'uses' => 'AdminPostController@getUndelete'));
 Route::get('admin/post/delete/{id}',
             array(
                 'uses' => 'AdminPostController@getDelete'));
+Route::get('admin/post/truedelete/{id}',
+            array(
+                'uses' => 'AdminPostController@getTrueDelete'));
 Route::post('admin/post/create',
             array(
                 'before' => 'csrf',

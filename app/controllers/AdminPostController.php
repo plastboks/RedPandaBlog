@@ -54,6 +54,7 @@ class AdminPostController extends BaseController
                                 ->paginate(10),
             'title' => 'Published posts',
             'action' => 'unpublish',
+            'archived' => false,
         );
         return View::make('admin/post/list', $data);
     }
@@ -71,6 +72,25 @@ class AdminPostController extends BaseController
                                 ->paginate(10),
             'title' => 'Unpublished posts',
             'action' => 'publish',
+            'archived' => false,
+        );
+        return View::make('admin/post/list', $data);
+    }
+
+    /**
+     * Post archived
+     *
+     * @return view
+     */
+    public function getArchived()
+    {
+        $data = array(
+            'posts' => Post::onlyTrashed()
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(10),
+            'title' => 'Archived posts',
+            'action' => false,
+            'archived' => true,
         );
         return View::make('admin/post/list', $data);
     }
@@ -156,7 +176,7 @@ class AdminPostController extends BaseController
     /**
      * Delete post action
      *
-     * @param int $id category_id
+     * @param int $id post_id
      *
      * @return redirect
      */
@@ -170,10 +190,42 @@ class AdminPostController extends BaseController
                 $post->categories()->detach();
             }
             $post->delete();
-            return Redirect::to('admin/post/list');
         }
-
         return Redirect::to('admin/post/list');
+    }
+
+    /**
+     * Undelete post action
+     *
+     * @param int $id post_id
+     *
+     * @return redirect
+     */
+    public function getUndelete($id)
+    {
+        if (($this->p->canI('undeletePost'))
+            && ($post = Post::onlyTrashed()->where('id', '=', $id))
+        ) {
+            $post->restore();
+        }
+        return Redirect::to('admin/post/archived');
+    }
+
+    /**
+     * Truedelete post action. Nuke that sucker.
+     *
+     * @param int $id post_id
+     *
+     * @return redirect
+     */
+    public function getTrueDelete($id)
+    {
+        if (($this->p->canI('truedeletePost'))
+            && ($post = Post::onlyTrashed()->where('id', '=', $id))
+        ) {
+            $post->forceDelete();
+        }
+        return Redirect::to('admin/post/archived');
     }
 
     /**
