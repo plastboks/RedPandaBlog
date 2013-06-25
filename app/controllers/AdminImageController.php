@@ -59,45 +59,48 @@ class AdminImageController extends BaseController
 
     /**
      * Ajax image list
-     * A serious cleanup is needed below...
      *
      * @param int $postid Optional id for getting images in post
      *
      * @return view
      */
-    public function ajaxList($postid = false)
+    public function ajaxEditList($postid)
     {
-        //butt ugly code follows...
+        $data = array(
+            'images' => null,
+            'postid' => null,
+        );
 
-        if (($post = Post::find($postid))
-            && (!Input::has('opposite'))
-        ) {
-            $data = array(
-                'images' => $post->images()->paginate(10),
-                'postid' => $postid,
-            );
-        } elseif (($post = Post::find($postid))
-                  && (Input::has('opposite'))
-        ) {
+        if (($post = Post::find($postid)) && (!Input::has('opposite'))) {
+            $data['images'] = $post->images()->paginate(10);
+            $data['postid'] = $postid;
+        } else {
             $excludedIDs = array();
             foreach ($post->images()->get() as $img) {
                 $excludedIDs[] = $img->id;
             }
-            $data = array(
-                'images' => Image::whereNotIn('id', $excludedIDs)->paginate(10),
-                'postid' => null,
-            );
-        } elseif (Input::has('newpost')) {
-            $data = array(
-                'images' => array(),
-                'postid' => null,
-            );
-        } else {
-            $data = array(
-                'images' => Image::orderBy('created_at', 'desc')
-                                    ->paginate(10),
-                'postid' => null,
-            );
+            $data['images'] = Image::whereNotIn('id', $excludedIDs)->paginate(10);
+        }
+
+        return View::make('admin/image/ajaxlist', $data);
+    }
+
+    /**
+     * Ajax list for new posts, for use in new post templates
+     *
+     * @param bool $images A boolean value for returning images or not
+     * @return view
+     */
+    public function ajaxNewList($images = false)
+    {
+        $data = array(
+            'postid' => null,
+            'images' => array(),
+        );
+
+        if ($images) {
+            $data['images'] = Image::orderBy('created_at', 'desc')
+                                      ->paginate(10);
         }
         return View::make('admin/image/ajaxlist', $data);
     }

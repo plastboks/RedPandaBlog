@@ -39,8 +39,8 @@ Edit post {{ $post->title }}
             </ul>
         </p>
         <p>
-            <div id="jqPostImageList" data-id="{{ $post->id }} "></div>
-            <p><input type="button" class="jqGetImages" data-id="{{$post->id}}" value="Add image"/></p>
+            <div id="jqEditPostImageList" class="jqCommonImageList" data-id="{{ $post->id }} "></div>
+            <p><input type="button" class="jqEditGetImages" data-id="{{$post->id}}" value="Add image"/></p>
         </p>
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>

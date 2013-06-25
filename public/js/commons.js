@@ -11,39 +11,78 @@
 
 $(function() {
    
-  if ($('#jqPostImageList').length) {
-      var container = $('#jqPostImageList');
+  if ($('#jqEditPostImageList').length) {
+      var container = $('#jqEditPostImageList');
       var id = container.attr('data-id');
-      var data = container.attr('data-type');
-      if (id) {
-        $.ajax({
-            url: '/admin/image/ajaxlist/'+id,
-            dataType: 'html',
-            type: 'GET',
-            success: function(data) {
-                container.html(data);
-            },
-            error: function() {
-                container.html('Error');
-            }
-        });
-      } else {
-        $.ajax({
-            url: '/admin/image/ajaxlist/',
-            dataType: 'html',
-            type: 'GET',
-            data: {
-                'newpost' : '1',
-            },
-            success: function(data) {
-                container.html(data);
-            },
-            error: function() {
-                container.html('Error');
-            }
-        });
-      }
+      $.ajax({
+          url: '/admin/image/ajaxeditlist/'+id,
+          dataType: 'html',
+          type: 'GET',
+          success: function(data) {
+              container.html(data);
+          },
+          error: function() {
+              container.html('Error');
+          }
+      });
   }
+
+  if ($('#jqNewPostImageList').length) {
+      var container = $('#jqNewPostImageList');
+      $.ajax({
+          url: '/admin/image/ajaxnewlist/',
+          dataType: 'html',
+          type: 'GET',
+          success: function(data) {
+              container.html(data);
+          },
+          error: function() {
+              container.html('Error');
+          }
+      });
+  }
+
+  $('.jqEditGetImages').on('click', function(){
+      var id = $(this).attr('data-id');
+      $.ajax({
+        url: '/admin/image/ajaxeditlist/'+id,
+        dataType: 'html',
+        type: 'GET',
+        data: { 'opposite' : '1' },
+        success: function(data) {
+            $('<div />').html(data).dialog({
+                title: 'Choose an image',
+                width: 600,
+            })
+        },
+        error: function() {
+            $('<div />').html('Error').dialog({
+                title: 'Error getting images',
+            })
+        },
+      });
+      return false;
+  });
+
+  $('.jqNewGetImages').on('click', function(){
+      $.ajax({
+          url: '/admin/image/ajaxnewlist/true',
+          dataType: 'HTML',
+          type: 'GET',
+          success: function(data) {
+              $('<div />').html(data).dialog({
+                  title: 'Choose an image',
+                  width: 600,
+              })
+          },
+          error: function() {
+              $('<div />').html('Error').dialog({
+                  title: 'Error getting images',
+              })
+              
+          }
+      });
+  })
   
   $(document).on('click', '.jqDetachImageFromPost', function(){
       $(this).closest('tr').remove();
@@ -54,33 +93,9 @@ $(function() {
       $(this).removeClass('jqAttachImageToPost');
       $(this).addClass('jqDetachImageFromPost');
       $(this).text('Detach');
-      $(this).closest('tr').appendTo('#jqPostImageList table tbody');
+      $(this).closest('tr').appendTo('.jqCommonImageList table tbody');
       return false; 
   });
-
-  $('.jqGetImages').on('click', function(){
-      var id = $(this).attr('data-id');
-      $.ajax({
-        url: '/admin/image/ajaxlist/'+id,
-        dataType: 'html',
-        type: 'GET',
-        data: {
-            'opposite' : '1',
-        },
-        success: function(data) {
-            $('<div />').html(data).dialog({
-                title: 'Choose an image',
-                width: 600,
-            })
-        },
-        error: function() {
-            $('<div />').html('Error').dialog({
-                title: 'Choose an image',
-            })
-        },
-      });
-      return false;
-  });
-
   
 });
+
