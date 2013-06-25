@@ -89,6 +89,7 @@ class AdminImageController extends BaseController
      * Ajax list for new posts, for use in new post templates
      *
      * @param bool $images A boolean value for returning images or not
+     *
      * @return view
      */
     public function ajaxNewList($images = false)

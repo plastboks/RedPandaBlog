@@ -48,10 +48,11 @@ class PostController extends BaseController
      */
     public function getIndex()
     {
+        $d = 'Welcome !';
+        $header = count(Post::where('published', '=', 1)->take(1)->get()) ? null:$d;
         $data = array(
             'errormessage' => Session::get('error'),
-            'header' => count(Post::where('published', '=', 1)
-                                      ->take(1)->get()) ? null : 'Welcome',
+            'header' => $header,
         );
 
         if (($this->s->frontpagecategory)
