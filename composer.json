@@ -3,8 +3,11 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "require": {
-        "laravel/framework": "4.0.*",
-        "squizlabs/php_codesniffer": "1.*"
+        "laravel/framework": "4.0.*"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "1.*",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "classmap": [
