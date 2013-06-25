@@ -50,7 +50,8 @@ class PostController extends BaseController
     {
         $data = array(
             'errormessage' => Session::get('error'),
-            'header' => count(Post::all()) ? null : 'Welcome',
+            'header' => count(Post::where('published', '=', 1)
+                                      ->take(1)->get()) ? null : 'Welcome',
         );
 
         if (($this->s->frontpagecategory)
