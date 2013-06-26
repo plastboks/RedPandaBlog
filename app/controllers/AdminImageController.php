@@ -53,6 +53,29 @@ class AdminImageController extends BaseController
                                 ->paginate(10),
             'status' => Session::get('status'),
             'error' => Session::get('error'),
+            'archived' => false,
+        );
+        return View::make('admin/image/list', $data);
+    }
+
+    /**
+     * Image list
+     *
+     * @return view
+     */
+    public function getArchived()
+    {
+        if (!$this->p->canI('seeArchivedImages')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $data = array(
+            'images' => Image::onlyTrashed()
+                                  ->orderBy('created_at', 'desc')
+                                  ->paginate(10),
+            'status' => Session::get('status'),
+            'error' => Session::get('error'),
+            'archived' => true,
         );
         return View::make('admin/image/list', $data);
     }
@@ -141,7 +164,7 @@ class AdminImageController extends BaseController
     }
 
     /**
-     * Post update image
+     * Delete image (archive)
      *
      * @param int $id image_id
      *
@@ -168,6 +191,55 @@ class AdminImageController extends BaseController
 
         return Redirect::back()
                   ->with('status', 'Image '.$image->title.' deleted');
+    }
+
+    /**
+     * Undelete image (restore)
+     *
+     * @param int $id image_id
+     *
+     * @return view
+     */
+    public function getUndelete($id)
+    {
+        if (!$this->p->canI('undeleteImage')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$image = Image::onlyTrashed()->where('id', '=', $id)) {
+            return Redirect::to('admin/image/archived')
+                        ->with('error', 'Unknown image');
+        }
+
+        $image->restore();
+
+        return Redirect::back()
+                  ->with('status', 'Image restored');
+
+    }
+
+    /**
+     * Forcedelete image
+     *
+     * @param int $id image_id
+     *
+     * @return view
+     */
+    public function getTrueDelete($id)
+    {
+        if (!$this->p->canI('trueDeleteImage')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$image = Image::onlyTrashed()->where('id', '=', $id)) {
+            return Redirect::to('admin/image/archived')
+                      ->with('error', 'Unkown image');
+        }
+
+        $image->forceDelete();
+        
+        return Redirect::back()
+                    ->with('status', 'Image is permanently deleted');
     }
 
     /**

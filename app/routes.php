@@ -111,6 +111,9 @@ Route::post('admin/post/update/{id}',
 Route::get('admin/image/list',
             array(
                 'uses' => 'AdminImageController@getList'));
+Route::get('admin/image/archived',
+            array(
+                'uses' => 'AdminImageController@getArchived'));
 Route::get('admin/image/ajaxnewlist/{images?}',
             array(
                 'uses' => 'AdminImageController@ajaxNewList'));
@@ -126,6 +129,12 @@ Route::get('admin/image/edit/{id}',
 Route::get('admin/image/delete/{id}',
            array(
                'uses' => 'AdminImageController@getDelete'));
+Route::get('admin/image/undelete/{id}',
+            array(
+                'uses' => 'AdminImageController@getUndelete'));
+Route::get('admin/image/truedelete/{id}',
+            array(
+                'uses' => 'AdminImageController@getTrueDelete'));
 Route::post('admin/image/create',
             array(
                 'before' => 'csrf',

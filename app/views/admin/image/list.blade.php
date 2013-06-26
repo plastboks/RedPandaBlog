@@ -2,7 +2,13 @@
 @section('content')
   <h1>Images</h1>
   <ul class="thirdmenu">
-    <li>{{ HTML::link('admin/image/new', 'Add new') }}</li>
+    <li>{{ HTML::link('admin/image/list', 'Public') }}</li>
+    @if ($p->canI('seeArchivedImages'))
+      <li>{{ HTML::link('admin/image/archived', 'Archived')}}</li>
+    @endif
+    @if ($p->canI('createImage'))
+      <li>{{ HTML::link('admin/image/new', 'Add new') }}</li>
+    @endif
   </ul>
 
   @if ($status)
@@ -31,6 +37,7 @@
         <td class="count">{{ count($image->posts()->get()) }}</td>
         <td class="action">
           <ul>
+          @unless ($archived)
             @if ($p->canI('updateImage'))
             <li class="edit">
               {{ HTML::link('admin/image/edit/'.$image->id, 'Edit') }}
@@ -38,9 +45,21 @@
             @endif
             @if (($p->canI('deleteImage')) && !(count($image->posts()->get())))
             <li class="delete">
-              {{ HTML::link('admin/image/delete/'.$image->id, 'Delete') }}
+              {{ HTML::link('admin/image/delete/'.$image->id, 'Archive') }}
             </li>
             @endif
+          @else
+            @if ($p->canI('undeleteImage'))
+            <li class="delete">
+              {{ HTML::link('admin/image/undelete/'.$image->id, 'Unarchive') }}
+            </li>
+            @endif
+            @if ($p->canI('trueDeleteImage'))
+            <li class="delete">
+              {{ HTML::link('admin/image/truedelete/'.$image->id, 'Delete') }}
+            </li>
+            @endif
+          @endunless
           </ul>
         </ul>
       </tr>

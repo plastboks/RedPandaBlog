@@ -57,6 +57,9 @@ class CapabilitySeeder extends Seeder
                                         70 => 'createImage',
                                         71 => 'updateImage',
                                         72 => 'deleteImage',
+                                        73 => 'undeleteImage',
+                                        74 => 'trueDeleteImage',
+                                        75 => 'seeArchivedImages',
                                         // only add in bottom of list
                                       );
     public function run()
