@@ -31,6 +31,7 @@ class CapabilitySeeder extends Seeder
                                         6 => 'deletePost',
                                         7 => 'undeletePost',
                                         8 => 'truedeletePost',
+                                        9 => 'seeDeletedPosts',
                                         // categories
                                         20 => 'createCategory',
                                         21 => 'updateCategory',

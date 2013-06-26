@@ -84,6 +84,10 @@ class AdminPostController extends BaseController
      */
     public function getArchived()
     {
+        if (!$this->p->canI('seeArchivedPosts')) {
+            return Abort::app(403, 'Forbidden');
+        }
+
         $data = array(
             'posts' => Post::onlyTrashed()
                                 ->orderBy('created_at', 'desc')

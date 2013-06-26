@@ -4,8 +4,12 @@
   <ul class="thirdmenu">
     <li>{{ HTML::link('admin/post/list', 'Published') }}</li>
     <li>{{ HTML::link('admin/post/unpublished', 'Unpublished') }}</li>
-    <li>{{ HTML::link('admin/post/archived', 'Archived') }}</li>
-    <li>{{ HTML::link('admin/post/new', 'Add new') }}</li>
+    @if ($p->canI('seeArchivedPosts'))
+      <li>{{ HTML::link('admin/post/archived', 'Archived') }}</li>
+    @endif
+    @if ($p->canI('createPost'))
+      <li>{{ HTML::link('admin/post/new', 'Add new') }}</li>
+    @endif
   </ul>
   <h3>{{ $title }}</h3>
   <div class="tablewrapper round5">

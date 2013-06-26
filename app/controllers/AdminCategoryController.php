@@ -64,6 +64,10 @@ class AdminCategoryController extends BaseController
      */
     public function getArchived()
     {
+        if (!$this->p->canI('seeArchivedCategories')) {
+            return Abort::app(403, 'Forbidden');
+        }
+
         $data = array(
             'categories' => Category::onlyTrashed()
                                   ->orderBy('id', 'asc')
