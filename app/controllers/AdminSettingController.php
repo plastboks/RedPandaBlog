@@ -49,10 +49,7 @@ class AdminSettingController extends BaseController
     public function getEdit()
     {
         if ($this->p->canI('siteSettings')) {
-            $data = array(
-                'status' => Session::get('status'),
-            );
-            return View::make('admin/setting/edit', $data);
+            return View::make('admin/setting/edit');
         }
         return App::abort(403, 'Forbidden');
     }
@@ -83,7 +80,7 @@ class AdminSettingController extends BaseController
         $this->_addMetaData('frontpagecategory', Input::get('frontpagecategory'));
 
         return Redirect::back()
-                  ->with('status', 'Site settings updated');
+                  ->with('flashStatus', 'Site settings updated');
     }
 
     /**

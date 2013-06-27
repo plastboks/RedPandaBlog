@@ -13,6 +13,9 @@
 
 View::share('s', App::make('settings'));
 View::share('p', App::make('permissions'));
+View::share('flashStatus', Session::get('flashStatus'));
+View::share('flashError', Session::get('flashError'));
+View::share('flashSuccess', Session::get('flashSuccess'));
 
 /**
  * Post part

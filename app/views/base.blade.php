@@ -33,6 +33,7 @@
       </ul>
     </div>
   </div>
+  @include('flash')
   <div id="content">
     @yield('content')
   </div>

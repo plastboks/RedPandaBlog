@@ -51,8 +51,6 @@ class AdminImageController extends BaseController
         $data = array(
             'images' => Image::orderBy('created_at', 'desc')
                                 ->paginate(10),
-            'status' => Session::get('status'),
-            'error' => Session::get('error'),
             'archived' => false,
         );
         return View::make('admin/image/list', $data);
@@ -73,8 +71,6 @@ class AdminImageController extends BaseController
             'images' => Image::onlyTrashed()
                                   ->orderBy('created_at', 'desc')
                                   ->paginate(10),
-            'status' => Session::get('status'),
-            'error' => Session::get('error'),
             'archived' => true,
         );
         return View::make('admin/image/list', $data);
@@ -154,7 +150,7 @@ class AdminImageController extends BaseController
 
         if (!$image = Image::find($id)) {
             return Redirect::to('admin/image/list')
-                      ->with('error', 'Unknown image');
+                      ->with('flashError', 'Unknown image');
         }
 
         $data = array(
@@ -178,19 +174,19 @@ class AdminImageController extends BaseController
 
         if (!$image = Image::find($id)) {
             return Redirect::to('admin/image/list')
-                      ->with('error', 'Unknown image');
+                      ->with('flashError', 'Unknown image');
         }
         
         if (count($image->posts()->get())) {
             $errorMsg = 'You cannot delete an image that is connected to posts';
             return Redirect::back()
-                      ->with('error', $errorMsg);
+                      ->with('flashError', $errorMsg);
         }
 
         $image->delete();
 
         return Redirect::back()
-                  ->with('status', 'Image '.$image->title.' deleted');
+                  ->with('flashStatus', 'Image '.$image->title.' deleted');
     }
 
     /**
@@ -208,13 +204,13 @@ class AdminImageController extends BaseController
 
         if (!$image = Image::onlyTrashed()->where('id', '=', $id)) {
             return Redirect::to('admin/image/archived')
-                        ->with('error', 'Unknown image');
+                        ->with('flashError', 'Unknown image');
         }
 
         $image->restore();
 
         return Redirect::back()
-                  ->with('status', 'Image restored');
+                  ->with('flashStatus', 'Image restored');
 
     }
 
@@ -233,13 +229,13 @@ class AdminImageController extends BaseController
 
         if (!$image = Image::onlyTrashed()->where('id', '=', $id)) {
             return Redirect::to('admin/image/archived')
-                      ->with('error', 'Unkown image');
+                      ->with('flashError', 'Unkown image');
         }
 
         $image->forceDelete();
         
         return Redirect::back()
-                    ->with('status', 'Image is permanently deleted');
+                    ->with('flashStatus', 'Image is permanently deleted');
     }
 
     /**
@@ -275,7 +271,7 @@ class AdminImageController extends BaseController
         $image->save();
          
         return Redirect::to('admin/image/list')
-                  ->with('status', 'New image '.$image->title.' created');
+                  ->with('flashSuccess', 'New image '.$image->title.' created');
     }
 
     /**
@@ -304,11 +300,11 @@ class AdminImageController extends BaseController
             $image->save();
             
             return Redirect::to('admin/image/list')
-                      ->with('status', 'Image '.$image->title.' updated');
+                      ->with('flashStatus', 'Image '.$image->title.' updated');
         }
 
         return Redirect::back()
-                  ->with('error', 'Unknown image');
+                  ->with('flashError', 'Unknown image');
     }
 
 }

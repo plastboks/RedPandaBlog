@@ -4,9 +4,6 @@ Edit Blog Settings
 @endsection
 @section('content')
     <h1>Edit Blog Settings</h1>
-    @if ($status)
-      <p class='message'>{{ $status }}</p>
-    @endif
     {{ Form::open(array('url'=>'admin/settings')) }}
         {{ Form::token() }}
 

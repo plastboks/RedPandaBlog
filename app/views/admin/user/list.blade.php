@@ -11,9 +11,6 @@
       <li>{{ HTML::link('admin/user/new', 'Add new') }}</li>
     @endif
   </ul>
-  @if ($status)
-  <p class="message">{{ $status }}</p>
-  @endif
   <h3>{{ $title }}</h3>
   <div class="tablewrapper round5">
     <table class="list userlist activeusers">

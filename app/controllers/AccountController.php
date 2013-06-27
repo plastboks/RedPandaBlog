@@ -60,7 +60,6 @@ class AccountController extends BaseController
     {
         $data = array(
             'user' => Auth::user(),
-            'status' => Session::get('status'),
         );
         return View::make('account/profile', $data);
     }
@@ -72,11 +71,7 @@ class AccountController extends BaseController
      */
     public function getPassword()
     {
-            $data = array(
-                'error' => Session::get('error'),
-                'status' => Session::get('status'),
-            );
-            return View::make('account/password', $data);
+        return View::make('account/password');
     }
 
     /**
@@ -120,7 +115,7 @@ class AccountController extends BaseController
             $dbUser->save();
             return Redirect::back()
                        ->with('user', Auth::user())
-                       ->with('status', 'User updated!');
+                       ->with('flashStatus', 'User updated!');
         }
     }
 
@@ -146,10 +141,10 @@ class AccountController extends BaseController
                 $user->password = Hash::make(Input::get('password'));
                 $user->save();
                 return Redirect::back()
-                          ->with('status', 'Password changed');
+                          ->with('flashStatus', 'Password changed');
             } else {
                 return Redirect::back()
-                          ->with('error', 'Incorrect password');
+                          ->with('flashError', 'Incorrect password');
             }
         }
 

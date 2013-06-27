@@ -6,9 +6,6 @@ Welcome
     @if ($header)
     <h1>{{ $header }}</h1>
     @endif
-    @if ($errormessage)
-    <p class="errormessage">{{ $errormessage }}</p>
-    @endif
 @if ($posts)
   @foreach ($posts as $post)
     <div class="post @if (!$post->published)unpublished @endif">

@@ -43,7 +43,6 @@ class InstallController extends BaseController
         }
 
         $data = array(
-            'status' => Session::get('status'),
             'username' => Session::get('username'),
             'email' => Session::get('email'),
         );
@@ -59,7 +58,7 @@ class InstallController extends BaseController
     {
         if (User::first()) {
             return Redirect::to('/')
-                            ->with('status', 'Users exists');
+                            ->with('flashError', 'Users exists');
         }
 
         $v = Validator::make(Input::all(), User::defaultRules());
@@ -79,7 +78,7 @@ class InstallController extends BaseController
         $user->password = Hash::make(Input::get('password'));
         $user->save();
         return Redirect::to('login')
-                  ->with('status', 'New user created');
+                  ->with('flashSuccess', 'New user created');
     }
 
 }

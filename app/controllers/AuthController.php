@@ -87,8 +87,6 @@ class AuthController extends BaseController
         }
 
         $data = array(
-                    'status' => Session::get('status'),
-                    'error' => Session::get('error'),
                     'token' => Input::get('token'),
                 );
         return View::make('auth/newpassword', $data);

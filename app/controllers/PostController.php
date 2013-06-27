@@ -51,7 +51,6 @@ class PostController extends BaseController
         $d = 'Welcome !';
         $header = count(Post::where('published', '=', 1)->take(1)->get()) ? null:$d;
         $data = array(
-            'errormessage' => Session::get('error'),
             'header' => $header,
         );
 
@@ -116,7 +115,7 @@ class PostController extends BaseController
         } else {
             $message = 'Please enter 3 og more character in the search query';
             return Redirect::to('/')
-                      ->with('errormessage', $message);
+                      ->with('flashError', $message);
         }
     }
 

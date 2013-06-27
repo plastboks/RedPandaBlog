@@ -51,7 +51,6 @@ class AdminCategoryController extends BaseController
         $data = array(
             'categories' => Category::orderBy('id', 'asc')
                               ->paginate(10),
-            'status' => Session::get('status'),
             'archived' => false,
         );
         return View::make('admin/category/list', $data);
@@ -72,7 +71,6 @@ class AdminCategoryController extends BaseController
             'categories' => Category::onlyTrashed()
                                   ->orderBy('id', 'asc')
                                   ->paginate(10),
-            'status' => Session::get('status'),
             'archived' => true,
         );
         return View::make('admin/category/list', $data);
@@ -136,7 +134,7 @@ class AdminCategoryController extends BaseController
         $category->save();
 
         return Redirect::to('admin/category/list')
-                ->with('status', 'New category '.$category->title.' created.');
+                ->with('flashSuccess', 'New category '.$category->title.' created.');
     }
 
     /**
@@ -165,7 +163,7 @@ class AdminCategoryController extends BaseController
             $category->slug = Input::get('slug');
             $category->save();
             return Redirect::to('admin/category/list')
-                    ->with('status', 'Category '.$category->title.' updated');
+                    ->with('flashStatus', 'Category '.$category->title.' updated');
         }
     }
 

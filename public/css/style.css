@@ -63,6 +63,30 @@ a {
   background: lightcyan;
 }
 
+/************************
+ * Flashmessage section *
+ ************************/
+#flashmessage .success {
+  border: 1px solid green;
+  padding: 5px;
+  background: lightgreen;
+  font-size: 0.9em;
+}
+
+#flashmessage .error {
+  border: 1px solid red;
+  padding: 5px;
+  background: salmon;
+  font-size: 0.9em;
+}
+
+#flashmessage .status {
+  border: 1px solid blue;
+  padding: 5px;
+  background: lightblue;
+  font-size: 0.9em;
+}
+
 
 /*******************
  * Content section *

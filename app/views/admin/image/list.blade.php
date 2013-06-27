@@ -10,14 +10,6 @@
       <li>{{ HTML::link('admin/image/new', 'Add new') }}</li>
     @endif
   </ul>
-
-  @if ($status)
-    <p class='message'>{{ $status }}</p>
-  @endif
-  @if ($error)
-    <p class='error'>{{ $error }}</p>
-  @endif
-
   <h3>Images</h3>
   <div class="tablewrapper round5">
     <table class="list imagelist publishedimages">

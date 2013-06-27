@@ -10,9 +10,6 @@
       <li>{{ HTML::link('admin/category/new', 'Add new') }}</li>
     @endif
   </ul>
-  @if ($status)
-    <p class="message">{{$status}}</p>
-  @endif 
   <h3>Categories</h3>
   <div class="tablewrapper round5">
     <table class="list postlist publishedposts">

@@ -57,7 +57,6 @@ class AdminUserController extends BaseController
             'users' => User::orderBy('id', 'asc')
                                 ->whereNull('blocked')
                                 ->paginate(10),
-            'status' => Session::get('status'),
             'title' => 'Active users',
             'action' => 'block',
             'archive' => false,
@@ -81,7 +80,6 @@ class AdminUserController extends BaseController
             'users' => User::orderBy('id', 'asc')
                                 ->where('blocked', '=', '1')
                                 ->paginate(10),
-            'status' => Session::get('status'),
             'title' => 'Blocked users',
             'action' => 'unblock',
             'archive' => false,
@@ -105,7 +103,6 @@ class AdminUserController extends BaseController
             'users' => User::onlyTrashed()
                               ->orderBy('id', 'asc')
                               ->paginate(10),
-            'status' => Session::get('status'),
             'title' => 'Archived users',
             'action' => '',
             'archive' => true,
@@ -141,7 +138,6 @@ class AdminUserController extends BaseController
         } elseif ($user = User::find($id)) {
             $data = array(
                 'user' => $user,
-                'status' => Session::get('status'),
                 'roles' => $formRoles,
             );
             return View::make('admin/user/edit', $data);
@@ -165,7 +161,6 @@ class AdminUserController extends BaseController
             $formRoles[$role->id] = ucwords($role->name);
         }
         $data = array(
-            'status' => Session::get('status'),
             'username' => Session::get('username'),
             'email' => Session::get('email'),
             'roles' => $formRoles,
@@ -317,7 +312,7 @@ class AdminUserController extends BaseController
         $user->password = Hash::make(Input::get('password'));
         $user->save();
         return Redirect::to('admin/user/list')
-                  ->with('status', 'New user created');
+                  ->with('flashSuccess', 'New user created');
     }
 
     /**
@@ -357,7 +352,7 @@ class AdminUserController extends BaseController
             }
             $user->save();
             return Redirect::to('admin/user/list')
-                      ->with('status', "User updated");
+                      ->with('flashStatus', "User updated");
         }
     }
 

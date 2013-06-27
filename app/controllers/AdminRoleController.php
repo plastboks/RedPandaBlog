@@ -52,7 +52,6 @@ class AdminRoleController extends BaseController
             $data = array(
                 'roles' => Role::orderBy('id', 'asc')
                                   ->paginate(10),
-                'status' => Session::get('status'),
                 'archive' => false
             );
             return View::make('admin/role/list', $data);
@@ -72,7 +71,6 @@ class AdminRoleController extends BaseController
                 'roles' => Role::onlyTrashed()
                                   ->orderBy('id', 'asc')
                                   ->paginate(10),
-                'status' => Session::get('status'),
                 'archive' => true,
             );
             return View::make('admin/role/list', $data);
@@ -210,7 +208,7 @@ class AdminRoleController extends BaseController
             $role->capabilities()->sync(Input::get('caps'));
         }
         return Redirect::to('admin/role/list')
-                 ->with('status', 'New role '.$role->name.' created.');
+                 ->with('flashSuccess', 'New role '.$role->name.' created.');
     }
 
     /**
@@ -243,7 +241,7 @@ class AdminRoleController extends BaseController
                 $role->capabilities()->detach();
             }
             return Redirect::to('admin/role/list')
-                    ->with('status', 'Role '.$role->name.' updated.');
+                    ->with('flashStatus', 'Role '.$role->name.' updated.');
         }
     }
 
