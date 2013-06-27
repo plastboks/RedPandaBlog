@@ -46,6 +46,9 @@ class CapabilitySeeder extends Seeder
                                         33 => 'deleteUser',
                                         34 => 'blockUser',
                                         35 => 'unblockUser',
+                                        36 => 'undeleteUser',
+                                        37 => 'trueDeleteUser',
+                                        38 => 'seeArchivedUsers',
                                         // roles
                                         40 => 'seeRoles',
                                         41 => 'createRole',

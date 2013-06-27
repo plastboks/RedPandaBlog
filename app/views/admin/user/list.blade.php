@@ -4,8 +4,11 @@
   <ul class="thirdmenu">
     <li>{{ HTML::link('admin/user/list', 'Users') }}</li>
     <li>{{ HTML::link('admin/user/blocked', 'Blocked') }}</li>
+    @if ($p->canI('seeArchivedUsers'))
+      <li>{{ HTML::link('admin/user/archived', 'Archived') }}</li>
+    @endif
     @if ($p->canI('createUser'))
-    <li>{{ HTML::link('admin/user/new', 'Add new') }}</li>
+      <li>{{ HTML::link('admin/user/new', 'Add new') }}</li>
     @endif
   </ul>
   @if ($status)
@@ -31,6 +34,7 @@
         <td class="action">
           @unless ($user->id == Auth::user()->id)
           <ul>
+          @unless ($archive)
             @if ($p->canI('updateUser'))
             <li class="edit">
               {{ HTML::link('admin/user/edit/'.$user->id, 'Edit') }}
@@ -44,10 +48,22 @@
               @endif
             @if ($p->canI('deleteUser') && !count($user->posts()->get()))
             <li class="delete">
-              {{ HTML::link('admin/user/delete/'.$user->id, 'Delete') }}
+              {{ HTML::link('admin/user/delete/'.$user->id, 'Archive') }}
             </li>
             @endif
             @endunless
+          @else
+            @if ($p->canI('undeleteUser'))
+            <li class="delete">
+              {{ HTML::link('admin/user/undelete/'.$user->id, 'Unarchive') }}
+            </li>
+            @endif
+            @if ($p->canI('trueDeleteUser'))
+            <li class="delete">
+              {{ HTML::link('admin/user/truedelete/'.$user->id, 'Delete') }}
+            </li>
+            @endif
+          @endunless
           </ul>
           @endunless
         </td>

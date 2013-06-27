@@ -39,6 +39,9 @@ Route::get('admin/user/list',
 Route::get('admin/user/blocked',
             array(
                 'uses' => 'AdminUserController@getBlocked'));
+Route::get('admin/user/archived',
+            array(
+                'uses' => 'AdminUserController@getArchived'));
 Route::get('admin/user/new',
             array(
                 'uses' => 'AdminUserController@getNew'));
@@ -54,6 +57,12 @@ Route::get('admin/user/unblock/{id}',
 Route::get('admin/user/delete/{id}',
             array(
                 'uses' => 'AdminUserController@getDelete'));
+Route::get('admin/user/undelete/{id}',
+            array(
+                'uses' => 'AdminUserController@getUndelete'));
+Route::get('admin/user/truedelete/{id}',
+            array(
+                'uses' => 'AdminUserController@getTrueDelete'));
 Route::post('admin/user/create',
             array(
                 'before' => 'csrf',

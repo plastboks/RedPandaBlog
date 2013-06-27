@@ -60,6 +60,7 @@ class AdminUserController extends BaseController
             'status' => Session::get('status'),
             'title' => 'Active users',
             'action' => 'block',
+            'archive' => false,
         );
         return View::make('admin/user/list', $data);
     }
@@ -83,6 +84,31 @@ class AdminUserController extends BaseController
             'status' => Session::get('status'),
             'title' => 'Blocked users',
             'action' => 'unblock',
+            'archive' => false,
+        );
+        return View::make('admin/user/list', $data);
+    }
+
+    /**
+     * Users list view (archived)
+     *
+     * @return view
+     */
+    public function getArchived()
+    {
+        if (!$this->p->canI('seeArchivedUsers')) {
+            return App::abort(403, 'Forbidden');
+        }
+        
+        $data = array(
+            'myself' => Auth::user(),
+            'users' => User::onlyTrashed()
+                              ->orderBy('id', 'asc')
+                              ->paginate(10),
+            'status' => Session::get('status'),
+            'title' => 'Archived users',
+            'action' => '',
+            'archive' => true,
         );
         return View::make('admin/user/list', $data);
     }
@@ -214,6 +240,50 @@ class AdminUserController extends BaseController
             }
         }
         return Redirect::to('admin/user/list');
+    }
+    
+    /**
+     * Undelete user action
+     *
+     * @param int $id user_id
+     *
+     * @return redirect
+     */
+    public function getUndelete($id)
+    {
+        if (!$this->p->canI('undeleteUser')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$user = User::onlyTrashed()->where('id', '=', $id)) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $user->restore();
+        
+        return Redirect::to('admin/user/archived');
+    }
+
+    /**
+     * Truedelete user action
+     *
+     * @param int $id user_id
+     *
+     * @return redirect
+     */
+    public function getTrueDelete($id)
+    {
+        if (!$this->p->canI('trueDeleteUser')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$user = User::onlyTrashed()->where('id', '=', $id)) {
+            return App::abort(403, 'Forbidden');
+        }
+        
+        $user->forceDelete();
+
+        return Redirect::to('admin/user/archived');
     }
 
     /**
