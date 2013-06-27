@@ -53,6 +53,27 @@ class AdminRoleController extends BaseController
                 'roles' => Role::orderBy('id', 'asc')
                                   ->paginate(10),
                 'status' => Session::get('status'),
+                'archive' => false
+            );
+            return View::make('admin/role/list', $data);
+        }
+        return App::abort(403, 'Forbidden');
+    }
+
+    /**
+     * Role list
+     *
+     * @return view
+     */
+    public function getArchived()
+    {
+        if ($this->p->canI('seeArchivedRoles')) {
+            $data = array(
+                'roles' => Role::onlyTrashed()
+                                  ->orderBy('id', 'asc')
+                                  ->paginate(10),
+                'status' => Session::get('status'),
+                'archive' => true,
             );
             return View::make('admin/role/list', $data);
         }
@@ -119,6 +140,50 @@ class AdminRoleController extends BaseController
         return Redirect::to('admin/role/list');
     }
 
+    /**
+     * Unelete role action
+     *
+     * @param int $id role_id
+     *
+     * @return redirect
+     */
+    public function getUndelete($id)
+    {
+        if (!$this->p->canI('undeleteRole') && $id != 1) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$role = Role::onlyTrashed()->where('id', '=', $id)) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $role->restore();
+
+        return Redirect::to('admin/role/archived');
+    }
+
+    /**
+     * Truedelete role action
+     *
+     * @param int $id role_id
+     *
+     * @return redirect
+     */
+    public function getTrueDelete($id)
+    {
+        if (!$this->p->canI('trueDeleteRole') && $id != 1) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$role = Role::onlyTrashed()->where('id', '=', $id)) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $role->forceDelete();
+
+        return Redirect::to('admin/role/archived');
+    }
+    
     /**
      * Create role action
      *

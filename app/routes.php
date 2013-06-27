@@ -203,6 +203,9 @@ Route::post('admin/settings',
 Route::get('admin/role/list',
             array(
                 'uses' => 'AdminRoleController@getList'));
+Route::get('admin/role/archived',
+            array(
+                'uses' => 'AdminRoleController@getArchived'));
 Route::get('admin/role/new',
             array(
                 'uses' => 'AdminRoleController@getNew'));
@@ -212,6 +215,12 @@ Route::get('admin/role/edit/{id}',
 Route::get('admin/role/delete/{id}',
             array(
                 'uses' => 'AdminRoleController@getDelete'));
+Route::get('admin/role/undelete/{id}',
+            array(
+                'uses' => 'AdminRoleController@getUndelete'));
+Route::get('admin/role/truedelete/{id}',
+            array(
+                'uses' => 'AdminRoleController@getTrueDelete'));
 Route::post('admin/role/create',
             array(
                 'before' => array('csrf'),

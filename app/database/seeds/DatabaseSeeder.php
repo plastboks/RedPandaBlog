@@ -54,6 +54,9 @@ class CapabilitySeeder extends Seeder
                                         41 => 'createRole',
                                         42 => 'updateRole',
                                         43 => 'deleteRole',
+                                        44 => 'undeleteRole',
+                                        45 => 'trueDeleteRole',
+                                        46 => 'seeArchivedRoles',
                                         // other
                                         50 => 'siteSettings',
                                         // images
