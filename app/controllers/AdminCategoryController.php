@@ -29,6 +29,7 @@
  */
 class AdminCategoryController extends BaseController
 {
+
     /**
      * Sets persmission and load parents contruct
      *
@@ -50,7 +51,27 @@ class AdminCategoryController extends BaseController
         $data = array(
             'categories' => Category::orderBy('id', 'asc')
                               ->paginate(10),
-            'status' => Session::get('status'),
+            'archived' => false,
+        );
+        return View::make('admin/category/list', $data);
+    }
+
+    /**
+     * Archived categories list
+     *
+     * @return view
+     */
+    public function getArchived()
+    {
+        if (!$this->p->canI('seeArchivedCategories')) {
+            return Abort::app(403, 'Forbidden');
+        }
+
+        $data = array(
+            'categories' => Category::onlyTrashed()
+                                  ->orderBy('id', 'asc')
+                                  ->paginate(10),
+            'archived' => true,
         );
         return View::make('admin/category/list', $data);
     }
@@ -102,7 +123,7 @@ class AdminCategoryController extends BaseController
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
-            return Redirect::to('admin/category/new')
+            return Redirect::back()
                     ->withErrors($v)
                     ->withInput();
         }
@@ -113,7 +134,7 @@ class AdminCategoryController extends BaseController
         $category->save();
 
         return Redirect::to('admin/category/list')
-                ->with('status', 'New category '.$category->title.' created.');
+                ->with('flashSuccess', 'New category '.$category->title.' created.');
     }
 
     /**
@@ -132,7 +153,7 @@ class AdminCategoryController extends BaseController
         $v = Validator::make(Input::all(), Category::defaultRules());
 
         if ($v->fails()) {
-            return Redirect::to('admin/category/edit/'.$id)
+            return Redirect::back()
                     ->withErrors($v)
                     ->withInput();
         }
@@ -142,12 +163,12 @@ class AdminCategoryController extends BaseController
             $category->slug = Input::get('slug');
             $category->save();
             return Redirect::to('admin/category/list')
-                    ->with('status', 'Category '.$category->title.' updated');
+                    ->with('flashStatus', 'Category '.$category->title.' updated');
         }
     }
 
     /**
-     * Category search view
+     * Delete (archive) category
      *
      * @param int $id category_id
      *
@@ -163,10 +184,46 @@ class AdminCategoryController extends BaseController
             && (!count(Category::find($id)->posts()->get()))
         ) {
             $cat->delete();
-            return Redirect::to('admin/category/list');
-        } else {
-            return Redirect::to('admin/category/list');
         }
+        return Redirect::to('admin/category/list');
+    }
+
+    /**
+     * Undelete (unarchive) category
+     *
+     * @param int $id category_id
+     *
+     * @return view
+     */
+    public function getUndelete($id)
+    {
+        if (!$this->p->canI('undeleteCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (($cat = Category::onlyTrashed()->where('id', '=', $id))) {
+            $cat->restore();
+        }
+        return Redirect::to('admin/category/archived');
+    }
+
+    /**
+     * Forcedelete category
+     *
+     * @param int $id category_id
+     *
+     * @return view
+     */
+    public function getTrueDelete($id)
+    {
+        if (!$this->p->canI('forcedeleteCategory')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (($cat = Category::onlyTrashed()->where('id', '=', $id))) {
+            $cat->forceDelete();
+        }
+        return Redirect::to('admin/category/archived');
     }
 
 }

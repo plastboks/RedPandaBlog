@@ -4,9 +4,6 @@ Edit Blog Settings
 @endsection
 @section('content')
     <h1>Edit Blog Settings</h1>
-    @if ($status)
-      <p class='message'>{{ $status }}</p>
-    @endif
     {{ Form::open(array('url'=>'admin/settings')) }}
         {{ Form::token() }}
 
@@ -29,6 +26,11 @@ Edit Blog Settings
         <p>{{ Form::label('excerptCut', 'Excerpt length') }}</p>
         {{ $errors->first('excerptCut', '<p class="error">:message</p>') }}
         <p>{{ Form::select('excerptCut', array_combine(range(50, 800, 50), range(50, 800, 50)), $s->excerptCut) }}</p>
+
+        <!-- category on fronpage -->
+        <p>{{ Form::label('frontpagecategory', 'Frontpage category')}}</p>
+        {{ $errors->first('frontpagecategory', '<p class="error">:message</p>')}}
+        <p>{{ Form::select('frontpagecategory', $s->getCatIncDefault(), $s->frontpagecategory)}}</p>
 
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>

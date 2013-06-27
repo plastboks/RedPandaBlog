@@ -38,6 +38,13 @@ class Post extends Eloquent
     protected $table = 'posts';
 
     /**
+     * Do not delete from database
+     *
+     * @var $softDelete
+     */
+    protected $softDelete = true;
+
+    /**
      * Get post author
      *
      * @return object
@@ -55,6 +62,16 @@ class Post extends Eloquent
     public function categories()
     {
         return $this->belongsToMany('Category');
+    }
+
+    /**
+     * Get post images
+     *
+     * @return object
+     */
+    public function images()
+    {
+        return $this->belongsToMany('Image')->withPivot('placement');
     }
 
     /**

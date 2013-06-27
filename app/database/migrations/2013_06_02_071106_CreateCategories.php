@@ -1,6 +1,9 @@
 <?php
 
-class CreateCategories {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCategories extends Migration
+{
 
   /**
    * Make changes to the database.
@@ -12,11 +15,14 @@ class CreateCategories {
     Schema::create('categories', function($table) 
     {
       $table->increments('id');
+
       $table->string('title');
       $table->string('slug');
+
       $table->boolean('active');
 
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

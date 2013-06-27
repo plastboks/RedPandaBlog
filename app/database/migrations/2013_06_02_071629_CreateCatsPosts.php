@@ -1,6 +1,9 @@
 <?php
 
-class CreateCatsPosts {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCatsPosts extends Migration
+{
 
   /**
    * Make changes to the database.
@@ -12,6 +15,7 @@ class CreateCatsPosts {
     Schema::create('category_post', function($table)
     {
       $table->increments('id');
+
       $table->integer('post_id');
       $table->integer('category_id');
 

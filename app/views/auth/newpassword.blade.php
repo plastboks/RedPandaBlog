@@ -1,12 +1,6 @@
 @extends('base')
 @section('content')
     <h1>New password</h1>
-    @if ($error)
-      <p class="error">{{ $error }}</p>
-    @endif
-    @if ($status)
-      <p class="message">{{ $status }}</p>
-    @endif
     {{ Form::open(array('url'=>'password/forgot')) }}
         {{ Form::token() }}
         {{ Form::hidden('confirmcode', $token) }}

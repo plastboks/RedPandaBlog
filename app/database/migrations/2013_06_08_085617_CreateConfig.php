@@ -1,6 +1,9 @@
 <?php
 
-class CreateConfig {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateConfig extends Migration
+{
 
   /**
    * Make changes to the database.
@@ -12,15 +15,12 @@ class CreateConfig {
     Schema::create('settings', function($table)
     {
       $table->increments('id');
+
       $table->string('meta_key', 128);
-      $table->string('meta_value');
+      $table->string('meta_value', 1024);
+
       $table->timestamps();
     });
-
-    DB::table('settings')->insert(array(
-                                      'meta_key' => 'blogName',
-                                      'meta_value' => 'Red Panda Blog',
-                                    ));
   }
 
   /**

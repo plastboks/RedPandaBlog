@@ -1,6 +1,9 @@
 <?php
 
-class CreateRoles {
+use Illuminate\Database\Migrations\Migration;
+
+class CreateRoles extends Migration
+{
 
 	/**
 	 * Make changes to the database.
@@ -12,11 +15,12 @@ class CreateRoles {
     Schema::create('roles', function($table)
     {
       $table->increments('id');
-      $table->string('name');
-      $table->timestamps();
-    });
 
-    DB::table('roles')->insert(array('name' => 'admin'));
+      $table->string('name', 256);
+
+      $table->timestamps();
+      $table->softDeletes();
+    });
 	}
 
 	/**

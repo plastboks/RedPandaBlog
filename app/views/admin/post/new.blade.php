@@ -37,6 +37,10 @@ Add new post
             @endforeach
             </ul>
         </p>
+        <p>
+            <div id="jqNewPostImageList" class="jqCommonImageList" data-type="newpost"></div>
+            <p><input type="button" class="jqNewGetImages" data-id="" value="Add image"/></p>
+        </p>
         <!-- submit button -->
         <p>{{ Form::submit('Create') }}</p>
     {{ Form::close() }}

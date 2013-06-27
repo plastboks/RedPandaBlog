@@ -29,7 +29,7 @@
  */
 class AdminPostController extends BaseController
 {
-
+    
     /**
      * Sets permisssions and loads parent construct
      *
@@ -54,6 +54,7 @@ class AdminPostController extends BaseController
                                 ->paginate(10),
             'title' => 'Published posts',
             'action' => 'unpublish',
+            'archived' => false,
         );
         return View::make('admin/post/list', $data);
     }
@@ -71,6 +72,29 @@ class AdminPostController extends BaseController
                                 ->paginate(10),
             'title' => 'Unpublished posts',
             'action' => 'publish',
+            'archived' => false,
+        );
+        return View::make('admin/post/list', $data);
+    }
+
+    /**
+     * Post archived
+     *
+     * @return view
+     */
+    public function getArchived()
+    {
+        if (!$this->p->canI('seeArchivedPosts')) {
+            return Abort::app(403, 'Forbidden');
+        }
+
+        $data = array(
+            'posts' => Post::onlyTrashed()
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(10),
+            'title' => 'Archived posts',
+            'action' => false,
+            'archived' => true,
         );
         return View::make('admin/post/list', $data);
     }
@@ -94,42 +118,6 @@ class AdminPostController extends BaseController
     }
 
     /**
-     * Create post action
-     *
-     * @return redirect
-     */
-    public function postCreate()
-    {
-        if (!$this->p->canI('createPost')) {
-            return App::abort(403, 'Forbidden');
-        }
-
-        $v = Validator::make(Input::all(), Post::defaultRules());
-
-        if ($v->fails()) {
-            return Redirect::to('admin/post/new')
-                      ->with('user', Auth::user())
-                      ->withErrors($v)
-                      ->withInput();
-        }
-
-        $post = new Post();
-        $post->title = Input::get('title');
-        $post->excerpt = Input::get('excerpt');
-        $post->body = Input::get('body');
-        $post->author_id = Input::get('author_id');
-        if ($this->p->canI('publishPost')) {
-            $post->published = Input::get('published');
-        }
-        $post->save();
-        if (Input::get('category')) {
-            $post->categories()->sync(Input::get('category'));
-        }
-
-        return Redirect::to('post/view/'.$post->id);
-    }
-
-    /**
      * Post edit view
      *
      * @param int $id post_id
@@ -146,48 +134,9 @@ class AdminPostController extends BaseController
             'post' => Post::find($id),
             'user' => Auth::user(),
             'categories' => Category::all(),
+            'images' => Post::find($id)->images()->get(),
         );
         return View::make('admin/post/edit', $data);
-    }
-
-    /**
-     * Update post action
-     *
-     * @param int $id post_id
-     *
-     * @return view
-     */
-    public function postUpdate($id)
-    {
-        if (!$this->p->canI('updatePost')) {
-            return App::abort(403, 'Forbidden');
-        }
-
-        $v = Validator::make(Input::all(), Post::defaultRules());
-
-        if ($v->fails()) {
-            return Redirect::to('admin/post/edit/'.$id)
-                      ->with('user', Auth::user())
-                      ->withErrors($v)
-                      ->withInput();
-        }
-
-        if ($post = Post::find($id)) {
-            $post->title = Input::get('title');
-            $post->excerpt = Input::get('excerpt');
-            $post->body = Input::get('body');
-            $post->author_id = Input::get('author_id');
-            if ($this->p->canI('publishPost')) {
-                $post->published = Input::get('published');
-            }
-            if (Input::has('category')) {
-                $post->categories()->sync(Input::get('category'));
-            } else {
-                $post->categories()->detach();
-            }
-            $post->save();
-            return Redirect::to('post/view/'.$id);
-        }
     }
 
     /**
@@ -231,7 +180,7 @@ class AdminPostController extends BaseController
     /**
      * Delete post action
      *
-     * @param int $id category_id
+     * @param int $id post_id
      *
      * @return redirect
      */
@@ -245,10 +194,148 @@ class AdminPostController extends BaseController
                 $post->categories()->detach();
             }
             $post->delete();
-            return Redirect::to('admin/post/list');
+        }
+        return Redirect::to('admin/post/list');
+    }
+
+    /**
+     * Undelete post action
+     *
+     * @param int $id post_id
+     *
+     * @return redirect
+     */
+    public function getUndelete($id)
+    {
+        if (($this->p->canI('undeletePost'))
+            && ($post = Post::onlyTrashed()->where('id', '=', $id))
+        ) {
+            $post->restore();
+        }
+        return Redirect::to('admin/post/archived');
+    }
+
+    /**
+     * Truedelete post action. Nuke that sucker.
+     *
+     * @param int $id post_id
+     *
+     * @return redirect
+     */
+    public function getTrueDelete($id)
+    {
+        if (($this->p->canI('truedeletePost'))
+            && ($post = Post::onlyTrashed()->where('id', '=', $id))
+        ) {
+            $post->forceDelete();
+        }
+        return Redirect::to('admin/post/archived');
+    }
+
+    /**
+     * Create post action
+     *
+     * @return redirect
+     */
+    public function postCreate()
+    {
+        if (!$this->p->canI('createPost')) {
+            return App::abort(403, 'Forbidden');
         }
 
-        return Redirect::to('admin/post/list');
+        $v = Validator::make(Input::all(), Post::defaultRules());
+
+        if ($v->fails()) {
+            return Redirect::back()
+                      ->with('user', Auth::user())
+                      ->withErrors($v)
+                      ->withInput();
+        }
+
+        $post = new Post();
+        $post->title = Input::get('title');
+        $post->excerpt = Input::get('excerpt');
+        $post->body = Input::get('body');
+        $post->author_id = Input::get('author_id');
+
+        if ($this->p->canI('publishPost')) {
+            $post->published = Input::get('published');
+        }
+
+        $post->save();
+
+        if (Input::get('category')) {
+            $post->categories()->sync(Input::get('category'));
+        }
+
+        if (Input::has('image')) {
+            foreach (Input::get('image') as $img) {
+                $post->images()->attach(
+                    $img, array(
+                        'placement' => Input::get('placement')[$img],
+                    )
+                );
+            }
+        }
+
+        return Redirect::to('post/view/'.$post->id);
+    }
+
+    /**
+     * Update post action
+     *
+     * @param int $id post_id
+     *
+     * @return view
+     */
+    public function postUpdate($id)
+    {
+        if (!$this->p->canI('updatePost')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $v = Validator::make(Input::all(), Post::defaultRules());
+
+        if ($v->fails()) {
+            return Redirect::back()
+                      ->with('user', Auth::user())
+                      ->withErrors($v)
+                      ->withInput();
+        }
+
+        if ($post = Post::find($id)) {
+            $post->title = Input::get('title');
+            $post->excerpt = Input::get('excerpt');
+            $post->body = Input::get('body');
+            $post->author_id = Input::get('author_id');
+
+            if ($this->p->canI('publishPost')) {
+                $post->published = Input::get('published');
+            }
+
+            if (Input::has('category')) {
+                $post->categories()->sync(Input::get('category'));
+            } else {
+                $post->categories()->detach();
+            }
+
+            if (Input::has('image')) {
+                $post->images()->detach();
+                foreach (Input::get('image') as $img) {
+                    $post->images()->attach(
+                        $img, array(
+                           'placement' => Input::get('placement')[$img],
+                        )
+                    );
+                }
+            } else {
+                $post->images()->detach();
+            }
+
+            $post->save();
+            return Redirect::to('post/view/'.$id);
+        }
+
     }
 
 }

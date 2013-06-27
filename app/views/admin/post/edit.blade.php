@@ -3,6 +3,7 @@
 Edit post {{ $post->title }}
 @endsection
 @section('content')
+    <h1>Edit post - {{ $post->title }}</h1>
     {{ Form::open(array('url'=>'admin/post/update/'.$post->id)) }}
         {{ Form::token() }}
         {{ Form::hidden('author_id', $user->id) }}
@@ -27,7 +28,7 @@ Edit post {{ $post->title }}
         </p>
         @endif
         <p>
-            <span>Categories</span>
+            <span>Categories:</span>
             <ul class="categorylist">
             @foreach ($categories as $category)
                 <li>
@@ -36,6 +37,10 @@ Edit post {{ $post->title }}
                 </li>
             @endforeach
             </ul>
+        </p>
+        <p>
+            <div id="jqEditPostImageList" class="jqCommonImageList" data-id="{{ $post->id }} "></div>
+            <p><input type="button" class="jqEditGetImages" data-id="{{$post->id}}" value="Add image"/></p>
         </p>
         <!-- submit button -->
         <p>{{ Form::submit('Update') }}</p>

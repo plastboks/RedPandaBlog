@@ -52,7 +52,26 @@ class AdminRoleController extends BaseController
             $data = array(
                 'roles' => Role::orderBy('id', 'asc')
                                   ->paginate(10),
-                'status' => Session::get('status'),
+                'archive' => false
+            );
+            return View::make('admin/role/list', $data);
+        }
+        return App::abort(403, 'Forbidden');
+    }
+
+    /**
+     * Role list
+     *
+     * @return view
+     */
+    public function getArchived()
+    {
+        if ($this->p->canI('seeArchivedRoles')) {
+            $data = array(
+                'roles' => Role::onlyTrashed()
+                                  ->orderBy('id', 'asc')
+                                  ->paginate(10),
+                'archive' => true,
             );
             return View::make('admin/role/list', $data);
         }
@@ -97,69 +116,6 @@ class AdminRoleController extends BaseController
     }
 
     /**
-     * Create role action
-     *
-     * @return redirect
-     */
-    public function postCreate()
-    {
-        if (!$this->p->canI('createRole')) {
-            return App::abort(403, 'Forbidden');
-        }
-
-        $v = Validator::make(Input::all(), Role::defaultRules());
-
-        if ($v->fails()) {
-            return Redirect::to('admin/role/new')
-                    ->withErrors($v)
-                    ->withInput();
-        }
-
-        $role = new Role();
-        $role->name = Input::get('name');
-        $role->save();
-        if (Input::get('caps')) {
-            $role->capabilities()->sync(Input::get('caps'));
-        }
-        return Redirect::to('admin/role/list')
-                 ->with('status', 'New role '.$role->name.' created.');
-    }
-
-    /**
-     * Update role action
-     *
-     * @param int $id role_id
-     *
-     * @return redirect
-     */
-    public function postUpdate($id)
-    {
-        if (!$this->p->canI('updateRole')) {
-            return App::abort(403, 'Forbidden');
-        }
-
-        $v = Validator::make(Input::all(), Role::defaultRules());
-
-        if ($v->fails()) {
-            return Redirect::to('admin/role/edit/'.$id)
-                    ->withErrors($v)
-                    ->withInput();
-        }
-
-        if ($role = Role::find($id)) {
-            $role->name = Input::get('name');
-            $role->save();
-            if (Input::get('caps')) {
-                $role->capabilities()->sync(Input::get('caps'));
-            } else {
-                $role->capabilities()->detach();
-            }
-            return Redirect::to('admin/role/list')
-                    ->with('status', 'Role '.$role->name.' updated.');
-        }
-    }
-
-    /**
      * Delete role action
      *
      * @param int $id role_id
@@ -180,6 +136,113 @@ class AdminRoleController extends BaseController
             return Redirect::to('admin/role/list');
         }
         return Redirect::to('admin/role/list');
+    }
+
+    /**
+     * Unelete role action
+     *
+     * @param int $id role_id
+     *
+     * @return redirect
+     */
+    public function getUndelete($id)
+    {
+        if (!$this->p->canI('undeleteRole') && $id != 1) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$role = Role::onlyTrashed()->where('id', '=', $id)) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $role->restore();
+
+        return Redirect::to('admin/role/archived');
+    }
+
+    /**
+     * Truedelete role action
+     *
+     * @param int $id role_id
+     *
+     * @return redirect
+     */
+    public function getTrueDelete($id)
+    {
+        if (!$this->p->canI('trueDeleteRole') && $id != 1) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        if (!$role = Role::onlyTrashed()->where('id', '=', $id)) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $role->forceDelete();
+
+        return Redirect::to('admin/role/archived');
+    }
+    
+    /**
+     * Create role action
+     *
+     * @return redirect
+     */
+    public function postCreate()
+    {
+        if (!$this->p->canI('createRole')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $v = Validator::make(Input::all(), Role::defaultRules());
+
+        if ($v->fails()) {
+            return Redirect::back()
+                    ->withErrors($v)
+                    ->withInput();
+        }
+
+        $role = new Role();
+        $role->name = Input::get('name');
+        $role->save();
+        if (Input::get('caps')) {
+            $role->capabilities()->sync(Input::get('caps'));
+        }
+        return Redirect::to('admin/role/list')
+                 ->with('flashSuccess', 'New role '.$role->name.' created.');
+    }
+
+    /**
+     * Update role action
+     *
+     * @param int $id role_id
+     *
+     * @return redirect
+     */
+    public function postUpdate($id)
+    {
+        if (!$this->p->canI('updateRole')) {
+            return App::abort(403, 'Forbidden');
+        }
+
+        $v = Validator::make(Input::all(), Role::defaultRules());
+
+        if ($v->fails()) {
+            return Redirect::back()
+                    ->withErrors($v)
+                    ->withInput();
+        }
+
+        if ($role = Role::find($id)) {
+            $role->name = Input::get('name');
+            $role->save();
+            if (Input::get('caps')) {
+                $role->capabilities()->sync(Input::get('caps'));
+            } else {
+                $role->capabilities()->detach();
+            }
+            return Redirect::to('admin/role/list')
+                    ->with('flashStatus', 'Role '.$role->name.' updated.');
+        }
     }
 
 }

@@ -87,8 +87,6 @@ class AuthController extends BaseController
         }
 
         $data = array(
-                    'status' => Session::get('status'),
-                    'error' => Session::get('error'),
                     'token' => Input::get('token'),
                 );
         return View::make('auth/newpassword', $data);
@@ -104,17 +102,11 @@ class AuthController extends BaseController
         $userdata = array(
             'email' => Input::get('email'),
             'password' => Input::get('password'),
+            'blocked' => null,
         );
 
         if (Auth::attempt($userdata, Input::get('remember_me'))) {
-            $user = Auth::user();
-            if ($user->blocked) {
-                Auth::logout();
-                return Redirect::to('login')
-                          ->with('login_errors', true);
-            } else {
-                return Redirect::to('account');
-            }
+            return Redirect::to('account');
         } else {
             return Redirect::to('login')
                       ->with('login_errors', true);
@@ -131,7 +123,7 @@ class AuthController extends BaseController
         $v = Validator::make(Input::all(), User::forgotPassword());
 
         if ($v->fails()) {
-            return Redirect::to('auth/forgot')
+            return Redirect::back()
                             ->withErrors($v)
                             ->withInput();
         }

@@ -13,6 +13,9 @@
 
 View::share('s', App::make('settings'));
 View::share('p', App::make('permissions'));
+View::share('flashStatus', Session::get('flashStatus'));
+View::share('flashError', Session::get('flashError'));
+View::share('flashSuccess', Session::get('flashSuccess'));
 
 /**
  * Post part
@@ -39,6 +42,9 @@ Route::get('admin/user/list',
 Route::get('admin/user/blocked',
             array(
                 'uses' => 'AdminUserController@getBlocked'));
+Route::get('admin/user/archived',
+            array(
+                'uses' => 'AdminUserController@getArchived'));
 Route::get('admin/user/new',
             array(
                 'uses' => 'AdminUserController@getNew'));
@@ -54,6 +60,12 @@ Route::get('admin/user/unblock/{id}',
 Route::get('admin/user/delete/{id}',
             array(
                 'uses' => 'AdminUserController@getDelete'));
+Route::get('admin/user/undelete/{id}',
+            array(
+                'uses' => 'AdminUserController@getUndelete'));
+Route::get('admin/user/truedelete/{id}',
+            array(
+                'uses' => 'AdminUserController@getTrueDelete'));
 Route::post('admin/user/create',
             array(
                 'before' => 'csrf',
@@ -72,6 +84,9 @@ Route::get('admin/post/list',
 Route::get('admin/post/unpublished',
             array(
                 'uses' => 'AdminPostController@getUnpublished'));
+Route::get('admin/post/archived',
+            array(
+                'uses' => 'AdminPostController@getArchived'));
 Route::get('admin/post/new',
            array(
                'uses' => 'AdminPostController@getNew'));
@@ -84,9 +99,15 @@ Route::get('admin/post/unpublish/{id}',
 Route::get('admin/post/publish/{id}',
             array(
                 'uses' => 'AdminPostController@getPublish'));
+Route::get('admin/post/undelete/{id}',
+            array(
+                'uses' => 'AdminPostController@getUndelete'));
 Route::get('admin/post/delete/{id}',
             array(
                 'uses' => 'AdminPostController@getDelete'));
+Route::get('admin/post/truedelete/{id}',
+            array(
+                'uses' => 'AdminPostController@getTrueDelete'));
 Route::post('admin/post/create',
             array(
                 'before' => 'csrf',
@@ -97,11 +118,53 @@ Route::post('admin/post/update/{id}',
                 'uses' => 'AdminPostController@postUpdate'));
 
 /**
+ * Admin Image routes
+ */
+Route::get('admin/image/list',
+            array(
+                'uses' => 'AdminImageController@getList'));
+Route::get('admin/image/archived',
+            array(
+                'uses' => 'AdminImageController@getArchived'));
+Route::get('admin/image/ajaxnewlist/{images?}',
+            array(
+                'uses' => 'AdminImageController@ajaxNewList'));
+Route::get('admin/image/ajaxeditlist/{postid}',
+            array(
+                'uses' => 'AdminImageController@ajaxEditList'));
+Route::get('admin/image/new',
+            array(
+                'uses' => 'AdminImageController@getNew'));
+Route::get('admin/image/edit/{id}',
+            array(
+                'uses' => 'AdminImageController@getEdit'));
+Route::get('admin/image/delete/{id}',
+           array(
+               'uses' => 'AdminImageController@getDelete'));
+Route::get('admin/image/undelete/{id}',
+            array(
+                'uses' => 'AdminImageController@getUndelete'));
+Route::get('admin/image/truedelete/{id}',
+            array(
+                'uses' => 'AdminImageController@getTrueDelete'));
+Route::post('admin/image/create',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminImageController@postCreate'));
+Route::post('admin/image/update/{id}',
+            array(
+                'before' => 'csrf',
+                'uses' => 'AdminImageController@postUpdate'));
+
+/**
  * Admin Category routes
  */
 Route::get('admin/category/list',
             array(
                 'uses' => 'AdminCategoryController@getList'));
+Route::get('admin/category/archived',
+            array(
+                'uses' => 'AdminCategoryController@getArchived'));
 Route::get('admin/category/new',
            array(
                'uses' => 'AdminCategoryController@getNew'));
@@ -111,6 +174,12 @@ Route::get('admin/category/edit/{id}',
 Route::get('admin/category/delete/{id}',
             array(
                 'uses' => 'AdminCategoryController@getDelete'));
+Route::get('admin/category/undelete/{id}',
+            array(
+                'uses' => 'AdminCategoryController@getUndelete'));
+Route::get('admin/category/truedelete/{id}',
+            array(
+                'uses' => 'AdminCategoryController@getTrueDelete'));
 Route::post('admin/category/create',
             array(
                 'before' => 'csrf',
@@ -137,6 +206,9 @@ Route::post('admin/settings',
 Route::get('admin/role/list',
             array(
                 'uses' => 'AdminRoleController@getList'));
+Route::get('admin/role/archived',
+            array(
+                'uses' => 'AdminRoleController@getArchived'));
 Route::get('admin/role/new',
             array(
                 'uses' => 'AdminRoleController@getNew'));
@@ -146,6 +218,12 @@ Route::get('admin/role/edit/{id}',
 Route::get('admin/role/delete/{id}',
             array(
                 'uses' => 'AdminRoleController@getDelete'));
+Route::get('admin/role/undelete/{id}',
+            array(
+                'uses' => 'AdminRoleController@getUndelete'));
+Route::get('admin/role/truedelete/{id}',
+            array(
+                'uses' => 'AdminRoleController@getTrueDelete'));
 Route::post('admin/role/create',
             array(
                 'before' => array('csrf'),

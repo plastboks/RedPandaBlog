@@ -1,6 +1,6 @@
 body {
   margin: 0 auto !important;
-  width: 800px;
+  width: 1024px;
 }
 
 a {
@@ -63,14 +63,41 @@ a {
   background: lightcyan;
 }
 
+/************************
+ * Flashmessage section *
+ ************************/
+#flashmessage .success {
+  border: 1px solid green;
+  padding: 5px;
+  background: lightgreen;
+  font-size: 0.9em;
+}
+
+#flashmessage .error {
+  border: 1px solid red;
+  padding: 5px;
+  background: salmon;
+  font-size: 0.9em;
+}
+
+#flashmessage .status {
+  border: 1px solid blue;
+  padding: 5px;
+  background: lightblue;
+  font-size: 0.9em;
+}
+
 
 /*******************
  * Content section *
  *******************/
 #content {
   clear: both;
+  float: left;
+  width: 750px;
 }
 
+.ajaxcontent h1,
 #content h1 {
   color: steelblue;
   border-bottom: 1px solid lightgray;
@@ -106,16 +133,19 @@ a {
   font-size: 0.9em;
 }
 
+.ajaxcontent .tablewrapper,
 #content .tablewrapper {
   padding: 5px;
   border: 1px solid lightgray;
   background: whitesmoke;
 }
 
+.ajaxcontent .list,
 #content .list {
   width: 100%;
 }
 
+.ajaxcontent .list thead th,
 #content .list thead th {
   text-align: left;
 }
@@ -151,6 +181,7 @@ a {
   border: 1px solid gray;  
 }
 
+#content form input[type="button"],
 #content form input[type="submit"] {
   margin-top: 10px;
   border: 1px solid lightskyblue;
@@ -191,7 +222,23 @@ a {
 }
 
 #content .post {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid whitesmoke;
+  clear: both;
+  overflow: hidden;
+  padding: 10px 0px;
+}
+
+#content .singlepost .postmainimage {
+  width: 750px;
+  height: auto;
+}
+
+#content .post .listimage {
+  float: left;
+  padding-right: 10px;
+  padding-top: 5px;
+  height: 150px;
+  width: auto;
 }
 
 #content .unpublished {
@@ -247,11 +294,31 @@ a {
 }
 
 
+/*******************
+ * Sidebar section *
+ *******************/
+
+#sidebar {
+  width: 220px;
+  margin: 55px 0px 15px 30px;
+  padding: 10px;
+  background: ghostwhite;
+  border: 1px solid powderblue;
+  float: left;
+}
+
+#sidebar ul {
+  list-style: none;
+  padding: 0px 15px;
+}
+
+
 /******************
  * Footer section *
  ******************/
 #footer {
-  padding: 5px;
+  clear: both;
+  padding: 40px;
   margin-top: 25px;
   border-top: 1px solid lightgray;
   text-align: center;

@@ -29,6 +29,7 @@ Point your webserver at the /public folder.
 * If using sqlite touch a file in app/database (eg: `touch app/database/production.sqlite`)
 * Generate app key via `php artisan key:generate` 
 * Run `php artisan migrate`
+* Run `php artisan db:seed`
 * Goto http://hostname/install to create a new admin user
 * Login via http://hostname/login
 * Success :-)
@@ -52,6 +53,14 @@ Most of the plans for this blog is kept as issues and milestones on Github. A sm
 * User registration
 * Captcha
 * Document...
+
+
+Upgrading
+=========
+Be careful using `php artisan db:seed` when upgrading. This routine is programmed to delete existing records in the database.
+* Run `php artisan migrate`
+* Run `php artisan db:seed`
+
 
 License
 =======

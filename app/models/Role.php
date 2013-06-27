@@ -38,6 +38,13 @@ class Role extends Eloquent
     protected $table = 'roles';
 
     /**
+     * Do not delete from database
+     *
+     * @var $softDelete
+     */
+    protected $softDelete = true;
+
+    /**
      * Get role users
      *
      * @return object

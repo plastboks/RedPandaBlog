@@ -1,12 +1,6 @@
 @extends('account/index')
 @section('content')
     <h1>Change password</h1>
-    @if ($error)
-      <p class="error">{{ $error }}</p>
-    @endif
-    @if ($status)
-      <p class="message">{{ $status }}</p>
-    @endif
     {{ Form::open(array('url'=>'account/changepassword')) }}
         {{ Form::token() }}
         <!-- old field -->

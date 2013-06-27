@@ -1,9 +1,6 @@
 @extends('admin/index')
 @section('content')
     <h1>Edit user - {{ $user->username }}</h1>
-    @if ($status)
-    <p class="message">{{ $status }}</p>
-    @endif
     {{ Form::open(array('url'=>'admin/user/update/'.$user->id)) }}
         {{ Form::token() }}
         <!-- username field -->

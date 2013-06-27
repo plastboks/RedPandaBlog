@@ -48,13 +48,24 @@ class PostController extends BaseController
      */
     public function getIndex()
     {
+        $d = 'Welcome !';
+        $header = count(Post::where('published', '=', 1)->take(1)->get()) ? null:$d;
         $data = array(
-            'posts' => Post::orderBy('created_at', 'desc')
-                              ->where('published', '=', 1)
-                              ->paginate($this->s->postsPerPage),
-            'errormessage' => false,
-            'header' => 'Welcome !',
+            'header' => $header,
         );
+
+        if (($this->s->frontpagecategory)
+            && ($this->s->frontpagecategory != 'all')
+        ) {
+            $data['posts'] = Category::find((int)$this->s->frontpagecategory)
+                                ->posts()
+                                ->where('published', '=', 1)
+                                ->paginate($this->s->postsPerPage);
+        } else {
+            $data['posts'] = Post::orderBy('created_at', 'desc')
+                                ->where('published', '=', 1)
+                                ->paginate($this->s->postsPerPage);
+        }
         return View::make('index', $data);
     }
 
@@ -104,7 +115,7 @@ class PostController extends BaseController
         } else {
             $message = 'Please enter 3 og more character in the search query';
             return Redirect::to('/')
-                      ->with('errormessage', $message);
+                      ->with('flashError', $message);
         }
     }
 

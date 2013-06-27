@@ -82,6 +82,33 @@ class Setting extends Eloquent
     }
 
     /**
+     * Get categories for use in selectors, included a default option
+     *
+     * @return array
+     */
+    public function getCatIncDefault()
+    {
+        $array = array();
+        $array['all'] = '--All';
+
+        $siteCat = $this->_getCategories();
+        foreach ($siteCat as $cat) {
+            $array[$cat->id] = $cat->slug;
+        }
+        return $array;
+    }
+
+    /**
+     * Private method for getting site categories
+     *
+     * @return object
+     */
+    private function _getCategories()
+    {
+        return Category::all();
+    }
+
+    /**
      * Set var
      *
      * @param string $var   meta_key
@@ -102,8 +129,8 @@ class Setting extends Eloquent
     public static function defaultRules()
     {
         return array(
-            'blogName' => 'min:3|max:64',
-            'footer' => 'max:64',
+            'blogName' => 'required|min:3|max:64',
+            'footertext' => 'max:1024',
         );
     }
 
