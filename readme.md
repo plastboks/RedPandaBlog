@@ -7,6 +7,9 @@ Laravel
 =======
 This blog is based on the [Laravel PHP Framework](https://github.com/laravel/laravel)
 
+Future
+======
+The future of this project depends on the authors focus. There will probably be times when the projects get a lot of attention and work, while at other times there will be none.
 
 Description
 ===========
