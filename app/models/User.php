@@ -9,7 +9,7 @@
  * @author   Alexander Skjolden <alex@plastboks.net>
  * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
  *
- * @link     http://github.com/plastboks/red-panda-blog
+ * @link     http://github.com/plastboks/RedPandaBlog
  * @date     2013-06-17
  *
  */
@@ -26,7 +26,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
  * @author   Alexander Skjolden <alex@plastboks.net>
  * @license  http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
  *
- * @link     http://github.com/plastboks/red-panda-blog
+ * @link     http://github.com/plastboks/RedPandaBlog
  * @date     2013-06-17
  *
  */
