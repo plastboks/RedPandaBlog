@@ -45,6 +45,8 @@ class InstallController extends BaseController
         $data = array(
             'username' => Session::get('username'),
             'email' => Session::get('email'),
+            'givenname' => Session::get('givenname'),
+            'surname' => Session::get('surname'),
         );
         return View::make('install', $data);
     }
@@ -68,12 +70,17 @@ class InstallController extends BaseController
                       ->withErrors($v)
                       ->withInput()
                       ->with('username', Input::get('username'))
-                      ->with('email', Input::get('email'));
+                      ->with('email', Input::get('email'))
+                      ->with('givenname', Input::get('givenname'))
+                      ->with('surname', Input::get('surname'));
         }
 
         $user = new User();
         $user->username = Input::get('username');
         $user->email = Input::get('email');
+        $user->givenname = Input::get('givenname');
+        $user->surname = Input::get('surname');
+        $user->active = true;
         $user->role_id = 1;
         $user->password = Hash::make(Input::get('password'));
         $user->save();
