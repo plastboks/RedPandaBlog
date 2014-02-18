@@ -21,12 +21,12 @@ class CreateUsers extends Migration
         $table->string('givenname', 120);
         $table->string('surname', 120);
 
-        $table->text('info');
+        $table->text('info')->nullable();
 
         $table->string('password', 64);
-        $table->string('confirmation_code');
+        $table->string('confirmation_code')->nullable();
 
-        $table->boolean('blocked');
+        $table->boolean('blocked')->default(false);
         $table->boolean('confirmed')->default(false);
         $table->boolean('approved')->default(false);
         $table->integer('role_id');

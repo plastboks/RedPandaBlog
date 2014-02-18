@@ -17,8 +17,8 @@ class CreatePosts extends Migration
         $table->increments('id');
         $table->string('title', 256);
 
-        $table->text('body');
-        $table->text('excerpt');
+        $table->text('body')->nullable();
+        $table->text('excerpt')->nullable();
 
         $table->integer('author_id');
         $table->boolean('archived');
