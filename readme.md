@@ -38,6 +38,10 @@ Point your webserver at the /public folder.
 * Success :-)
 
 
+Develop
+=======
+* Run `php -S localhost:8000 -t public/`
+
 Branches
 ========
 There will mainly be two branches in this repo (@github) at all times. The master and develop branch.
